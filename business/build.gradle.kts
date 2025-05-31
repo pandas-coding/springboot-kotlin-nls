@@ -19,18 +19,14 @@ repositories {
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
-    compileOnly("org.projectlombok:lombok")
-    annotationProcessor("org.projectlombok:lombok")
-
-    // implementation("org.springframework.boot:spring-boot-starter-web")
-    // implementation("org.springframework.boot:spring-boot-starter-aop")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-aop")
     // implementation("org.springframework.boot:spring-boot-starter-validation")
     // implementation("org.springframework.boot:spring-boot-starter-data-redis")
-    // implementation("com.alibaba:fastjson")
+    implementation("com.alibaba:fastjson:2.0.57")
     // implementation("cn.hutool:hutool-all")
     // implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter")
     // implementation("mysql:mysql-connector-java")
@@ -45,8 +41,12 @@ dependencies {
     // implementation("com.alibaba.boot:nacos-config-spring-boot-starter")
     // runtimeOnly("org.springframework.boot:spring-boot-devtools")
     // annotationProcessor("org.projectlombok:lombok")
-    // testImplementation("org.springframework.boot:spring-boot-starter-test")
-    //
+
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+    // kotlin-logging lib
+    implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
+
     // // 阿里云vod上传
     // implementation(files("${projectDir}/src/main/resources/aliyun-java-vod-upload-1.4.15.jar"))
 

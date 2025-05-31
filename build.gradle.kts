@@ -23,7 +23,7 @@ repositories {
 
 dependencyManagement {
     dependencies {
-        dependency("com.alibaba:fastjson:1.2.83")
+        dependency("com.alibaba:fastjson:2.0.57") // dependency("com.alibaba:fastjson:1.2.83")
         dependency("cn.hutool:hutool-all:5.8.10")
         dependency("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3")
         dependency("mysql:mysql-connector-java:8.0.28") // Note: newer versions use com.mysql:mysql-connector-j

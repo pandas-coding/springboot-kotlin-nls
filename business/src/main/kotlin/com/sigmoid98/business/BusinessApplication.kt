@@ -1,17 +1,21 @@
 package com.sigmoid98.business
 
-import org.slf4j.LoggerFactory
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
 class BusinessApplication
 
+
+private val logger = KotlinLogging.logger {}
+
 fun main(args: Array<String>) {
-    val logger = LoggerFactory.getLogger(BusinessApplication::class.java)
     val environment = runApplication<BusinessApplication>(*args)
         .environment;
 
-    logger.info("bootup successfully!!!")
-    logger.info("bootup at: http://localhost:${environment.getProperty("server.port")}${environment.getProperty("server.servlet.context-path")}/hello")
+    val appServerPort = environment.getProperty("server.port")
+    val appServerContextPath = environment.getProperty("server.servlet.context-path")
+    logger.info { "Application bootup!!!" }
+    logger.info { "Application bootup at: http://localhost:${appServerPort}${appServerContextPath}/hello" }
 }
