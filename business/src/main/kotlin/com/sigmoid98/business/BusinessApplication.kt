@@ -1,9 +1,11 @@
 package com.sigmoid98.business
 
+import org.mybatis.spring.annotation.MapperScan
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
+@MapperScan("com.sigmoid98.business.mapper")
 @SpringBootApplication
 class BusinessApplication
 
