@@ -2,3 +2,9 @@ GET http://localhost:18000/nls/hello
 Accept: application/json
 
 ###
+
+GET http://localhost:18000/nls/count
+Accept: application/json
+
+###
+

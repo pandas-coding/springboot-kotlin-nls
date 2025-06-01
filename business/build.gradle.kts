@@ -1,8 +1,8 @@
 plugins {
     kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
-    id("org.springframework.boot") version "3.3.12"
-    id("io.spring.dependency-management") version "1.1.7"
+    // id("org.springframework.boot") version "3.3.12"
+    // id("io.spring.dependency-management") version "1.1.7"
 }
 
 group = "com.sigmoid-98"
@@ -29,7 +29,7 @@ dependencies {
     implementation("com.alibaba:fastjson:2.0.57")
     // implementation("cn.hutool:hutool-all")
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter")
-    implementation("mysql:mysql-connector-java")
+    implementation("mysql:mysql-connector-java:8.0.28")
     // implementation("com.aliyun:alibabacloud-dysmsapi20170525")
     // implementation("com.github.penggle:kaptcha")
     // implementation("com.aliyun:aliyun-java-sdk-core")
@@ -55,8 +55,6 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-
 }
 
 // kotlin {
