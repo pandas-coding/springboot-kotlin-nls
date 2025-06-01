@@ -1,6 +1,5 @@
 package com.sigmoid98.business.controller
 
-import com.sigmoid98.business.mapper.DemoMapper
 import com.sigmoid98.business.service.DemoService
 import jakarta.annotation.Resource
 import org.springframework.web.bind.annotation.GetMapping

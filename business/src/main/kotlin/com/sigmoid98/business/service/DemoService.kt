@@ -1,6 +1,6 @@
 package com.sigmoid98.business.service
 
-import com.sigmoid98.business.mapper.DemoMapper
+import com.sigmoid98.business.mapper.custom.DemoMapperCustom
 import jakarta.annotation.Resource
 import org.springframework.stereotype.Service
 
@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service
 class DemoService {
 
     @Resource
-    lateinit var demoMapper: DemoMapper
+    lateinit var demoMapperCustom: DemoMapperCustom
 
     fun count(): Int {
-        return demoMapper.count()
+        return demoMapperCustom.count()
     }
 
 }
