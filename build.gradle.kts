@@ -13,11 +13,11 @@ java {
     }
 }
 
-kotlin {
-    compilerOptions {
-        freeCompilerArgs.addAll("-Xjsr305=strict")
-    }
-}
+// kotlin {
+//     compilerOptions {
+//         freeCompilerArgs.addAll("-Xjsr305=strict")
+//     }
+// }
 
 allprojects {
     group = "com.sigmoid-98"
