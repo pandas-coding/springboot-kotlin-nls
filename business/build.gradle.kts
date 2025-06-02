@@ -25,7 +25,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     // implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("com.alibaba:fastjson:2.0.57")
-    // implementation("cn.hutool:hutool-all")
+    implementation("cn.hutool:hutool-all")
     /*implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter")*/
     // mybatis-plus
     implementation("com.baomidou:mybatis-plus-spring-boot3-starter:3.5.12")
