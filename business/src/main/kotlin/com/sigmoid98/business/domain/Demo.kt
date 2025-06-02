@@ -1,46 +1,45 @@
-package com.sigmoid98.business.domain;
+package com.sigmoid98.business.domain
 
-public class Demo {
-    private Long id;
+import com.baomidou.mybatisplus.annotation.TableField
+import com.baomidou.mybatisplus.annotation.TableId
+import com.baomidou.mybatisplus.annotation.TableName
 
-    private String mobile;
+import java.io.Serializable
 
-    private String password;
+/**
+ * <p>
+ * 示例
+ * </p>
+ *
+ * @author mybatis-plus code generator
+ * @since 2025-06-02 17:47:53
+ */
+@TableName("demo")
+class Demo : Serializable {
 
-    public Long getId() {
-        return id;
-    }
+    /**
+     * id
+     */
+    @TableId("id")
+    var id: Long? = null
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    /**
+     * 手机号
+     */
+    @TableField("mobile")
+    var mobile: String? = null
 
-    public String getMobile() {
-        return mobile;
-    }
+    /**
+     * 密码
+     */
+    @TableField("password")
+    var password: String? = null
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", mobile=").append(mobile);
-        sb.append(", password=").append(password);
-        sb.append("]");
-        return sb.toString();
+    override fun toString(): String {
+        return "Demo{" +
+        "id=" + id +
+        ", mobile=" + mobile +
+        ", password=" + password +
+        "}"
     }
 }

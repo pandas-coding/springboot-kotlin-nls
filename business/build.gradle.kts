@@ -1,6 +1,6 @@
 plugins {
-    kotlin("jvm") version "1.9.25"
-    kotlin("plugin.spring") version "1.9.25"
+    kotlin("jvm") version "2.1.0"
+    kotlin("plugin.spring") version "2.1.0"
 }
 
 group = "com.sigmoid-98"
@@ -26,7 +26,9 @@ dependencies {
     // implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("com.alibaba:fastjson:2.0.57")
     // implementation("cn.hutool:hutool-all")
-    implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter")
+    /*implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter")*/
+    // mybatis-plus
+    implementation("com.baomidou:mybatis-plus-spring-boot3-starter:3.5.12")
     implementation("mysql:mysql-connector-java:8.0.28")
     // implementation("com.aliyun:alibabacloud-dysmsapi20170525")
     // implementation("com.github.penggle:kaptcha")

@@ -1,10 +1,8 @@
 
 
 plugins {
-    kotlin("jvm") version "1.9.25"
-    kotlin("plugin.spring") version "1.9.25"
-
-    id("com.qqviaja.gradle.MybatisGenerator") version "2.5"
+    kotlin("jvm") version "2.1.0"
+    kotlin("plugin.spring") version "2.1.0"
 }
 
 group = "com.sigmoid-98"
@@ -23,31 +21,18 @@ kotlin {
 }
 
 
-configurations {
-    mybatisGenerator
-}
-
-mybatisGenerator {
-    // missing default true
-    overwrite  = true
-    // missing default false
-    verbose = true
-    // missing default src/main/resources/generator/generatorConfig.xml
-    configFile = "src/main/resources/generator-config-business.xml"
-    dependencies {
-        // Dependencies for the MyBatis Generator tool itself
-        mybatisGenerator("mysql:mysql-connector-java:8.0.22")
-        mybatisGenerator("org.mybatis.generator:mybatis-generator-core:1.4.1") // <-- 主要改动在这里
-    }
-}
-
 
 repositories {
     mavenCentral()
+    google()
 }
 
 dependencies {
-    implementation("org.mybatis.generator:mybatis-generator-core:1.4.0")
+    // mybatis-plus
+    implementation("com.baomidou:mybatis-plus-spring-boot3-starter:3.5.12")
+    implementation("com.baomidou:mybatis-plus-generator:3.5.12")
+    implementation("org.freemarker:freemarker:2.3.32")
+    implementation("org.springframework.boot:spring-boot-starter-freemarker")
     implementation("mysql:mysql-connector-java:8.0.22")
 
     implementation("org.springframework.boot:spring-boot-starter")

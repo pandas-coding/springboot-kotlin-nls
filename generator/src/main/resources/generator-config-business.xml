@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-    <context id="Mysql" targetRuntime="MyBatis3" defaultModelType="flat">
+    <context id="Mysql" targetRuntime="MyBatis3Kotlin" defaultModelType="flat">
 
         <!-- 自动检查关键字，为关键字增加反引号 select * from `from` -->
         <property name="autoDelimitKeywords" value="true"/>
