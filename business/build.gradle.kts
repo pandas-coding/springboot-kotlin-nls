@@ -22,7 +22,7 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-aop")
-    // implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     // implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("com.alibaba:fastjson:2.0.57")
     // implementation("cn.hutool:hutool-all")
