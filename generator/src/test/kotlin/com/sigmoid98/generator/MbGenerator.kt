@@ -1,24 +1,15 @@
 package com.sigmoid98.generator
 
 import com.baomidou.mybatisplus.generator.AutoGenerator
-import com.baomidou.mybatisplus.generator.FastAutoGenerator
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig
 import com.baomidou.mybatisplus.generator.config.GlobalConfig
 import com.baomidou.mybatisplus.generator.config.PackageConfig
 import com.baomidou.mybatisplus.generator.config.StrategyConfig
 
+/**
+ * @deprecated 基于Mybatis-Generator的代码生成器
+ */
 fun main() {
-    // 1. 数据库连接信息
-    val dbUrl = "jdbc:mysql://localhost:13306/springboot-kotlin-nls"
-    val dbUser = "root"
-    val dbPwd = "123456"
-
-    // 2. 全局配置
-    val projectPath = System.getProperty("user.dir") // 获取项目根路径
-    val outputDir = "$projectPath/src/main/kotlin"   // Kotlin代码输出目录
-    val xmlOutputDir = "$projectPath/src/main/resources/mapper" // XML输出目录
-
-
 
     AutoGenerator(
         // 设置数据源

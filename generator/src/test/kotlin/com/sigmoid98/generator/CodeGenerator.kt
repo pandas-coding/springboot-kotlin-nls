@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.generator.config.rules.DateType
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine
 import java.util.*
 
+/**
+ * 基于MyBatis-Plus Generator的代码生成器
+ */
 fun main() {
     // 1. 数据库连接信息
     val dbUrl = "jdbc:mysql://localhost:13306/springboot-kotlin-nls"
@@ -34,7 +37,8 @@ fun main() {
                 .disableOpenDir() // 生成后不打开输出目录 (可选)
         }
         .packageConfig { builder ->
-            builder.parent("com.sigmoid98.business") // 父包名
+            builder
+                .parent("com.sigmoid98.business") // 父包名
                 // .moduleName("system") // 模块名 (可选, 会在父包名下创建模块文件夹)
                 .entity("domain")       // Entity 包名
                 .mapper("mapper")       // Mapper 接口包名
@@ -46,6 +50,7 @@ fun main() {
         .strategyConfig { builder ->
             builder.addInclude(*generateTables) // 需要生成的表名，可多个
                 // .addTablePrefix("t_", "c_") // 表前缀过滤 (生成类名时会去掉这些前缀)
+
                 // Entity实体类配置
                 .entityBuilder()
                 .enableFileOverride()
