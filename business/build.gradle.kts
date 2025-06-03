@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "2.1.0"
+    kotlin("kapt") version "2.1.21"
     kotlin("plugin.spring") version "2.1.0"
 }
 
@@ -10,6 +11,14 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+}
+
+kotlin {
+    jvmToolchain { 17 }
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
+    compilerOptions.javaParameters.set(true)
 }
 
 repositories {
@@ -46,6 +55,9 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
     // kotlin-logging lib
     implementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
+    // MapStruct
+    implementation("org.mapstruct:mapstruct:1.6.3")
+    kapt("org.mapstruct:mapstruct-processor:1.6.3")
 
     // // 阿里云vod上传
     // implementation(files("${projectDir}/src/main/resources/aliyun-java-vod-upload-1.4.15.jar"))

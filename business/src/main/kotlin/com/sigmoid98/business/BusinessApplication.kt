@@ -19,5 +19,5 @@ fun main(args: Array<String>) {
     val appServerPort = environment.getProperty("server.port")
     val appServerContextPath = environment.getProperty("server.servlet.context-path")
     logger.info { "Application bootup!!!" }
-    logger.info { "Application bootup at: http://localhost:${appServerPort}${appServerContextPath}/hello" }
+    logger.info { "Application bootup at: http://localhost:${appServerPort}${appServerContextPath}" }
 }
