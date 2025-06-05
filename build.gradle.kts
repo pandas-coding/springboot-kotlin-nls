@@ -1,9 +1,10 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "2.1.0"
-    kotlin("kapt") version "2.1.21"
     kotlin("plugin.spring") version "2.1.0"
+    id("com.google.devtools.ksp") version "2.1.0-1.0.29"
     id("org.springframework.boot") version "3.3.12"
     id("io.spring.dependency-management") version "1.1.7"
 }
@@ -14,13 +15,8 @@ java {
     }
 }
 
-// kotlin {
-//     compilerOptions {
-//         freeCompilerArgs.addAll("-Xjsr305=strict")
-//     }
-// }
-
 allprojects {
+
     group = "com.sigmoid-98"
     version = "0.0.1-SNAPSHOT"
     description = "springboot nls service with kotlin"
@@ -29,36 +25,22 @@ allprojects {
         mavenCentral()
     }
 
-    tasks.withType<Test> {
-        useJUnitPlatform()
-    }
-
 }
 
 // Configuration for all subprojects
 subprojects {
-    apply(plugin = "java")
-    apply(plugin = "org.springframework.boot")
-    apply(plugin = "io.spring.dependency-management")
-    apply(plugin = "org.jetbrains.kotlin.jvm")
-
     group = rootProject.group
     version = rootProject.version
 
-    repositories {
-        mavenCentral()
-    }
+    apply(plugin = "org.jetbrains.kotlin.jvm")
+    apply(plugin = "com.google.devtools.ksp")
+    apply(plugin = "java")
+    apply(plugin = "org.springframework.boot")
+    apply(plugin = "io.spring.dependency-management")
 
     java {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    tasks.withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = "17"
-            freeCompilerArgs = listOf("-Xjsr305=strict")
-        }
     }
 
     dependencyManagement {
@@ -86,5 +68,19 @@ subprojects {
         }
     }
 
+
+    // 1. 指定 Kotlin 编译生成的字节码目标为 Java 17
+    // 2. 开启 Kotlin 对 JSR-305 注解
+    tasks.withType<KotlinCompile> {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+            freeCompilerArgs.set(listOf("-Xjsr305=strict"))
+        }
+    }
+
+    // 为 Test 的 Gradle 任务配置为使用 JUnit Platform 运行测试
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
 }
 

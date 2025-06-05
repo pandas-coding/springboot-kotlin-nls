@@ -1,8 +1,5 @@
 package com.sigmoid98.business.controller
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
-import com.sigmoid98.business.domain.Demo
-import com.sigmoid98.business.mapper.DemoMapper
 import com.sigmoid98.business.req.DemoQueryReq
 import com.sigmoid98.business.resp.CommonResp
 import com.sigmoid98.business.resp.DemoQueryResp
