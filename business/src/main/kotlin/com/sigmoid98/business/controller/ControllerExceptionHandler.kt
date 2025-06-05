@@ -6,7 +6,6 @@ import org.springframework.validation.BindException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
-import org.springframework.web.servlet.View
 
 private val logger = KotlinLogging.logger {}
 
@@ -14,7 +13,7 @@ private val logger = KotlinLogging.logger {}
  * 统一异常处理、数据预处理等
  */
 @ControllerAdvice
-class ControllerExceptionHandler(private val error: View) {
+class ControllerExceptionHandler() {
 
     /**
      * 所有异常统一处理
