@@ -30,7 +30,7 @@ class DemoService {
     fun query(req: DemoQueryReq): List<DemoQueryResp> {
         val mobile = req.mobile
 
-        if (mobile.isBlank()) {
+        if (mobile.isNullOrBlank()) {
             throw Exception("mobile is blank")
         }
 

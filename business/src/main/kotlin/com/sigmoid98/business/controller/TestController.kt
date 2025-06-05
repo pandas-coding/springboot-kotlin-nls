@@ -5,6 +5,7 @@ import com.sigmoid98.business.resp.CommonResp
 import com.sigmoid98.business.resp.DemoQueryResp
 import com.sigmoid98.business.service.DemoService
 import jakarta.annotation.Resource
+import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -26,7 +27,7 @@ class TestController {
     }
 
     @GetMapping("/query")
-    fun query(req: DemoQueryReq): CommonResp<List<DemoQueryResp>> {
+    fun query(@Valid req: DemoQueryReq): CommonResp<List<DemoQueryResp>> {
         val demoList = demoService.query(req)
         return CommonResp(demoList)
     }

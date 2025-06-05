@@ -7,4 +7,6 @@ data class CommonResp<T>(
     var success: Boolean = true,
     // 返回信息
     var message: String? = null,
+    // 返回错误信息详情
+    var errorMessage: String? = null,
 )
