@@ -1,0 +1,20 @@
+GET http://localhost:18000/nls/hello
+Accept: application/json
+
+###
+
+GET http://localhost:18000/nls/count
+Accept: application/json
+
+###
+
+GET http://localhost:18000/nls/query?mobile=111111
+Accept: application/json
+
+###
+
+#test query without mobile param
+GET http://localhost:18000/nls/query
+Accept: application/json
+
+###
