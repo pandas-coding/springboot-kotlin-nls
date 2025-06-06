@@ -1,5 +1,6 @@
 package com.sigmoid98.business.aspect
 
+import cn.hutool.core.util.IdUtil
 import com.alibaba.fastjson.JSONObject
 import com.alibaba.fastjson.support.spring.PropertyPreFilters
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -11,6 +12,7 @@ import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Before
 import org.aspectj.lang.annotation.Pointcut
+import org.slf4j.MDC
 import org.springframework.stereotype.Component
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
@@ -32,6 +34,7 @@ class LogAspect {
 
     @Around("pointCut()")
     fun doAround(proceedingJoinPoint: ProceedingJoinPoint): Any? {
+        MDC.put("LOG_ID", IdUtil.getSnowflakeNextIdStr());
         logger.info { "------------- 环绕通知开始 -------------" }
         val startTime = System.currentTimeMillis()
         // 开始打印请求日志
