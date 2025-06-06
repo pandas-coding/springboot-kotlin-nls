@@ -34,7 +34,7 @@ class LogAspect {
 
     @Around("pointCut()")
     fun doAround(proceedingJoinPoint: ProceedingJoinPoint): Any? {
-        MDC.put("LOG_ID", IdUtil.getSnowflakeNextIdStr());
+        MDC.put("LOG_ID", IdUtil.getSnowflakeNextIdStr())
         logger.info { "------------- 环绕通知开始 -------------" }
         val startTime = System.currentTimeMillis()
         // 开始打印请求日志
