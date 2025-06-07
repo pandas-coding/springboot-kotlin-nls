@@ -1,7 +1,21 @@
 <script lang="ts" setup>
 import ViewHeader from "@/components/ViewHeader.vue";
 import ViewSider from "@/components/ViewSider.vue";
+import axios from "axios"
 
+
+async function queryMobile() {
+  const resp = await axios.get("http://localhost:18000/nls/query", {
+    params: {
+      mobile: '111111',
+    }
+  }).catch(console.error)
+  if (!resp) return
+
+  console.log(resp)
+}
+
+queryMobile()
 </script>
 
 <template>
