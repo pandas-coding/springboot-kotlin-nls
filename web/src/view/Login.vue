@@ -11,7 +11,7 @@ const router = useRouter()
 const loginMember = ref({
   mobile: '',
   password: '',
-  // imageCode: '',
+  imageCode: '',
 })
 
 const login = async (values: {}) => {
