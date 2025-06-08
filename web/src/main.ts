@@ -7,3 +7,5 @@ import router from "./router";
 createApp(App)
   .use(router)
   .mount('#app')
+
+console.info('VITE_SERVER: %o', import.meta.env.VITE_SERVER)

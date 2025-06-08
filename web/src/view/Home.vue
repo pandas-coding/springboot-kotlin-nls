@@ -4,7 +4,7 @@ import ViewSider from "@/components/ViewSider.vue";
 import service from "@/utils/request.ts";
 
 async function queryMobile() {
-  const resp = await service.get("http://localhost:18000/nls/query", {
+  const resp = await service.get("/nls/query", {
     params: {
       mobile: '111111',
     }
