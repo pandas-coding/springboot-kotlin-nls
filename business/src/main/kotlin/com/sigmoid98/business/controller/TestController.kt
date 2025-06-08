@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class TestController {
+class TestController(
     @Resource
-    lateinit var demoService: DemoService
+    private val demoService: DemoService,
+) {
 
-    @GetMapping ("/hello")
+    @GetMapping("/hello")
     fun hello(): CommonResp<String> {
         val hello = "hello from business/testController:hello()"
         return CommonResp(hello)
