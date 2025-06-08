@@ -14,6 +14,7 @@ export default defineConfig({
                     importStyle: false,
                 }),
             ],
+            dts: 'src/components.d.ts',
         }),
     ],
     resolve: {
