@@ -3,8 +3,9 @@ import Home from "@/view/Home.vue";
 import Login from "@/view/Login.vue";
 
 const routes: RouteRecordRaw[] = [
-  { path: '/home', component: Home },
+  { path: '/', redirect: '/login'},
   { path: '/login', component: Login},
+  { path: '/home', component: Home },
 ]
 
 const router = createRouter({
