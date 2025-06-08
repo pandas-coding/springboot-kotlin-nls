@@ -3,29 +3,30 @@ import { useRouter } from "vue-router";
 import { ref } from "vue";
 import service from "@/utils/request.ts";
 import { message } from "ant-design-vue";
+import { LockOutlined, MobileOutlined, SafetyOutlined } from "@ant-design/icons-vue";
+
 
 const router = useRouter()
 
 const loginMember = ref({
   mobile: '',
   password: '',
-  imageCode: ''
+  // imageCode: '',
 })
 
-const login = async (values) => {
+const login = async (values: {}) => {
   console.info('开始登录: %o', values)
   const response = await service.post('/nls/web/member/login', {
     mobile: loginMember.value.mobile,
     // password: hexMd5Key(loginMember.value.password),
-    imageCode: loginMember.value.imageCode,
+    // imageCode: loginMember.value.imageCode,
     // imageCodeToken: imageCodeToken.value,
   })
   const data = response.data
   if (data.success) {
     message.success('登录成功!')
     await router.push('/home/welcome')
-  }
-  else {
+  } else {
     message.error(data.message)
   }
 }
@@ -74,7 +75,7 @@ const login = async (values) => {
                 <SafetyOutlined style="margin-left: 15px"/>
               </template>
               <template #suffix>
-                <img v-show="!!imageCodeSrc" :src="imageCodeSrc" alt="验证码" v-on:click="loadImageCode()"/>
+                <!--<img v-show="!!imageCodeSrc" :src="imageCodeSrc" alt="验证码" v-on:click="loadImageCode()"/>-->
               </template>
             </a-input>
           </a-form-item>
@@ -87,7 +88,7 @@ const login = async (values) => {
         </a-form>
 
         <p class="footer">
-          <router-link to="/register">我要注册</router-link>
+          <router-link to="/register">注册</router-link>
           <router-link to="/reset" class="pull-right">忘记密码</router-link>
         </p>
       </a-col>
