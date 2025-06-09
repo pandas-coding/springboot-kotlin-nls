@@ -18,7 +18,7 @@ class SmsCodeService(
 ) {
 
     /**
-     *
+     * 发送短信验证码
      */
     fun sendCode(mobile: String, use: String) {
         val now = Date()
