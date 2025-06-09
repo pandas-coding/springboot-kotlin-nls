@@ -32,7 +32,7 @@ fun main() {
                 .author("mybatis-plus code generator") // 作者
                 .outputDir(outputDir)         // Kotlin 类输出目录
                 .enableKotlin()               // 开启 Kotlin 模式！！!
-                .dateType(DateType.TIME_PACK) // 使用 java.time 包下的日期类型
+                .dateType(DateType.ONLY_DATE) // 使用 只使用 java.util.date 包下的日期类型
                 .commentDate("yyyy-MM-dd HH:mm:ss") // 注释日期格式
                 .disableOpenDir() // 生成后不打开输出目录 (可选)
         }
@@ -58,6 +58,8 @@ fun main() {
                 .enableChainModel() // 链式调用
                 .enableTableFieldAnnotation() // 生成 @TableField 注解
                 .formatFileName("%s") // Entity 文件名格式，默认 %sEntity
+                // 设置Entity的模板配置, 不需要添加ftl后缀名, 会自动配置@link: https://baomidou.com/reference/new-code-generator-configuration/#%E6%A8%A1%E6%9D%BF%E9%85%8D%E7%BD%AE-templateconfig
+                .kotlinTemplatePath("/templates/entity.kt")
 
                 // Mapper 接口配置
                 .mapperBuilder()
