@@ -1,18 +1,18 @@
 package com.sigmoid98.business.mapper
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper
-import com.sigmoid98.business.domain.Demo
+import com.sigmoid98.business.domain.SmsCode
 import org.apache.ibatis.annotations.Mapper
 
 /**
  * <p>
- * 示例 Mapper 接口
+ * 短信验证码表 Mapper 接口
  * </p>
  *
  * @author mybatis-plus code generator
  * @since 2025-06-09 21:22:27
  */
 @Mapper
-interface DemoMapper : BaseMapper<Demo> {
+interface SmsCodeMapper : BaseMapper<SmsCode> {
 
 }
