@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper
  * </p>
  *
  * @author mybatis-plus code generator
- * @since 2025-06-09 21:22:27
+ * @since 2025-06-09 23:33:42
  */
 @Mapper
 interface DemoMapper : BaseMapper<Demo> {
