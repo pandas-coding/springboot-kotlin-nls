@@ -1,7 +1,17 @@
-#注册
+#注册(表单格式)
 POST http://localhost:18000/nls/web/sms-code/send-for-register
 Content-Type: application/x-www-form-urlencoded
 
 mobile = 123
+
+###
+
+#注册(json格式)
+POST http://localhost:18000/nls/web/sms-code/send-for-register
+Content-Type: application/json
+
+{
+  "mobile": 12345678905
+}
 
 ###

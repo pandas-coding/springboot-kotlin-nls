@@ -7,6 +7,7 @@ import com.sigmoid98.business.service.SmsCodeService
 import jakarta.annotation.Resource
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -18,7 +19,7 @@ class WebSmsCodeController(
 ) {
 
     @PostMapping("/send-for-register")
-    fun sendForRegister(@Valid req: SmsCodeRegisterReq): CommonResp<Unit> {
+    fun sendForRegister(@Valid @RequestBody req: SmsCodeRegisterReq): CommonResp<Unit> {
         smsCodeService.sendCode(req.mobile, SmsCodeUseEnum.REGISTER.code)
         return CommonResp()
     }
