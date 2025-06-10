@@ -84,3 +84,9 @@ subprojects {
     }
 }
 
+
+tasks.register("kotlinCompilerVersion") {
+    doLast {
+        println("Kotlin Compiler Version: ${KotlinVersion.CURRENT}")
+    }
+}

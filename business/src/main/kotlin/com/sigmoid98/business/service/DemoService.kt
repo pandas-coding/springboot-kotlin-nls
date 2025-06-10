@@ -11,17 +11,15 @@ import jakarta.annotation.Resource
 import org.springframework.stereotype.Service
 
 @Service
-class DemoService {
-
+class DemoService(
     @Resource
-    lateinit var demoMapperCustom: DemoMapperCustom
-
-    @Resource
-    lateinit var demoMapper: DemoMapper
-
+    private val demoMapperCustom: DemoMapperCustom,
     // data class mapper
     @Resource
-    lateinit var demoConverter: DemoConverter
+    private val demoMapper: DemoMapper,
+    @Resource
+    private val demoConverter: DemoConverter,
+) {
 
     fun count(): Int {
         return demoMapperCustom.count()

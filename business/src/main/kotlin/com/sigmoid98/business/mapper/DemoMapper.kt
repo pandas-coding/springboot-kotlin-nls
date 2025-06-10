@@ -1,8 +1,8 @@
-package com.sigmoid98.business.mapper;
+package com.sigmoid98.business.mapper
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.sigmoid98.business.domain.Demo;
-import org.apache.ibatis.annotations.Mapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper
+import com.sigmoid98.business.domain.Demo
+import org.apache.ibatis.annotations.Mapper
 
 /**
  * <p>
@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author mybatis-plus code generator
- * @since 2025-06-02 17:55:06
+ * @since 2025-06-09 23:33:42
  */
 @Mapper
 interface DemoMapper : BaseMapper<Demo> {
