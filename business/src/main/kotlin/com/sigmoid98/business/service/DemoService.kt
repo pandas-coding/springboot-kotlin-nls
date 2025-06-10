@@ -3,6 +3,8 @@ package com.sigmoid98.business.service
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryChainWrapper
 import com.sigmoid98.business.converter.DemoConverter
 import com.sigmoid98.business.domain.Demo
+import com.sigmoid98.business.exception.BusinessException
+import com.sigmoid98.business.exception.BusinessExceptionEnum
 import com.sigmoid98.business.mapper.DemoMapper
 import com.sigmoid98.business.mapper.custom.DemoMapperCustom
 import com.sigmoid98.business.req.DemoQueryReq
@@ -28,8 +30,8 @@ class DemoService(
     fun query(req: DemoQueryReq): List<DemoQueryResp> {
         val mobile = req.mobile
 
-        if (mobile.isNullOrBlank()) {
-            throw Exception("mobile is blank")
+        if (mobile.isBlank()) {
+            throw BusinessException(BusinessExceptionEnum.DEMO_MOBILE_NOT_NULL)
         }
 
         // warning 使用MyBatis-Plus 搭配 Kotlin 的 LambdaQueryWrapper 构建查询时
