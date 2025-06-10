@@ -1,5 +1,6 @@
 package com.sigmoid98.business.controller
 
+import com.sigmoid98.business.exception.BusinessException
 import com.sigmoid98.business.resp.CommonResp
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.validation.BindException
@@ -7,13 +8,17 @@ import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
 
-private val logger = KotlinLogging.logger {}
 
 /**
  * 统一异常处理、数据预处理等
  */
 @ControllerAdvice
-class ControllerExceptionHandler() {
+class ControllerExceptionHandler {
+
+    // Companion object to hold the logger instance
+    companion object {
+        private val logger = KotlinLogging.logger {} // Logger for SmsCodeService
+    }
 
     /**
      * 所有异常统一处理
@@ -29,6 +34,22 @@ class ControllerExceptionHandler() {
         logger.error(ex) { "系统异常:\n" }
 
         return commonAnyResp
+    }
+
+    /**
+     * 业务异常统一处理
+     */
+    @ExceptionHandler(value = [BusinessException::class])
+    @ResponseBody
+    fun exceptionHandler(ex: BusinessException): CommonResp<Any> {
+        val commonResp = CommonResp<Any>(
+            success = false,
+            message = ex.e.desc,
+            errorMessage = ex.message,
+        )
+        logger.error(ex) { "系统异常:\n" }
+
+        return commonResp
     }
 
 
