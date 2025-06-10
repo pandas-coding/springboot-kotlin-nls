@@ -1,0 +1,14 @@
+package com.sigmoid98.business.exception
+
+enum class BusinessExceptionEnum(
+    val desc: String,
+) {
+    DEMO_MOBILE_NOT_NULL("手机号不能为空！！!"),
+
+    SMS_CODE_TOO_FREQUENT("短信请求过于频繁"),
+    SMS_CODE_SEND_ERROR("短信发送失败，请联系管理员或稍候重试"),
+    SMS_CODE_ERROR("短信验证码不正确"),
+    SMS_CODE_EXPIRED("短信验证码未发送或已过期，请重新发送短信"),
+
+
+}
