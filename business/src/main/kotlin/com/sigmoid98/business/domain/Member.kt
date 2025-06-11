@@ -8,14 +8,14 @@ import java.util.*
 
 /**
  * <p>
- * 短信验证码表
+ * 会员表
  * </p>
  *
  * @author mybatis-plus code generator
  * @since 2025-06-12 00:02:30
  */
-@TableName("sms_code")
-class SmsCode : Serializable {
+@TableName("member")
+class Member : Serializable {
 
     /**
      * id
@@ -30,22 +30,16 @@ class SmsCode : Serializable {
     var mobile: String? = null
 
     /**
-     * 验证码
+     * 密码
      */
-    @TableField("`code`")
-    var code: String? = null
+    @TableField("`password`")
+    var password: String? = null
 
     /**
-     * 用途|枚举[SmsCodeUseEnum]：REGISTER("0", "注册"), FORGET_PASSWORD("1", "忘记密码")
+     * 昵称
      */
-    @TableField("`use`")
-    var use: String? = null
-
-    /**
-     * 状态|枚举[SmsCodeStatusEnum]：USED("1", "已使用"), NOT_USED("0", "未使用")
-     */
-    @TableField("`status`")
-    var status: String? = null
+    @TableField("`name`")
+    var name: String? = null
 
     /**
      * 创建时间
@@ -60,12 +54,11 @@ class SmsCode : Serializable {
     var updatedAt: Date? = null
 
     override fun toString(): String {
-        return "SmsCode{" +
+        return "Member{" +
                 "id=" + id +
                 ", mobile=" + mobile +
-                ", code=" + code +
-                ", use=" + use +
-                ", status=" + status +
+                ", password=" + password +
+                ", name=" + name +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 "}"

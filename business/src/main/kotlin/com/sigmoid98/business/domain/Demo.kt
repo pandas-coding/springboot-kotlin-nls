@@ -11,7 +11,7 @@ import java.io.Serializable
  * </p>
  *
  * @author mybatis-plus code generator
- * @since 2025-06-09 23:33:42
+ * @since 2025-06-12 00:02:30
  */
 @TableName("demo")
 class Demo : Serializable {
