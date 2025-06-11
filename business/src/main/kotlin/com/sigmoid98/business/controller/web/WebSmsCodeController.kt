@@ -1,6 +1,5 @@
 package com.sigmoid98.business.controller.web
 
-import com.sigmoid98.business.enums.SmsCodeUseEnum
 import com.sigmoid98.business.req.SmsCodeRegisterReq
 import com.sigmoid98.business.resp.CommonResp
 import com.sigmoid98.business.service.SmsCodeService
