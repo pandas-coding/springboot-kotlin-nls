@@ -19,7 +19,7 @@ class WebSmsCodeController(
 
     @PostMapping("/send-for-register")
     fun sendForRegister(@Valid @RequestBody req: SmsCodeRegisterReq): CommonResp<Unit> {
-        smsCodeService.sendCode(req.mobile, SmsCodeUseEnum.REGISTER.code)
+        smsCodeService.sendCodeForRegister(req.mobile)
         return CommonResp()
     }
 }
