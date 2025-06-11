@@ -9,6 +9,7 @@ import com.sigmoid98.business.enums.SmsCodeStatusEnum
 import com.sigmoid98.business.exception.BusinessException
 import com.sigmoid98.business.exception.BusinessExceptionEnum
 import com.sigmoid98.business.mapper.SmsCodeMapper
+import com.sigmoid98.business.util.SmsUtil
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.Resource
 import org.springframework.stereotype.Service
@@ -16,8 +17,8 @@ import java.util.*
 
 @Service
 class SmsCodeService(
-    @Resource
-    val smsCodeMapper: SmsCodeMapper,
+    @Resource val smsCodeMapper: SmsCodeMapper,
+    @Resource val smsUtil: SmsUtil,
 ) {
 
     // Companion object to hold the logger instance
@@ -45,8 +46,7 @@ class SmsCodeService(
             throw BusinessException(BusinessExceptionEnum.SMS_CODE_TOO_FREQUENT)
         }
 
-
-        // 保存短信到数据库
+        // 保存验证码到数据库
         val smsCode = SmsCode().apply {
             this.id = IdUtil.getSnowflakeNextId()
             this.mobile = mobile
@@ -57,5 +57,8 @@ class SmsCodeService(
             this.updatedAt = now
         }
         smsCodeMapper.insert(smsCode)
+
+        // 对接短信通道, 发送短信
+        smsUtil.sendCode(mobile, code)
     }
 }

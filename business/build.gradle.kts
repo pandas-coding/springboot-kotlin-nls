@@ -39,7 +39,7 @@ dependencies {
     // mybatis-plus
     implementation("com.baomidou:mybatis-plus-spring-boot3-starter:3.5.12")
     implementation("mysql:mysql-connector-java:8.0.28")
-    // implementation("com.aliyun:alibabacloud-dysmsapi20170525")
+    implementation("com.aliyun:alibabacloud-dysmsapi20170525")
     // implementation("com.github.penggle:kaptcha")
     // implementation("com.aliyun:aliyun-java-sdk-core")
     // implementation("com.aliyun.oss:aliyun-sdk-oss")
@@ -62,6 +62,9 @@ dependencies {
     // KSP to generate mapping code
     ksp("io.mcarle:konvert:4.1.0")
     ksp("io.mcarle:konvert-spring-injector:4.1.0")
+
+    // spring-dotenv property source
+    implementation("me.paulschwarz:spring-dotenv:4.0.0")
 
     // // 阿里云vod上传
     // implementation(files("${projectDir}/src/main/resources/aliyun-java-vod-upload-1.4.15.jar"))
