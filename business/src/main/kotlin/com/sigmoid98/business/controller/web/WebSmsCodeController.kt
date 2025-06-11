@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/web/sms-code")
 class WebSmsCodeController(
-    @Resource
-    val smsCodeService: SmsCodeService,
+    @Resource val smsCodeService: SmsCodeService,
 ) {
 
     @PostMapping("/send-for-register")

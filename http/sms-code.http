@@ -6,12 +6,22 @@ mobile = 123
 
 ###
 
-#注册(json格式)
+# send sms code for an unexisted phone number reported error
 POST http://localhost:18000/nls/web/sms-code/send-for-register
 Content-Type: application/json
 
 {
   "mobile": 12345678905
+}
+
+###
+
+# send sms code for an existed phone number
+POST http://localhost:18000/nls/web/sms-code/send-for-register
+Content-Type: application/json
+
+{
+  "mobile": "<REPLACE_WITH_A_REAL_PHONE_NUMBER>"
 }
 
 ###

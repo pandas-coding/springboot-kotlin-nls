@@ -49,7 +49,7 @@ subprojects {
             dependency("cn.hutool:hutool-all:5.8.10")
             dependency("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3")
             dependency("mysql:mysql-connector-java:8.0.28") // Note: newer versions use com.mysql:mysql-connector-j
-            dependency("com.aliyun:alibabacloud-dysmsapi20170525:2.0.24")
+            dependency("com.aliyun:alibabacloud-dysmsapi20170525:4.0.2")// dependency("com.aliyun:alibabacloud-dysmsapi20170525:2.0.24")
 
             dependency("com.github.penggle:kaptcha:2.3.2") {
                 // CORRECTED EXCLUSION:
