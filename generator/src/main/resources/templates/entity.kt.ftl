@@ -4,10 +4,10 @@ package ${package.Entity}
     import ${pkg}
 </#list>
 <#if springdoc>
-    import io.swagger.v3.oas.annotations.media.Schema;
+    import io.swagger.v3.oas.annotations.media.Schema
 <#elseif swagger>
-    import io.swagger.annotations.ApiModel;
-    import io.swagger.annotations.ApiModelProperty;
+    import io.swagger.annotations.ApiModel
+    import io.swagger.annotations.ApiModelProperty
 </#if>
 
 /**
