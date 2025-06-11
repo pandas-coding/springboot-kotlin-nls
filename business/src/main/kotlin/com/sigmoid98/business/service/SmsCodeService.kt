@@ -6,6 +6,7 @@ import cn.hutool.core.util.RandomUtil
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryChainWrapper
 import com.sigmoid98.business.domain.SmsCode
 import com.sigmoid98.business.enums.SmsCodeStatusEnum
+import com.sigmoid98.business.enums.SmsCodeUseEnum
 import com.sigmoid98.business.exception.BusinessException
 import com.sigmoid98.business.exception.BusinessExceptionEnum
 import com.sigmoid98.business.mapper.SmsCodeMapper
@@ -18,12 +19,25 @@ import java.util.*
 @Service
 class SmsCodeService(
     @Resource val smsCodeMapper: SmsCodeMapper,
+    @Resource val memberService: MemberService,
     @Resource val smsUtil: SmsUtil,
 ) {
 
     // Companion object to hold the logger instance
     companion object {
         private val logger = KotlinLogging.logger {} // Logger for SmsCodeService
+    }
+
+    /**
+     * 注册发送验证码
+     */
+    fun sendCodeForRegister(mobile: String) {
+        val member = memberService.selectByMobile(mobile)
+        if (member == null) {
+            throw BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_HAD_REGISTER)
+        }
+
+        sendCode(mobile, SmsCodeUseEnum.REGISTER.code)
     }
 
     /**

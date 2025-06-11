@@ -1,6 +1,5 @@
 package com.sigmoid98.business.controller.web
 
-import com.sigmoid98.business.enums.SmsCodeUseEnum
 import com.sigmoid98.business.req.SmsCodeRegisterReq
 import com.sigmoid98.business.resp.CommonResp
 import com.sigmoid98.business.service.SmsCodeService
@@ -19,7 +18,7 @@ class WebSmsCodeController(
 
     @PostMapping("/send-for-register")
     fun sendForRegister(@Valid @RequestBody req: SmsCodeRegisterReq): CommonResp<Unit> {
-        smsCodeService.sendCode(req.mobile, SmsCodeUseEnum.REGISTER.code)
+        smsCodeService.sendCodeForRegister(req.mobile)
         return CommonResp()
     }
 }
