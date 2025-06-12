@@ -26,7 +26,7 @@ const registerMember = ref({
 const register = async (values: Object) => {
   console.info('开始注册: %o', values)
   if (registerMember.value.passwordOri !== registerMember.value.passwordConfirm) {
-    message.error("密码和确认密码不一致!");
+    message.error("密码和确认密码不一致!")
     return;
   }
   registerMember.value.password = registerMember.value.passwordOri
@@ -39,18 +39,18 @@ const register = async (values: Object) => {
 
   const data = response.data
   if (data.success) {
-    message.success("注册成功！");
-    await router.push("/login");
+    message.success("注册成功！")
+    await router.push("/login")
   } else {
-    message.error(data.message);
+    message.error(data.message)
   }
 }
 
 // <editor-fold desc="短信验证码">
 const sendBtnLoading = ref(false)
 const sendText = ref("获取验证码")
-const COUNTDOWN = 5;
-let countdown = ref(COUNTDOWN);
+const COUNTDOWN = 5
+let countdown = ref(COUNTDOWN)
 const setTime = () => {
   if (countdown.value === 0) {
     sendBtnLoading.value = false;
@@ -65,31 +65,31 @@ const setTime = () => {
   setTimeout(function () {
     setTime();
   }, 1000);
-};
-const sendRegisterSmsCode = () => {
+}
+const sendRegisterSmsCode = async () => {
   console.log('发送短信验证码:');
   sendBtnLoading.value = true;
-  service.post("/nls/web/sms-code/send-for-register", {
+  const response = await service.post("/nls/web/sms-code/send-for-register", {
     mobile: registerMember.value.mobile,
     imageCode: registerMember.value.imageCode,
     imageCodeToken: imageCodeToken.value,
-  }).then(response => {
-    let data = response.data;
-    if (data.success) {
-      setTime();
-      message.success("短信发送成功！");
-    } else {
-      sendBtnLoading.value = false;
-      message.error(data.message);
-    }
   })
-};
+
+  let data = response.data
+  if (data.success) {
+    setTime()
+    message.success("短信发送成功！")
+  } else {
+    sendBtnLoading.value = false
+    message.error(data.message)
+  }
+}
 // </editor-fold>
 
 
 // <editor-fold desc="图形验证码">
-const imageCodeToken = ref();
-const imageCodeSrc = ref();
+const imageCodeToken = ref()
+const imageCodeSrc = ref()
 /**
  * 加载图形验证码
  */
