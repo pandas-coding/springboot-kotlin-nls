@@ -1,6 +1,7 @@
 package com.sigmoid98.business.controller.web
 
 import cn.hutool.crypto.digest.DigestUtil
+import com.sigmoid98.business.enums.SmsCodeUseEnum
 import com.sigmoid98.business.req.MemberRegisterReq
 import com.sigmoid98.business.resp.CommonResp
 import com.sigmoid98.business.service.MemberService
@@ -26,10 +27,19 @@ class WebMemberController(
 
     @PostMapping("/register")
     fun register(@Valid @RequestBody req: MemberRegisterReq): CommonResp<Any> {
-
+        // 加密用户密码
         val desensitizedReq = req.copy(
-            password = DigestUtil.md5Hex(req.password)
+            password = DigestUtil.md5Hex(req.password.lowercase())
         )
+
+        logger.info { "会员注册开始: ${req.mobile}" }
+
+        smsCodeService.validCode(
+            mobile = desensitizedReq.mobile,
+            use = SmsCodeUseEnum.REGISTER.code,
+            code = desensitizedReq.code,
+        )
+        logger.info { "会员注册验证码校验通过: ${req.mobile}" }
 
         memberService.register(desensitizedReq)
 

@@ -1,4 +1,4 @@
-#用户注册
+# 用户注册
 POST http://localhost:18000/nls/web/member/register
 Content-Type: application/json
 
@@ -6,6 +6,42 @@ Content-Type: application/json
   "mobile": "12345678903",
   "password": "1123",
   "code": "654654"
+}
+
+###
+
+# 手机号已注册
+POST http://localhost:18000/nls/web/member/register
+Content-Type: application/json
+
+{
+  "mobile": "12345678903",
+  "password": "3211",
+  "code": "456456"
+}
+
+###
+
+# 手机号注册校验通过
+POST http://localhost:18000/nls/web/member/register
+Content-Type: application/json
+
+{
+  "mobile": "12345678904",
+  "password": "3211",
+  "code": "456456"
+}
+
+###
+
+# 发送生成的验证码
+POST http://localhost:18000/nls/web/member/register
+Content-Type: application/json
+
+{
+  "mobile": "12345678906",
+  "password": "3211",
+  "code": "035920"
 }
 
 ###

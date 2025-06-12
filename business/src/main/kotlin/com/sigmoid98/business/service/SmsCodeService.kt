@@ -33,7 +33,7 @@ class SmsCodeService(
      */
     fun sendCodeForRegister(mobile: String) {
         val member = memberService.selectByMobile(mobile)
-        if (member == null) {
+        if (member != null) {
             throw BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_HAD_REGISTER)
         }
 
@@ -74,5 +74,42 @@ class SmsCodeService(
 
         // 对接短信通道, 发送短信
         smsUtil.sendCode(mobile, code)
+    }
+
+    /**
+     * 验证码校验:
+     * 5分钟内、同手机号、同用途、未使用过的验证码才算有效
+     * 只校验最后一次验证码
+     */
+    fun validCode(mobile: String, use: String, code: String) {
+
+        val fiveMinutesAgo = DateUtil.offsetMinute(Date(), -5)
+
+        val latestSmsCodeInFiveMinutes =
+            KtQueryChainWrapper(smsCodeMapper, SmsCode())
+                .eq(SmsCode::mobile, mobile)
+                .eq(SmsCode::use, use)
+                .eq(SmsCode::status, SmsCodeStatusEnum.NOT_USED.code)
+                .gt(SmsCode::createdAt, fiveMinutesAgo)
+                .orderByDesc(SmsCode::createdAt)
+                .list()
+                .firstOrNull()
+                ?: run {
+                    logger.warn { "验证码已过期或不存在, 手机号: ${mobile}, 输入验证码: ${code}, 用途: $use" }
+                    throw BusinessException(BusinessExceptionEnum.SMS_CODE_EXPIRED)
+                }
+
+        if (latestSmsCodeInFiveMinutes.code != code) {
+            logger.warn { "验证码不正确, 手机号: ${mobile}, 输入验证码: ${code}, 用途: $use" }
+            throw BusinessException(BusinessExceptionEnum.SMS_CODE_ERROR)
+        }
+
+        // update sms-code status
+        latestSmsCodeInFiveMinutes.apply {
+            status = SmsCodeStatusEnum.USED.code
+            updatedAt = Date()
+        }.let {
+            smsCodeMapper.updateById(latestSmsCodeInFiveMinutes)
+        }
     }
 }
