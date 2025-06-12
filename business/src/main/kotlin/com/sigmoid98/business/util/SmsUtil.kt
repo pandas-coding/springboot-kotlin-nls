@@ -73,6 +73,7 @@ class SmsUtil(
 
             // 假设 resp, resp.body, resp.body.code 不会是 null，如果API调用成功到这一步
             // 否则需要进行空安全检查，例如 resp?.body?.code
+            // "isv.SMS_TEST_NUMBER_LIMIT"表示阿里云SMS报错: "只能向已回复授权信息的手机号发送", 将这种情况视作正常情况
             if (resp.body.code != "OK" && resp.body.code != "isv.SMS_TEST_NUMBER_LIMIT") {
                 throw BusinessException(BusinessExceptionEnum.SMS_CODE_SEND_ERROR)
             }
