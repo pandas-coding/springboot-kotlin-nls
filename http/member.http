@@ -1,0 +1,11 @@
+#用户注册
+POST http://localhost:18000/nls/web/member/register
+Content-Type: application/json
+
+{
+  "mobile": "12345678903",
+  "password": "1123",
+  "code": "654654"
+}
+
+###
