@@ -50,7 +50,7 @@ const register = async (values: Object) => {
 const sendBtnLoading = ref(false)
 const sendText = ref("获取验证码")
 const COUNTDOWN = 5
-let countdown = ref(COUNTDOWN)
+const countdown = ref(COUNTDOWN)
 const setTime = () => {
   if (countdown.value === 0) {
     sendBtnLoading.value = false;
@@ -75,7 +75,7 @@ const sendRegisterSmsCode = async () => {
     imageCodeToken: imageCodeToken.value,
   })
 
-  let data = response.data
+  const data = response.data
   if (data.success) {
     setTime()
     message.success("短信发送成功！")
