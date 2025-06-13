@@ -4,8 +4,6 @@ import com.google.code.kaptcha.impl.DefaultKaptcha
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.Resource
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.data.redis.core.StringRedisTemplate
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
