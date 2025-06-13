@@ -32,7 +32,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    // implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("com.alibaba:fastjson:2.0.57")
     implementation("cn.hutool:hutool-all")
     /*implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter")*/
@@ -40,7 +40,7 @@ dependencies {
     implementation("com.baomidou:mybatis-plus-spring-boot3-starter:3.5.12")
     implementation("mysql:mysql-connector-java:8.0.28")
     implementation("com.aliyun:alibabacloud-dysmsapi20170525")
-    // implementation("com.github.penggle:kaptcha")
+    implementation("com.github.penggle:kaptcha")
     // implementation("com.aliyun:aliyun-java-sdk-core")
     // implementation("com.aliyun.oss:aliyun-sdk-oss")
     // implementation("com.aliyun:aliyun-java-sdk-vod")
