@@ -1,5 +1,6 @@
 package com.sigmoid98.business.service
 
+import cn.hutool.core.bean.BeanUtil
 import cn.hutool.core.util.IdUtil
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryChainWrapper
 import com.sigmoid98.business.domain.Member
@@ -9,6 +10,7 @@ import com.sigmoid98.business.mapper.MemberMapper
 import com.sigmoid98.business.req.MemberLoginReq
 import com.sigmoid98.business.req.MemberRegisterReq
 import com.sigmoid98.business.resp.MemberLoginResp
+import com.sigmoid98.business.util.JwtUtil
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.Resource
 import org.springframework.stereotype.Service
@@ -17,6 +19,7 @@ import java.util.Date
 @Service
 class MemberService(
     @Resource private val memberMapper: MemberMapper,
+    @Resource private val jwtUtil: JwtUtil,
 ) {
 
     companion object {
@@ -79,6 +82,12 @@ class MemberService(
             token = "",
         )
 
-        return loginResp
+        val map = BeanUtil.beanToMap(loginResp)
+        val token = jwtUtil.createLoginToken(map)
+        val loginRespWithToken = loginResp.copy(
+            token = token,
+        )
+
+        return loginRespWithToken
     }
 }
