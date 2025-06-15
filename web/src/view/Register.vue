@@ -11,6 +11,8 @@ import {
   MobileOutlined,
   SafetyOutlined
 } from "@ant-design/icons-vue"
+import { uuid } from "@/utils/tool.ts";
+import { hashPassword } from "@/utils/password.ts";
 
 const router = useRouter()
 
@@ -34,7 +36,7 @@ const register = async (values: Object) => {
   const response = await service.post('/nls/web/member/register', {
     mobile: registerMember.value.mobile,
     code: registerMember.value.code,
-    // password: hexMd5Key(registerMember.value.password),
+    password: hashPassword(registerMember.value.password),
   })
 
   const data = response.data
@@ -94,11 +96,11 @@ const imageCodeSrc = ref()
  * 加载图形验证码
  */
 const loadImageCode = () => {
-  // registerMember.value.imageCode = "";
-  // imageCodeToken.value = Tool.uuid(8);
-  // imageCodeSrc.value = import.meta.env.VITE_SERVER + '/nls/web/kaptcha/image-code/' + imageCodeToken.value;
-};
-loadImageCode();
+  registerMember.value.imageCode = ""
+  imageCodeToken.value = uuid(8)
+  imageCodeSrc.value = import.meta.env.VITE_SERVER + '/nls/web/kaptcha/image-code/' + imageCodeToken.value
+}
+loadImageCode()
 // </editor-fold>
 
 
