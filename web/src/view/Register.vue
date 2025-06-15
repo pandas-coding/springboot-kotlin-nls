@@ -12,6 +12,7 @@ import {
   SafetyOutlined
 } from "@ant-design/icons-vue"
 import { uuid } from "@/utils/tool.ts";
+import { hashPassword } from "@/utils/password.ts";
 
 const router = useRouter()
 
@@ -35,7 +36,7 @@ const register = async (values: Object) => {
   const response = await service.post('/nls/web/member/register', {
     mobile: registerMember.value.mobile,
     code: registerMember.value.code,
-    // password: hexMd5Key(registerMember.value.password),
+    password: hashPassword(registerMember.value.password),
   })
 
   const data = response.data
