@@ -1,8 +1,6 @@
 package com.sigmoid98.business.exception
 
-enum class BusinessExceptionEnum(
-    val desc: String,
-) {
+enum class BusinessExceptionEnum(val desc: String, ) {
     DEMO_MOBILE_NOT_NULL("手机号不能为空！！!"),
 
     SMS_CODE_TOO_FREQUENT("短信请求过于频繁"),
@@ -14,6 +12,8 @@ enum class BusinessExceptionEnum(
     MEMBER_MOBILE_NOT_REGISTER("手机号未注册"),
     MEMBER_LOGIN_ERROR("手机号未注册或密码错误"),
 
+    USER_LOGIN_ERROR("登录名未注册或密码错误"),
 
+    IMAGE_CODE_ERROR("图片验证码不正确或已过期"),
 
 }

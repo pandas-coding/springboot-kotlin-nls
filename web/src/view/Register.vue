@@ -11,6 +11,7 @@ import {
   MobileOutlined,
   SafetyOutlined
 } from "@ant-design/icons-vue"
+import { uuid } from "@/utils/tool.ts";
 
 const router = useRouter()
 
@@ -94,11 +95,11 @@ const imageCodeSrc = ref()
  * 加载图形验证码
  */
 const loadImageCode = () => {
-  // registerMember.value.imageCode = "";
-  // imageCodeToken.value = Tool.uuid(8);
-  // imageCodeSrc.value = import.meta.env.VITE_SERVER + '/nls/web/kaptcha/image-code/' + imageCodeToken.value;
-};
-loadImageCode();
+  registerMember.value.imageCode = ""
+  imageCodeToken.value = uuid(8)
+  imageCodeSrc.value = import.meta.env.VITE_SERVER + '/nls/web/kaptcha/image-code/' + imageCodeToken.value
+}
+loadImageCode()
 // </editor-fold>
 
 
