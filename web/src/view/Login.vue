@@ -6,9 +6,12 @@ import { message } from "ant-design-vue";
 import { LockOutlined, MobileOutlined, SafetyOutlined } from "@ant-design/icons-vue";
 import { hashPassword } from "@/utils/password.ts";
 import { uuid } from "@/utils/tool.ts";
+import { useMemberStore } from "@/stores/member-store.ts";
 
 
 const router = useRouter()
+
+const { setMember } = useMemberStore()
 
 const loginMember = ref({
   mobile: '',
@@ -24,13 +27,16 @@ const login = async (values: {}) => {
     imageCode: loginMember.value.imageCode,
     imageCodeToken: imageCodeToken.value,
   })
+
   const data = response.data
-  if (data.success) {
-    message.success('登录成功!')
-    await router.push('/home/welcome')
-  } else {
+  if (!data.success) {
     message.error(data.message)
+    return
   }
+
+  message.success('登录成功!')
+  setMember(data.content)
+  await router.push('/home/welcome')
 }
 
 // ----------- 图形验证码 --------------------

@@ -40,12 +40,12 @@ const register = async (values: Object) => {
   })
 
   const data = response.data
-  if (data.success) {
-    message.success("注册成功！")
-    await router.push("/login")
-  } else {
+  if (!data.success) {
     message.error(data.message)
+    return
   }
+  message.success("注册成功！")
+  await router.push("/login")
 }
 
 // <editor-fold desc="短信验证码">
