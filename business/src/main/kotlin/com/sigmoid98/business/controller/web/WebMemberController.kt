@@ -52,7 +52,7 @@ class WebMemberController(
     }
 
     @PostMapping("/login")
-    fun login(req: MemberLoginReq): CommonResp<MemberLoginResp> {
+    fun login(@Valid @RequestBody req: MemberLoginReq): CommonResp<MemberLoginResp> {
         val desensitizedReq = req.copy(
             password = DigestUtil.md5Hex(req.password.lowercase()),
         )

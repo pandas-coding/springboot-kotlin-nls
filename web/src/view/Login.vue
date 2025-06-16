@@ -4,6 +4,8 @@ import { ref } from "vue";
 import service from "@/utils/request.ts";
 import { message } from "ant-design-vue";
 import { LockOutlined, MobileOutlined, SafetyOutlined } from "@ant-design/icons-vue";
+import { hashPassword } from "@/utils/password.ts";
+import { uuid } from "@/utils/tool.ts";
 
 
 const router = useRouter()
@@ -18,9 +20,9 @@ const login = async (values: {}) => {
   console.info('开始登录: %o', values)
   const response = await service.post('/nls/web/member/login', {
     mobile: loginMember.value.mobile,
-    // password: hexMd5Key(loginMember.value.password),
-    // imageCode: loginMember.value.imageCode,
-    // imageCodeToken: imageCodeToken.value,
+    password: hashPassword(loginMember.value.password),
+    imageCode: loginMember.value.imageCode,
+    imageCodeToken: imageCodeToken.value,
   })
   const data = response.data
   if (data.success) {
@@ -30,6 +32,19 @@ const login = async (values: {}) => {
     message.error(data.message)
   }
 }
+
+// ----------- 图形验证码 --------------------
+const imageCodeToken = ref()
+const imageCodeSrc = ref()
+/**
+ * 加载图形验证码
+ */
+const loadImageCode = () => {
+  loginMember.value.imageCode = ""
+  imageCodeToken.value = uuid(8)
+  imageCodeSrc.value = `${import.meta.env.VITE_SERVER}/nls/web/kaptcha/image-code/${imageCodeToken.value}`
+}
+loadImageCode()
 
 </script>
 
@@ -46,6 +61,7 @@ const login = async (values: {}) => {
             :wrapper-col="{ span: 24 }"
             @finish="login"
         >
+          <!-- 手机号 -->
           <a-form-item
               name="mobile" class="form-item"
               :rules="[{ required: true, message: '请输入手机号' }]"
@@ -57,6 +73,7 @@ const login = async (values: {}) => {
             </a-input>
           </a-form-item>
 
+          <!-- 密码框 -->
           <a-form-item
               name="password" class="form-item"
               :rules="[{ required: true, message: '请输入密码' }]"
@@ -68,6 +85,7 @@ const login = async (values: {}) => {
             </a-input-password>
           </a-form-item>
 
+          <!-- 图片验证码 -->
           <a-form-item name="imageCode" class="form-item"
                        :rules="[{ required: true, message: '请输入图片验证码', trigger: 'blur' }]">
             <a-input v-model:value="loginMember.imageCode" placeholder="图片验证码">
@@ -75,11 +93,12 @@ const login = async (values: {}) => {
                 <SafetyOutlined style="margin-left: 15px"/>
               </template>
               <template #suffix>
-                <!--<img v-show="!!imageCodeSrc" :src="imageCodeSrc" alt="验证码" v-on:click="loadImageCode()"/>-->
+                <img v-show="!!imageCodeSrc" :src="imageCodeSrc" alt="验证码" v-on:click="loadImageCode()"/>
               </template>
             </a-input>
           </a-form-item>
 
+          <!-- 登录按钮 -->
           <a-form-item class="form-item">
             <a-button type="primary" block html-type="submit" class="login-btn" size="large">
               登&nbsp;录
