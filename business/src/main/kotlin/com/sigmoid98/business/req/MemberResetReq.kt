@@ -7,9 +7,9 @@ import jakarta.validation.constraints.NotBlank
  */
 data class MemberResetReq(
     @field:NotBlank(message = "[手机号] 不能为空")
-    val mobile: String,
+    val mobile: String = "",
     @field:NotBlank(message = "[密码] 不能为空")
-    val password: String,
+    val password: String = "",
     @field:NotBlank(message = "[验证码] 不能为空")
-    val code: String,
+    val code: String = "",
 )

@@ -67,7 +67,7 @@ class WebMemberController(
     }
 
     @PostMapping("/reset")
-    fun reset(req: MemberResetReq): CommonResp<Unit> {
+    fun reset(@Valid @RequestBody req: MemberResetReq): CommonResp<Unit> {
         val desensitizedReq = req.copy(
             password = DigestUtil.md5Hex(req.password.lowercase()),
         )
