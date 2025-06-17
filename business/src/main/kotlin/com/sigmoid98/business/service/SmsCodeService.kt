@@ -33,11 +33,19 @@ class SmsCodeService(
      */
     fun sendCodeForRegister(mobile: String) {
         val member = memberService.selectByMobile(mobile)
-        if (member != null) {
-            throw BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_HAD_REGISTER)
-        }
+            ?: throw BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_HAD_REGISTER)
 
         sendCode(mobile, SmsCodeUseEnum.REGISTER.code)
+    }
+
+    /**
+     * 重置密码发送验证码
+     */
+    fun sendCodeForReset(mobile: String) {
+        val member = memberService.selectByMobile(mobile)
+            ?: throw BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_NOT_REGISTER)
+
+        sendCode(mobile, SmsCodeUseEnum.RESET.code)
     }
 
     /**
