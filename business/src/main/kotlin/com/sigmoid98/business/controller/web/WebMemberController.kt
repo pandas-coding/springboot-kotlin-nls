@@ -4,6 +4,7 @@ import cn.hutool.crypto.digest.DigestUtil
 import com.sigmoid98.business.enums.SmsCodeUseEnum
 import com.sigmoid98.business.req.MemberLoginReq
 import com.sigmoid98.business.req.MemberRegisterReq
+import com.sigmoid98.business.req.MemberResetReq
 import com.sigmoid98.business.resp.CommonResp
 import com.sigmoid98.business.resp.MemberLoginResp
 import com.sigmoid98.business.service.KaptchaService
@@ -63,6 +64,20 @@ class WebMemberController(
 
         val memberLoginResp = memberService.login(desensitizedReq)
         return CommonResp(memberLoginResp)
+    }
+
+    @PostMapping("/reset")
+    fun reset(@Valid @RequestBody req: MemberResetReq): CommonResp<Unit> {
+        val desensitizedReq = req.copy(
+            password = DigestUtil.md5Hex(req.password.lowercase()),
+        )
+
+        logger.info { "会员忘记密码重置开始: ${req.mobile}" }
+        smsCodeService.validCode(req.mobile, SmsCodeUseEnum.RESET.code, req.code)
+        logger.info { "忘记密码验证码校验通过: ${req.mobile}" }
+
+        memberService.reset(desensitizedReq)
+        return CommonResp()
     }
 
 }

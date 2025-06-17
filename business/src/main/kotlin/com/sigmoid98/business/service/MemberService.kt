@@ -9,6 +9,7 @@ import com.sigmoid98.business.exception.BusinessExceptionEnum
 import com.sigmoid98.business.mapper.MemberMapper
 import com.sigmoid98.business.req.MemberLoginReq
 import com.sigmoid98.business.req.MemberRegisterReq
+import com.sigmoid98.business.req.MemberResetReq
 import com.sigmoid98.business.resp.MemberLoginResp
 import com.sigmoid98.business.util.JwtUtil
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -89,5 +90,22 @@ class MemberService(
         )
 
         return loginRespWithToken
+    }
+
+    /**
+     * 重置密码
+     */
+    fun reset(req: MemberResetReq) {
+        val resetMobile = req.mobile
+        val savedMember = selectByMobile(resetMobile)
+            ?: throw BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_NOT_REGISTER)
+
+        val now = Date()
+        val resetMember = Member().apply {
+            id = savedMember.id
+            password = req.password
+            updatedAt = now
+        }
+        memberMapper.updateById(resetMember)
     }
 }

@@ -12,6 +12,8 @@ import {
   MobileOutlined,
   SafetyOutlined
 } from "@ant-design/icons-vue";
+import { uuid } from "@/utils/tool.ts";
+import { hashPassword } from "@/utils/password.ts";
 
 const router = useRouter();
 
@@ -33,7 +35,7 @@ const reset = async (values: Object) => {
   const response = await service.post("/nls/web/member/reset", {
     mobile: resetMember.value.mobile,
     code: resetMember.value.code,
-    // password: hexMd5Key(resetMember.value.password),
+    password: hashPassword(resetMember.value.password),
   })
 
   const data = response.data
@@ -65,23 +67,24 @@ const setTime = () => {
     setTime();
   }, 1000);
 }
-const sendResetSmsCode = () => {
+const sendResetSmsCode = async () => {
   console.log('发送短信验证码:');
   sendBtnLoading.value = true;
-  service.post("/nls/web/sms-code/send-for-reset", {
+  const response = await service.post("/nls/web/sms-code/send-for-reset", {
     mobile: resetMember.value.mobile,
     imageCode: resetMember.value.imageCode,
     imageCodeToken: imageCodeToken.value,
-  }).then(response => {
-    let data = response.data;
-    if (data.success) {
-      setTime();
-      message.success("短信发送成功！");
-    } else {
-      sendBtnLoading.value = false;
-      message.error(data.message);
-    }
   })
+
+  const data = response.data;
+  if (!data.success) {
+    sendBtnLoading.value = false
+    message.error(data.message)
+    return
+  }
+
+  setTime()
+  message.success("短信发送成功！")
 }
 // </editor-fold>-->
 
@@ -93,7 +96,7 @@ const imageCodeSrc = ref()
  */
 const loadImageCode = () => {
   resetMember.value.imageCode = ""
-  // imageCodeToken.value = Tool.uuid(8)
+  imageCodeToken.value = uuid(8)
   imageCodeSrc.value = import.meta.env.VITE_SERVER + '/nls/web/kaptcha/image-code/' + imageCodeToken.value
 }
 loadImageCode()
@@ -103,7 +106,7 @@ loadImageCode()
 <template>
   <div class="reset">
     <a-row>
-      <a-col :span="6" :offset="9">
+      <a-col :span="6" :offset="9" class="main">
 
         <div class="title">
           重置密码
