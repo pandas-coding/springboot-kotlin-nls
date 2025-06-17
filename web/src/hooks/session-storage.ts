@@ -1,5 +1,7 @@
-
-export function useSessionStorage () {
+/**
+ * sessionStorage handler.
+ */
+export function useSessionStorage() {
 
   const getSessionItem = (key: string) => {
     const v = sessionStorage.getItem(key)
