@@ -1,0 +1,9 @@
+POST http://localhost:18000/nls/web/vod/get-upload-auth
+Content-Type: application/json
+
+{
+  "name": "test-0621.mp4",
+  "key": "2025062101"
+}
+
+###

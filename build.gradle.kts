@@ -57,6 +57,7 @@ subprojects {
                 exclude(mapOf("group" to "javax.servlet", "name" to "javax.servlet-api"))
             }
 
+            // 阿里云vod
             dependency("com.aliyun:aliyun-java-sdk-core:4.5.1")
             dependency("com.aliyun.oss:aliyun-sdk-oss:3.10.2")
             dependency("com.aliyun:aliyun-java-sdk-vod:2.16.11")
