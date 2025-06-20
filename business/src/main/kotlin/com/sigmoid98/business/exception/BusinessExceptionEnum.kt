@@ -16,6 +16,7 @@ enum class BusinessExceptionEnum(val desc: String, ) {
 
     IMAGE_CODE_ERROR("图片验证码不正确或已过期"),
 
+    UPLOAD_VIDEO_ERROR("上传视频失败"),
     GEN_SUBTITLE_ERROR("生成字幕文件失败"),
 
     ALIPAY_ERROR("调用支付宝接口失败"),

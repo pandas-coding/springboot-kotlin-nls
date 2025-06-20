@@ -26,6 +26,7 @@ class VodUtil(
     @Value("\${vod.accessKeyId}") private val accessKeyId: String,
     @Value("\${vod.accessKeySecret}") private val accessKeySecret: String,
     @Value("\${filetrans.audio.price:0.2}") private val filetransAudioPrice: BigDecimal,
+    @Value("\${vod.acsRegionId}") private val vodAcsRegionId: String,
 ) {
 
     companion object {
@@ -38,8 +39,7 @@ class VodUtil(
      */
     fun initVodClient(): DefaultAcsClient {
         // 点播服务接入区域，国内请填cn-shanghai，其他区域请参考文档[点播中心](~~98194~~)
-        val regionId = "cn-shanghai"
-        val profile = DefaultProfile.getProfile(regionId, accessKeyId, accessKeySecret)
+        val profile = DefaultProfile.getProfile("cn-shanghai", accessKeyId, accessKeySecret)
         val client = DefaultAcsClient(profile)
         return client
     }
