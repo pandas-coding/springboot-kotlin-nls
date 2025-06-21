@@ -1,59 +1,59 @@
 <script setup lang="ts">
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from "@ant-design/icons-vue";
-import { ref } from "vue";
+import { CoffeeOutlined, QuestionCircleOutlined, VideoCameraOutlined } from "@ant-design/icons-vue";
+import { ref, watch } from "vue";
+import { useRouter } from "vue-router";
 
-const selectedKeys2 = ref<string[]>(['1']);
-const openKeys = ref<string[]>(['sub1']);
+const router = useRouter();
+const selectedKeys = ref(['/home/welcome']);
+
+watch(() => router.currentRoute.value.path, (newValue, oldValue) => {
+  console.info('watch route changed: ', newValue, oldValue)
+  selectedKeys.value = []
+  selectedKeys.value.push(newValue)
+}, { immediate: true })
+
 </script>
 
 <template>
   <a-layout-sider width="200" style="background: #fff">
     <a-menu
-        v-model:selectedKeys="selectedKeys2"
-        v-model:openKeys="openKeys"
+        v-model:selectedKeys="selectedKeys"
         mode="inline"
         :style="{ height: '100%', borderRight: 0 }"
     >
-      <a-sub-menu key="sub1">
-        <template #title>
-              <span>
-                <user-outlined/>
-                subnav 1
-              </span>
-        </template>
-        <a-menu-item key="1">option1</a-menu-item>
-        <a-menu-item key="2">option2</a-menu-item>
-        <a-menu-item key="3">option3</a-menu-item>
-        <a-menu-item key="4">option4</a-menu-item>
-      </a-sub-menu>
-      <a-sub-menu key="sub2">
-        <template #title>
-              <span>
-                <laptop-outlined/>
-                subnav 2
-              </span>
-        </template>
-        <a-menu-item key="5">option5</a-menu-item>
-        <a-menu-item key="6">option6</a-menu-item>
-        <a-menu-item key="7">option7</a-menu-item>
-        <a-menu-item key="8">option8</a-menu-item>
-      </a-sub-menu>
-      <a-sub-menu key="sub3">
-        <template #title>
-              <span>
-                <notification-outlined/>
-                subnav 3
-              </span>
-        </template>
-        <a-menu-item key="9">option9</a-menu-item>
-        <a-menu-item key="10">option10</a-menu-item>
-        <a-menu-item key="11">option11</a-menu-item>
-        <a-menu-item key="12">option12</a-menu-item>
-      </a-sub-menu>
+      <a-menu-item key="/home/welcome">
+        <router-link to="/home/welcome">
+          <CoffeeOutlined/>
+          <span>欢迎使用</span>
+        </router-link>
+      </a-menu-item>
+      <a-menu-item key="/home/file-transfer">
+        <router-link to="/home/file-transfer">
+          <VideoCameraOutlined/>
+          <span>语音识别</span>
+        </router-link>
+      </a-menu-item>
+      <a-menu-item key="/home/help">
+        <router-link to="/home/help">
+          <QuestionCircleOutlined/>
+          <span>帮助文档</span>
+        </router-link>
+      </a-menu-item>
     </a-menu>
   </a-layout-sider>
 </template>
 
 <style scoped>
+.logo {
+  float: left;
+  width: 120px;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  background: rgba(255, 255, 255, 0.3);
+}
 
+.ant-row-rtl .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
+}
 </style>
