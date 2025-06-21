@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { useRouter } from "vue-router";
-import { useMemberStore } from "@/stores/member-store.ts";
 import { CoffeeOutlined, QuestionCircleOutlined, VideoCameraOutlined, } from '@ant-design/icons-vue'
+import { useMemberStore } from "@/stores/member-store.ts";
+import { storeToRefs } from "pinia";
 
 const router = useRouter()
-const { member } = useMemberStore()
+const memberStore = useMemberStore()
+const { member } = storeToRefs(memberStore)
 
 const selectedKeys = ref(['/home/welcome'])
 
@@ -41,8 +43,8 @@ watch(() => router.currentRoute.value.path, (newValue: any, oldValue: any) => {
         </router-link>
       </a-menu-item>
 
-      <a-menu-item key="/home/filetrans">
-        <router-link to="/home/filetrans">
+      <a-menu-item key="/home/file-transfer">
+        <router-link to="/home/file-transfer">
           <VideoCameraOutlined/>
           <span>语音识别</span>
         </router-link>
