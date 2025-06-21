@@ -1,8 +1,17 @@
 <script setup lang="ts">
+import { useTemplateRef } from 'vue'
+import FileTransferUpload from "@/view/home/FileTransferUpload.vue";
 
+const fileTransferUploadModalRef = useTemplateRef('file-transfer-upload-modal')
+
+
+const showModal = () => {
+  fileTransferUploadModalRef.value.showModal()
+}
 </script>
 
 <template>
+  <file-transfer-upload ref="file-transfer-upload-modal"></file-transfer-upload>
 
   <a-alert :message="null" type="info">
     <template #description>
