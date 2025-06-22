@@ -2,11 +2,11 @@
 import { useTemplateRef } from 'vue'
 import FileTransferUpload from "@/view/home/FileTransferUpload.vue";
 
-const fileTransferUploadModalRef = useTemplateRef('file-transfer-upload-modal')
+const fileTransferUploadModalRef = useTemplateRef<InstanceType<typeof FileTransferUpload>>('file-transfer-upload-modal')
 
 
 const showModal = () => {
-  fileTransferUploadModalRef.value.showModal()
+  fileTransferUploadModalRef.value?.showModal()
 }
 </script>
 
@@ -22,7 +22,10 @@ const showModal = () => {
   <br/>
   <p>
     <a-space>
-      <a-button type="primary">开始上传音频</a-button>
+      <a-button
+          type="primary"
+          @click="showModal"
+      >开始上传音频</a-button>
       <a-button type="default">刷新列表</a-button>
     </a-space>
   </p>
