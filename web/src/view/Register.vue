@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { useRouter } from "vue-router";
-import { message } from "ant-design-vue";
-import service from "@/utils/request.ts";
-import { ref } from "vue";
+import { useRouter } from 'vue-router'
+import { message } from 'ant-design-vue'
+import { service } from '@/service'
+import { ref } from 'vue'
 import {
   ArrowLeftOutlined,
   CheckCircleOutlined,
   LockOutlined,
   MessageOutlined,
   MobileOutlined,
-  SafetyOutlined
-} from "@ant-design/icons-vue"
-import { uuid } from "@/utils/tool.ts";
-import { hashPassword } from "@/utils/password.ts";
+  SafetyOutlined,
+} from '@ant-design/icons-vue'
+import { uuid } from '@/utils/tool.ts'
+import { hashPassword } from '@/utils/password.ts'
 
 const router = useRouter()
 
@@ -22,14 +22,14 @@ const registerMember = ref({
   code: '',
   password: '',
   passwordOri: '',
-  passwordConfirm: ''
+  passwordConfirm: '',
 })
 
 const register = async (values: Object) => {
   console.info('开始注册: %o', values)
   if (registerMember.value.passwordOri !== registerMember.value.passwordConfirm) {
-    message.error("密码和确认密码不一致!")
-    return;
+    message.error('密码和确认密码不一致!')
+    return
   }
   registerMember.value.password = registerMember.value.passwordOri
 
@@ -44,34 +44,34 @@ const register = async (values: Object) => {
     message.error(data.message)
     return
   }
-  message.success("注册成功！")
-  await router.push("/login")
+  message.success('注册成功！')
+  await router.push('/login')
 }
 
 // <editor-fold desc="短信验证码">
 const sendBtnLoading = ref(false)
-const sendText = ref("获取验证码")
+const sendText = ref('获取验证码')
 const COUNTDOWN = 5
 const countdown = ref(COUNTDOWN)
 const setTime = () => {
   if (countdown.value === 0) {
-    sendBtnLoading.value = false;
-    sendText.value = "获取验证码";
-    countdown.value = COUNTDOWN;
-    return;
+    sendBtnLoading.value = false
+    sendText.value = '获取验证码'
+    countdown.value = COUNTDOWN
+    return
   } else {
-    sendBtnLoading.value = true;
-    sendText.value = "重新发送(" + countdown.value + ")";
-    countdown.value--;
+    sendBtnLoading.value = true
+    sendText.value = '重新发送(' + countdown.value + ')'
+    countdown.value--
   }
   setTimeout(function () {
-    setTime();
-  }, 1000);
+    setTime()
+  }, 1000)
 }
 const sendRegisterSmsCode = async () => {
-  console.log('发送短信验证码:');
-  sendBtnLoading.value = true;
-  const response = await service.post("/nls/web/sms-code/send-for-register", {
+  console.log('发送短信验证码:')
+  sendBtnLoading.value = true
+  const response = await service.post('/nls/web/sms-code/send-for-register', {
     mobile: registerMember.value.mobile,
     imageCode: registerMember.value.imageCode,
     imageCodeToken: imageCodeToken.value,
@@ -80,7 +80,7 @@ const sendRegisterSmsCode = async () => {
   const data = response.data
   if (data.success) {
     setTime()
-    message.success("短信发送成功！")
+    message.success('短信发送成功！')
   } else {
     sendBtnLoading.value = false
     message.error(data.message)
@@ -96,7 +96,7 @@ const imageCodeSrc = ref()
  * 加载图形验证码
  */
 const loadImageCode = () => {
-  registerMember.value.imageCode = ""
+  registerMember.value.imageCode = ''
   imageCodeToken.value = uuid(8)
   imageCodeSrc.value = import.meta.env.VITE_SERVER + '/nls/web/kaptcha/image-code/' + imageCodeToken.value
 }
