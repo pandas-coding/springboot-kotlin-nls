@@ -1,10 +1,10 @@
 package com.sigmoid98.business.controller.web
 
-import com.alibaba.fastjson.JSONObject
 import com.sigmoid98.business.exception.BusinessException
 import com.sigmoid98.business.exception.BusinessExceptionEnum
 import com.sigmoid98.business.req.GetUploadAuthReq
 import com.sigmoid98.business.resp.CommonResp
+import com.sigmoid98.business.resp.GetRepeatFileUploadAuthResp
 import com.sigmoid98.business.resp.GetUploadAuthResp
 import com.sigmoid98.business.util.VodUtil
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -37,19 +37,19 @@ class WebVodController(
             val vid = media.mediaId
             val getMezzanineInfoResp = vodUtil.getMezzanineInfo(vid)
             val fileUrl = getMezzanineInfoResp.mezzanine.fileURL
-            val respFileUrl = fileUrl.split("\\?").first()
-            val respJsonObject = JSONObject().apply {
-                put("fileUrl", respFileUrl)
-                put("videoId", vid)
-            }
-            logger.info { "重复文件 fileUrl: ${respFileUrl}, videoId: $vid" }
-            return CommonResp(content = respJsonObject)
+            val repeatFileUrl = fileUrl.split("\\?").first()
+
+            logger.info { "重复文件 fileUrl: ${repeatFileUrl}, videoId: $vid" }
+            val repeatFileUploadAuthResp = GetRepeatFileUploadAuthResp(
+                fileUrl = repeatFileUrl,
+                videoId = vid,
+            )
+            return CommonResp(content = repeatFileUploadAuthResp)
         }
 
         val client = runCatching {
             vodUtil.initVodClient()
-        }.getOrElse {
-            exception ->
+        }.getOrElse { exception ->
             logger.error(exception) { "获取vod Client失败" }
             throw BusinessException(BusinessExceptionEnum.UPLOAD_VIDEO_ERROR)
         }
@@ -61,19 +61,19 @@ class WebVodController(
                 uploadAddress = videoResponse.uploadAddress,
                 videoId = videoResponse.videoId,
             )
-        }
-            .onSuccess { resp ->
-                logger.info { """
+        }.onSuccess { resp ->
+            logger.info {
+                """
                     上传文件成功:
                     授权码 = ${resp.uploadAuth}
                     地址 = ${resp.uploadAddress}
                     videoId = ${resp.videoId}
                 """.trimIndent()
-                }
-            }.getOrElse { ex ->
-                logger.error(ex) { "获取上传凭证错误" }
-                throw BusinessException(BusinessExceptionEnum.UPLOAD_VIDEO_ERROR)
             }
+        }.getOrElse { ex ->
+            logger.error(ex) { "获取上传凭证错误" }
+            throw BusinessException(BusinessExceptionEnum.UPLOAD_VIDEO_ERROR)
+        }
         logger.info { "获取上传凭证结束" }
         return CommonResp(content = authResp)
     }

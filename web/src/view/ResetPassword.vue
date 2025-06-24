@@ -1,21 +1,20 @@
 <script setup lang="ts">
-
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-import { message } from "ant-design-vue";
-import service from "@/utils/request.ts";
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+import { message } from 'ant-design-vue'
+import { service } from '@/service'
 import {
   ArrowLeftOutlined,
   CheckCircleOutlined,
   LockOutlined,
   MessageOutlined,
   MobileOutlined,
-  SafetyOutlined
-} from "@ant-design/icons-vue";
-import { uuid } from "@/utils/tool.ts";
-import { hashPassword } from "@/utils/password.ts";
+  SafetyOutlined,
+} from '@ant-design/icons-vue'
+import { uuid } from '@/utils/tool.ts'
+import { hashPassword } from '@/utils/password.ts'
 
-const router = useRouter();
+const router = useRouter()
 
 const resetMember = ref({
   mobile: '',
@@ -23,16 +22,16 @@ const resetMember = ref({
   code: '',
   password: '',
   passwordOri: '',
-  passwordConfirm: ''
-});
+  passwordConfirm: '',
+})
 const reset = async (values: Object) => {
-  console.log('开始重置密码:', values);
+  console.log('开始重置密码:', values)
   if (resetMember.value.passwordOri !== resetMember.value.passwordConfirm) {
-    message.error("密码和确认密码不一致!")
+    message.error('密码和确认密码不一致!')
     return
   }
   resetMember.value.password = resetMember.value.passwordOri
-  const response = await service.post("/nls/web/member/reset", {
+  const response = await service.post('/nls/web/member/reset', {
     mobile: resetMember.value.mobile,
     code: resetMember.value.code,
     password: hashPassword(resetMember.value.password),
@@ -40,8 +39,8 @@ const reset = async (values: Object) => {
 
   const data = response.data
   if (data.success) {
-    message.success("重置密码成功！")
-    await router.push("/login")
+    message.success('重置密码成功！')
+    await router.push('/login')
   } else {
     message.error(data.message)
   }
@@ -49,34 +48,34 @@ const reset = async (values: Object) => {
 
 // <editor-fold desc="短信验证码">-->
 const sendBtnLoading = ref(false)
-const sendText = ref("获取验证码")
+const sendText = ref('获取验证码')
 const COUNTDOWN = 5
 let countdown = ref(COUNTDOWN)
 const setTime = () => {
   if (countdown.value === 0) {
-    sendBtnLoading.value = false;
-    sendText.value = "获取验证码";
-    countdown.value = COUNTDOWN;
-    return;
+    sendBtnLoading.value = false
+    sendText.value = '获取验证码'
+    countdown.value = COUNTDOWN
+    return
   } else {
-    sendBtnLoading.value = true;
-    sendText.value = "重新发送(" + countdown.value + ")";
-    countdown.value--;
+    sendBtnLoading.value = true
+    sendText.value = '重新发送(' + countdown.value + ')'
+    countdown.value--
   }
   setTimeout(function () {
-    setTime();
-  }, 1000);
+    setTime()
+  }, 1000)
 }
 const sendResetSmsCode = async () => {
-  console.log('发送短信验证码:');
-  sendBtnLoading.value = true;
-  const response = await service.post("/nls/web/sms-code/send-for-reset", {
+  console.log('发送短信验证码:')
+  sendBtnLoading.value = true
+  const response = await service.post('/nls/web/sms-code/send-for-reset', {
     mobile: resetMember.value.mobile,
     imageCode: resetMember.value.imageCode,
     imageCodeToken: imageCodeToken.value,
   })
 
-  const data = response.data;
+  const data = response.data
   if (!data.success) {
     sendBtnLoading.value = false
     message.error(data.message)
@@ -84,7 +83,7 @@ const sendResetSmsCode = async () => {
   }
 
   setTime()
-  message.success("短信发送成功！")
+  message.success('短信发送成功！')
 }
 // </editor-fold>-->
 
@@ -95,7 +94,7 @@ const imageCodeSrc = ref()
  * 加载图形验证码
  */
 const loadImageCode = () => {
-  resetMember.value.imageCode = ""
+  resetMember.value.imageCode = ''
   imageCodeToken.value = uuid(8)
   imageCodeSrc.value = import.meta.env.VITE_SERVER + '/nls/web/kaptcha/image-code/' + imageCodeToken.value
 }

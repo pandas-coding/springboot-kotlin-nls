@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-import service from "@/utils/request.ts";
-import { message } from "ant-design-vue";
-import { LockOutlined, MobileOutlined, SafetyOutlined } from "@ant-design/icons-vue";
-import { hashPassword } from "@/utils/password.ts";
-import { uuid } from "@/utils/tool.ts";
-import { useMemberStore } from "@/stores/member-store.ts";
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+import { service } from '@/service/index.ts'
+import { message } from 'ant-design-vue'
+import { LockOutlined, MobileOutlined, SafetyOutlined } from '@ant-design/icons-vue'
+import { hashPassword } from '@/utils/password.ts'
+import { uuid } from '@/utils/tool.ts'
+import { useMemberStore } from '@/stores/member-store.ts'
 
 
 const router = useRouter()
@@ -46,7 +46,7 @@ const imageCodeSrc = ref()
  * 加载图形验证码
  */
 const loadImageCode = () => {
-  loginMember.value.imageCode = ""
+  loginMember.value.imageCode = ''
   imageCodeToken.value = uuid(8)
   imageCodeSrc.value = `${import.meta.env.VITE_SERVER}/nls/web/kaptcha/image-code/${imageCodeToken.value}`
 }

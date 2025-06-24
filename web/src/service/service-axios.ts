@@ -1,5 +1,6 @@
-import axios from 'axios'
-import router from "@/router";
+import axios, {type AxiosResponse} from 'axios'
+import type {CommonRespData} from '@/service/service-types.ts'
+import router from '@/router'
 
 const service = axios.create({
   baseURL: import.meta.env.VITE_SERVER,
@@ -17,7 +18,7 @@ service.interceptors.request.use(
 )
 
 service.interceptors.response.use(
-  (response) => {
+  <V, D = any>(response: AxiosResponse<CommonRespData<V>, D>) => {
     console.info('返回结果: %o', response)
     return response
   },

@@ -15,3 +15,9 @@ interface ImportMeta {
   readonly env: ImportMetaEnv
 }
 //</editor-fold>
+
+declare global {
+  interface AliyunUpload {
+
+  }
+}
