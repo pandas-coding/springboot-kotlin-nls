@@ -15,7 +15,7 @@ fun main() {
     val dbUsername = "root"
     val dbPassword = "123456"
 
-    val generateTables = arrayOf("demo", "sms_code", "member")
+    val generateTables = arrayOf("demo", "sms_code", "member", "file_transfer")
 
     // 2. 全局配置
     val projectPath = "${System.getProperty("user.dir")}/business" // 获取项目根路径
@@ -32,7 +32,7 @@ fun main() {
                 .author("mybatis-plus code generator") // 作者
                 .outputDir(outputDir)         // Kotlin 类输出目录
                 .enableKotlin()               // 开启 Kotlin 模式！！!
-                .dateType(DateType.ONLY_DATE) // 使用 只使用 java.util.date 包下的日期类型
+                .dateType(DateType.TIME_PACK) // 使用 只使用 java.util.date 包下的日期类型
                 .commentDate("yyyy-MM-dd HH:mm:ss") // 注释日期格式
                 .disableOpenDir() // 生成后不打开输出目录 (可选)
         }

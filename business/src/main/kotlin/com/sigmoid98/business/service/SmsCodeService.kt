@@ -14,6 +14,7 @@ import com.sigmoid98.business.util.SmsUtil
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.Resource
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 import java.util.*
 
 @Service
@@ -53,7 +54,7 @@ class SmsCodeService(
      * 校验：如果1分钟内有同手机号同用途发送记录，则报错：短信请求过于频繁
      */
     fun sendCode(mobile: String, use: String) {
-        val now = Date()
+        val now = LocalDateTime.now()
         val code = RandomUtil.randomNumbers(6)
 
         logger.info { "当前时间：${Date()}" }
@@ -115,7 +116,7 @@ class SmsCodeService(
         // update sms-code status
         latestSmsCodeInFiveMinutes.apply {
             status = SmsCodeStatusEnum.USED.code
-            updatedAt = Date()
+            updatedAt = LocalDateTime.now()
         }.let {
             smsCodeMapper.updateById(latestSmsCodeInFiveMinutes)
         }

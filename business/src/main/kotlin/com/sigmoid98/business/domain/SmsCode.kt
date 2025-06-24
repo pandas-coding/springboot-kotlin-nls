@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField
 import com.baomidou.mybatisplus.annotation.TableId
 import com.baomidou.mybatisplus.annotation.TableName
 import java.io.Serializable
-import java.util.*
+import java.time.LocalDateTime
 
 /**
  * <p>
@@ -12,7 +12,7 @@ import java.util.*
  * </p>
  *
  * @author mybatis-plus code generator
- * @since 2025-06-12 00:02:30
+ * @since 2025-06-24 23:52:41
  */
 @TableName("sms_code")
 class SmsCode : Serializable {
@@ -51,13 +51,13 @@ class SmsCode : Serializable {
      * 创建时间
      */
     @TableField("`created_at`")
-    var createdAt: Date? = null
+    var createdAt: LocalDateTime? = null
 
     /**
      * 修改时间
      */
     @TableField("`updated_at`")
-    var updatedAt: Date? = null
+    var updatedAt: LocalDateTime? = null
 
     override fun toString(): String {
         return "SmsCode{" +
