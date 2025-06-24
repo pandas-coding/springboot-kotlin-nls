@@ -5,6 +5,18 @@ import {notification} from 'ant-design-vue'
 
 import {base64MD5String} from '@/utils/password.ts'
 import restService from '@/service'
+import { useAliyunUpload } from '@/hooks/aliyun-upload.ts'
+
+const {
+  uploader,
+  setUploadAuth,
+  setOnUploadSucceed,
+  setOnUploadProgress,
+  setOnUploadEnd,
+} = useAliyunUpload()
+setOnUploadSucceed((fileUrl) => fileTransfer.audio = fileUrl)
+setOnUploadProgress(loadedPercent => fileTransfer.percent = loadedPercent * 100)
+setOnUploadEnd(() => fileUploadInputRef.value!!.value = '')
 
 const open = ref(false)
 const fileTransfer = reactive({
@@ -65,7 +77,6 @@ const uploadFile = async () => {
     key,
   })
 
-  const data = respData.data
   if (!respData.success) {
     notification.error({
       message: '系统提示',
@@ -86,6 +97,10 @@ const uploadFile = async () => {
   uploadAuth = content.uploadAuth
   uploadAddress = content.uploadAddress
   videoId = content.videoId
+
+  setUploadAuth(content.uploadAuth, content.uploadAddress, content.videoId)
+  uploader.addFile(file, null, null, null, null)
+  uploader.startUpload()
 }
 
 let uploadAuth: string
