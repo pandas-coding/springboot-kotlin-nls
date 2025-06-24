@@ -6,6 +6,7 @@ import {notification} from 'ant-design-vue'
 import {base64MD5String} from '@/utils/password.ts'
 import restService from '@/service'
 import { useAliyunUpload } from '@/hooks/aliyun-upload.ts'
+import type { FileTransferInfo } from '@/view/home/types/file-transfer-upload-types.ts'
 
 const {
   uploader,
@@ -18,8 +19,7 @@ setOnUploadSucceed((fileUrl) => fileTransfer.audio = fileUrl)
 setOnUploadProgress(loadedPercent => fileTransfer.percent = loadedPercent * 100)
 setOnUploadEnd(() => fileUploadInputRef.value!!.value = '')
 
-const open = ref(false)
-const fileTransfer = reactive({
+const INIT_FILE_TRANSFER: FileTransferInfo = Object.freeze({
   name: '',
   percent: 0,
   amount: 0,
@@ -29,12 +29,21 @@ const fileTransfer = reactive({
   vod: '',
   channel: '',
 })
+
+const open = ref(false)
+const fileTransfer: FileTransferInfo = reactive({...INIT_FILE_TRANSFER})
 const FILE_TRANSFER_LANG_ARRAY = ref(window.FILE_TRANSFER_LANG_ARRAY)
 const fileUploadInputRef = useTemplateRef<InstanceType<typeof HTMLInputElement>>('file-upload-input')
 
 
 const showModal = () => {
+  resetFileTransfer()
   open.value = true
+}
+
+// 重置上传文件信息的变量
+const resetFileTransfer = () => {
+  Object.assign(fileTransfer, INIT_FILE_TRANSFER)
 }
 
 // 选中文件
