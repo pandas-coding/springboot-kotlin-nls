@@ -15,6 +15,7 @@ import com.sigmoid98.business.util.JwtUtil
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.Resource
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 import java.util.Date
 
 @Service
@@ -48,7 +49,7 @@ class MemberService(
             throw BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_HAD_REGISTER)
         }
 
-        val now = Date()
+        val now = LocalDateTime.now()
         val registerMember = Member().apply {
             id = IdUtil.getSnowflakeNextId()
             mobile = registerMobile
@@ -100,7 +101,7 @@ class MemberService(
         val savedMember = selectByMobile(resetMobile)
             ?: throw BusinessException(BusinessExceptionEnum.MEMBER_MOBILE_NOT_REGISTER)
 
-        val now = Date()
+        val now = LocalDateTime.now()
         val resetMember = Member().apply {
             id = savedMember.id
             password = req.password
