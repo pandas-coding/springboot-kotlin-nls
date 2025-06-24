@@ -25,7 +25,7 @@ import java.math.RoundingMode
 class VodUtil(
     @Value("\${vod.accessKeyId}") private val accessKeyId: String,
     @Value("\${vod.accessKeySecret}") private val accessKeySecret: String,
-    @Value("\${filetrans.audio.price:0.2}") private val filetransAudioPrice: BigDecimal,
+    @Value("\${fileTransfer.audio.price:0.2}") private val fileTransferAudioPrice: BigDecimal,
     @Value("\${vod.acsRegionId}") private val vodAcsRegionId: String,
 ) {
 
@@ -277,7 +277,7 @@ class VodUtil(
         JSONObject.parseObject(Base64.decodeBase64(uploadAuth), JSONObject::class.java)
 
     /**
-     * 计算音频转字幕金额
+     * 计算音频转字幕应收金额
      */
     fun calcAmount(videoId: String): BigDecimal {
         val videoInfo = runCatching {
@@ -288,13 +288,13 @@ class VodUtil(
         }
 
         val durationInSeconds = videoInfo.video.duration
-        logger.info { "视频: ${videoId}, 时长: ${durationInSeconds}, 单价: $filetransAudioPrice" }
+        logger.info { "视频: ${videoId}, 时长: ${durationInSeconds}, 单价: $fileTransferAudioPrice" }
         if (durationInSeconds <= 0f) {
             throw BusinessException(BusinessExceptionEnum.FILETRANS_CAL_AMOUNT_ERROR)
         }
 
         return BigDecimal(durationInSeconds.toString())
-            .multiply(filetransAudioPrice)
+            .multiply(fileTransferAudioPrice)
             .divide(60.toBigDecimal(), 2, RoundingMode.HALF_UP)
             .let { amount ->
                 if (amount.compareTo(BigDecimal.ZERO) == 0) {
