@@ -99,22 +99,32 @@ const uploadFile = async () => {
     fileTransfer.percent = 100
     fileTransfer.vod = content.videoId
     fileTransfer.audio = content.fileUrl
+
+    setTimeout(calcAmount, 500)
     return
   }
   console.info('获取上传文件凭证成功:', content)
   fileTransfer.vod = content.videoId
-  uploadAuth = content.uploadAuth
-  uploadAddress = content.uploadAddress
-  videoId = content.videoId
 
   setUploadAuth(content.uploadAuth, content.uploadAddress, content.videoId)
   uploader.addFile(file, null, null, null, null)
   uploader.startUpload()
+
+  setTimeout(calcAmount, 500)
 }
 
-let uploadAuth: string
-let uploadAddress: string
-let videoId: string
+// -------------- 计算收费金额 ---------------
+const calcAmount = async () => {
+  const respData = await restService.get(`/nls/web/vod/calc-amount/${fileTransfer.vod}`)
+  if (!respData.success) {
+    notification.error({
+      message: '系统提示',
+      description: '计算收费金额异常',
+    })
+    return
+  }
+  fileTransfer.amount = respData.content
+}
 
 defineExpose({
   showModal,
