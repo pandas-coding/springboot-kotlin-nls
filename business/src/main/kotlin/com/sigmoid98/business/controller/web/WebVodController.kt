@@ -82,7 +82,7 @@ class WebVodController(
     }
 
     /**
-     * 计算语言转字幕金额
+     * 计算语音转字幕金额
      */
     @GetMapping("/calc-amount/{videoId}")
     fun calcAmount(@PathVariable videoId: String): CommonResp<BigDecimal> {
