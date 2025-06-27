@@ -1,8 +1,8 @@
 package com.sigmoid98.business.enums
 
 enum class FileTransferPayStatusEnum(
-    private val code: String,
-    private val desc: String,
+    val code: String,
+    val desc: String,
 ) {
 
     I("I", "未支付"),

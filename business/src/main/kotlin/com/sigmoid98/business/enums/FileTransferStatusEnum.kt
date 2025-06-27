@@ -1,8 +1,8 @@
 package com.sigmoid98.business.enums
 
 enum class FileTransferStatusEnum(
-    private val code: String,
-    private val desc: String,
+    val code: String,
+    val desc: String,
 ) {
     INIT("I", "初始"),
     SUBTITLE_INIT("SI", "待生成字幕"),

@@ -7,6 +7,7 @@ import {base64MD5String} from '@/utils/password.ts'
 import restService from '@/service'
 import { useAliyunUpload } from '@/hooks/aliyun-upload.ts'
 import type { FileTransferInfo } from '@/view/home/types/file-transfer-upload-types.ts'
+import { FILE_TRANSFER_LANG_ARRAY } from "../../../public/js/enums.ts";
 
 const {
   uploader,
@@ -32,7 +33,7 @@ const INIT_FILE_TRANSFER: FileTransferInfo = Object.freeze({
 
 const open = ref(false)
 const fileTransfer: FileTransferInfo = reactive({...INIT_FILE_TRANSFER})
-const FILE_TRANSFER_LANG_ARRAY = ref(window.FILE_TRANSFER_LANG_ARRAY)
+// const FILE_TRANSFER_LANG_ARRAY = ref(FILE_TRANSFER_LANG_ARRAY)
 const fileUploadInputRef = useTemplateRef<InstanceType<typeof HTMLInputElement>>('file-upload-input')
 
 
