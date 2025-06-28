@@ -1,0 +1,14 @@
+POST http://localhost:18000/nls/web/file-transfer/pay
+Content-Type: application/json
+
+{
+  "memberId": 1934266420249407488,
+  "name": "1.mov",
+  "amount": 0.01,
+  "audio": "321",
+  "fileSign": "123456789",
+  "lang": "5jYCe7Ls9ziaMWNc",
+  "vod":"40147b7e510f71f0bfcf4531959c0102"
+}
+
+###
