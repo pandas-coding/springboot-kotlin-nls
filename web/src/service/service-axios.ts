@@ -1,6 +1,7 @@
 import axios, {type AxiosResponse} from 'axios'
 import type {CommonRespData} from '@/service/service-types.ts'
 import router from '@/router'
+import { useMemberStore } from '@/stores/member-store.ts'
 
 const service = axios.create({
   baseURL: import.meta.env.VITE_SERVER,
@@ -8,7 +9,16 @@ const service = axios.create({
 
 service.interceptors.request.use(
   (config) => {
+    debugger
     console.info('请求参数: %o', config)
+
+    const memberToken = useMemberStore().member?.token
+    // 如果登陆过, 才有token
+    if (memberToken) {
+      config.headers.token = memberToken
+      console.info('请求headers添加token: %o', memberToken)
+    }
+
     return config
   },
   (err) => {
