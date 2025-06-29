@@ -1,4 +1,4 @@
-package com.sigmoid98.business.config.graphics
+package com.sigmoid98.business.extensions
 
 import java.awt.Graphics2D
 

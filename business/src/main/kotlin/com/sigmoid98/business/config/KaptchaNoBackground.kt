@@ -2,7 +2,7 @@ package com.sigmoid98.business.config
 
 import com.google.code.kaptcha.BackgroundProducer
 import com.google.code.kaptcha.util.Configurable
-import com.sigmoid98.business.config.graphics.use
+import com.sigmoid98.business.extensions.use
 import java.awt.geom.Rectangle2D
 import java.awt.image.BufferedImage
 
