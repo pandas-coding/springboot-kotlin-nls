@@ -9,7 +9,6 @@ const service = axios.create({
 
 service.interceptors.request.use(
   (config) => {
-    debugger
     console.info('请求参数: %o', config)
 
     const memberToken = useMemberStore().member?.token

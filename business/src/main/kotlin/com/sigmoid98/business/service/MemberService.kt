@@ -11,17 +11,16 @@ import com.sigmoid98.business.req.MemberLoginReq
 import com.sigmoid98.business.req.MemberRegisterReq
 import com.sigmoid98.business.req.MemberResetReq
 import com.sigmoid98.business.resp.MemberLoginResp
-import com.sigmoid98.business.util.JwtUtil
+import com.sigmoid98.business.util.JwtProvider
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.Resource
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
-import java.util.Date
 
 @Service
 class MemberService(
     @Resource private val memberMapper: MemberMapper,
-    @Resource private val jwtUtil: JwtUtil,
+    @Resource private val jwtUtil: JwtProvider,
 ) {
 
     companion object {
