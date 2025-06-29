@@ -3,7 +3,7 @@ package com.sigmoid98.business.config
 import com.google.code.kaptcha.GimpyEngine
 import com.google.code.kaptcha.util.Configurable
 import com.jhlabs.image.RippleFilter
-import com.sigmoid98.business.config.graphics.use
+import com.sigmoid98.business.extensions.use
 import java.awt.image.BufferedImage
 import kotlin.random.Random
 
