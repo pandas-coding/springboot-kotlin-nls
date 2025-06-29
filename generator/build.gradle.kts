@@ -28,6 +28,12 @@ repositories {
 }
 
 dependencies {
+    // business包
+    implementation(project(":business"))
+    // kotlin反射API
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+
     // mybatis-plus
     implementation("com.baomidou:mybatis-plus-spring-boot3-starter:3.5.12")
     implementation("com.baomidou:mybatis-plus-generator:3.5.12")

@@ -1,8 +1,8 @@
 package com.sigmoid98.business.enums
 
 enum class FileTransferLangEnum(
-    private val code: String,
-    private val desc: String,
+    val code: String,
+    val desc: String,
 ) {
 
     LANG0("5jYCe7Ls9ziaMWNc", "普通话"),

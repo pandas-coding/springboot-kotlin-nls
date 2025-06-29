@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm")
     kotlin("plugin.spring")
+    kotlin("plugin.serialization") version "2.1.0"
     id("com.google.devtools.ksp")
 }
 
@@ -25,9 +26,17 @@ repositories {
     mavenCentral()
 }
 
+val jjwtVersion = "0.12.5"
+
 dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+    // kotlin serialization lib
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
+    // jjwt for JWT
+    implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:$jjwtVersion")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jjwtVersion") // For automatic JSON parsing
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-aop")

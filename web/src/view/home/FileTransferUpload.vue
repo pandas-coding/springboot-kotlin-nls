@@ -7,6 +7,8 @@ import {base64MD5String} from '@/utils/password.ts'
 import restService from '@/service'
 import { useAliyunUpload } from '@/hooks/aliyun-upload.ts'
 import type { FileTransferInfo } from '@/view/home/types/file-transfer-upload-types.ts'
+import { FILE_TRANSFER_LANG_ARRAY } from "../../../public/js/enums.ts";
+import { isEmpty } from 'radash'
 
 const {
   uploader,
@@ -32,7 +34,7 @@ const INIT_FILE_TRANSFER: FileTransferInfo = Object.freeze({
 
 const open = ref(false)
 const fileTransfer: FileTransferInfo = reactive({...INIT_FILE_TRANSFER})
-const FILE_TRANSFER_LANG_ARRAY = ref(window.FILE_TRANSFER_LANG_ARRAY)
+// const FILE_TRANSFER_LANG_ARRAY = ref(FILE_TRANSFER_LANG_ARRAY)
 const fileUploadInputRef = useTemplateRef<InstanceType<typeof HTMLInputElement>>('file-upload-input')
 
 
@@ -126,13 +128,61 @@ const calcAmount = async () => {
   fileTransfer.amount = respData.content
 }
 
+//<editor-fold desc="结算">
+const pay = async (_ev: Event) => {
+  console.info('开始结算: ', JSON.stringify(fileTransfer))
+  if (isEmpty(fileTransfer.audio)) {
+    notification.error({
+      message: '系统提示',
+      description: '请先上传音频文件',
+    })
+    return
+  }
+  if (isEmpty(fileTransfer.lang)) {
+    notification.error({
+      message: '系统提示',
+      description: '请选择 音频语言',
+    })
+    return
+  }
+  if (fileTransfer.amount <= 0) {
+    notification.error({
+      message: '系统提示',
+      description: '金额计算异常',
+    })
+    return
+  }
+
+  const respData = await restService.post('/nls/web/file-transfer/pay', {
+    ...fileTransfer,
+  })
+  if (!respData.success) {
+    notification.error({
+      message: '系统提示',
+      description: '下单失败',
+    })
+    return
+  }
+  notification.success({
+    message: '系统提示',
+    description: `下单成功, 订单号: ${respData.content?.orderNo}`,
+  })
+}
+//</editor-fold>
+
 defineExpose({
   showModal,
 })
 </script>
 
 <template>
-  <a-modal v-model:open="open" title="">
+  <a-modal
+    v-model:open="open"
+    title=""
+    ok-text="结算"
+    cancel-text="取消"
+    @ok="pay"
+  >
     <p>
       <a-space>
         <a-button type="primary" @click="selectFile">
