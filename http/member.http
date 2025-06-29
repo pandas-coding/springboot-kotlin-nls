@@ -58,3 +58,22 @@ Content-Type: application/json
 }
 
 ###
+
+# 测试登录, 并设置全局token
+POST http://localhost:18000/nls/web/member/login
+Content-Type: application/json
+
+{
+  "mobile": "12345678908",
+  "password": "$2b$10$ltWxALzJw.UM46trElkkKOnSrRtym0.VMSD8.mWWRdASZdJSQs4rm",
+  "imageCode": "pgfy",
+  "imageCodeToken": "123"
+}
+
+> {%
+    client.log(JSON.stringify(response.body));
+    client.log(JSON.stringify(response.body.content.token));
+    client.global.set("token", response.body.content.token);
+%}
+
+###

@@ -12,3 +12,20 @@ Content-Type: application/json
 }
 
 ###
+
+# 测试通过member.http中设置的全局token发起请求
+POST http://localhost:18000/nls/web/file-transfer/pay
+Content-Type: application/json
+token: {{token}}
+
+{
+  "memberId": 1934266420249407488,
+  "name": "1.mov",
+  "amount": 0.01,
+  "audio": "321",
+  "fileSign": "123456789",
+  "lang": "5jYCe7Ls9ziaMWNc",
+  "vod":"40147b7e510f71f0bfcf4531959c0102"
+}
+
+###

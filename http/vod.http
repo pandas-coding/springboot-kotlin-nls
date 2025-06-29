@@ -1,5 +1,6 @@
 POST http://localhost:18000/nls/web/vod/get-upload-auth
 Content-Type: application/json
+token: {{token}}
 
 {
   "name": "test-0621.mp4",
@@ -10,5 +11,6 @@ Content-Type: application/json
 
 GET http://localhost:18000/nls/web/vod/calc-amount/40147b7e510f71f0bfcf4531959c0102
 Accept: application/json
+token: {{token}}
 
 ###
