@@ -1,6 +1,7 @@
 package com.sigmoid98.business.service
 
 import cn.hutool.core.util.IdUtil
+import com.sigmoid98.business.context.LoginMemberContext
 import com.sigmoid98.business.domain.FileTransfer
 import com.sigmoid98.business.enums.FileTransferPayStatusEnum
 import com.sigmoid98.business.enums.FileTransferStatusEnum
@@ -17,6 +18,7 @@ import java.time.LocalDateTime
 class FileTransferService(
     @Resource private val fileTransferMapper: FileTransferMapper,
     @Resource private val vodUtil: VodUtil,
+    @Resource private val loginMemberContext: LoginMemberContext,
 ) {
 
     companion object {
@@ -34,7 +36,7 @@ class FileTransferService(
 
         val fileTransfer = FileTransfer().apply {
             id = IdUtil.getSnowflakeNextId()
-            memberId = req.memberId
+            memberId = loginMemberContext.id
             name = req.name
             second = seconds
             amount = req.amount
