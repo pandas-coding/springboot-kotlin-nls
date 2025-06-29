@@ -1,6 +1,5 @@
 package com.sigmoid98.business.interceptor
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.sigmoid98.business.context.LoginMemberContext
 import com.sigmoid98.business.converter.MemberConvertor
 import com.sigmoid98.business.extensions.convertToDataValue
@@ -21,7 +20,6 @@ class WebLoginInterceptor(
     @Resource private val jwtProvider: JwtProvider,
     @Resource private val loginMemberContext: LoginMemberContext,
     @Resource private val memberConvertor: MemberConvertor,
-    private val objectMapper: ObjectMapper,
 ) : HandlerInterceptor {
 
     companion object {

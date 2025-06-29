@@ -7,7 +7,6 @@ import com.sigmoid98.business.enums.FileTransferPayStatusEnum
 import com.sigmoid98.business.enums.FileTransferStatusEnum
 import com.sigmoid98.business.mapper.FileTransferMapper
 import com.sigmoid98.business.req.FileTransferPayReq
-import com.sigmoid98.business.resp.OrderInfoPayResp
 import com.sigmoid98.business.util.VodUtil
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.Resource
