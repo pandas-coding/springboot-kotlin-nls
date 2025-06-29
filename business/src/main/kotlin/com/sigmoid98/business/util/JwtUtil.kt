@@ -1,5 +1,10 @@
 package com.sigmoid98.business.util
 
+import cn.hutool.core.date.DateField
+import cn.hutool.core.date.DateTime
+import cn.hutool.crypto.GlobalBouncyCastleProvider
+import cn.hutool.jwt.JWTPayload
+import cn.hutool.jwt.JWTUtil
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.ExpiredJwtException
@@ -17,7 +22,7 @@ import javax.crypto.SecretKey
 import kotlin.time.Duration.Companion.minutes
 
 @Component
-class JwtProvider(
+class JwtUtil(
     @Value("\${jwt.secret}")
     val secret: String,
     @Value("\${jwt.expiration-ms}")
@@ -28,10 +33,42 @@ class JwtProvider(
         Keys.hmacShaKeyFor(secret.toByteArray(StandardCharsets.UTF_8))
     }
 
+    /**
+     * jwt salt key
+     */
+    private val jwtSaltKey = "springboot-nls"
+
     companion object {
         private val logger = KotlinLogging.logger {} // Logger for SmsCodeService
 
         val STANDARD_CLAIMS = setOf(Claims.ISSUED_AT, Claims.EXPIRATION, Claims.NOT_BEFORE)
+    }
+
+    /**
+     *
+     */
+    @Deprecated("deprecated for new jwt provider")
+    fun createLoginToken(map: Map<String, Any>): String {
+        logger.info { "准备生成登录token, 原始map: $map" }
+        return createToken(map, 24 * 60)
+    }
+
+    fun createToken(map: Map<String, Any>, expireMinutes: Int): String {
+        logger.info { "开始生成JWT token, map: $map" }
+
+        GlobalBouncyCastleProvider.setUseBouncyCastle(false)
+        val now = DateTime.now()
+        val expireTime = now.offsetNew(DateField.MINUTE, expireMinutes)
+        val payload = buildMap<String, Any> {
+            put(JWTPayload.ISSUED_AT, now)
+            put(JWTPayload.EXPIRES_AT, expireTime)
+            put(JWTPayload.NOT_BEFORE, now)
+            putAll(map)
+        }
+
+        return JWTUtil.createToken(payload, jwtSaltKey.toByteArray()).also { token ->
+            logger.info { "生成成功JWT token: $token" }
+        }
     }
 
     fun createLoginToken(vararg claims: Pair<String, Any>): String {

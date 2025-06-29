@@ -2,13 +2,14 @@ package com.sigmoid98.business.interceptor
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.sigmoid98.business.context.LoginMemberContext
-import com.sigmoid98.business.resp.MemberLoginResp
+import com.sigmoid98.business.converter.MemberConvertor
+import com.sigmoid98.business.extensions.convertToDataValue
 import com.sigmoid98.business.util.JwtProvider
+import com.sigmoid98.business.vo.MemberJwtPayloadVO
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.Resource
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView
 class WebLoginInterceptor(
     @Resource private val jwtProvider: JwtProvider,
     @Resource private val loginMemberContext: LoginMemberContext,
+    @Resource private val memberConvertor: MemberConvertor,
     private val objectMapper: ObjectMapper,
 ) : HandlerInterceptor {
 
@@ -54,18 +56,19 @@ class WebLoginInterceptor(
         // 2. 从有效的 token 中获取 payload
         // 使用 runCatching 优雅处理潜在的解析异常
         // JwtUtil.getPayload 返回 Map<String, Any>?
-        val payload = jwtProvider.getPayload(token) ?: run {
+        val jwtPayload = jwtProvider.getPayload(token) ?: run {
             // 理论上 validate() 通过后这里不应为 null，但作为安全兜底
             logger.error { "Token 校验通过但无法解析 Payload，请求被拦截. Token: $token" }
             response.status = HttpStatus.UNAUTHORIZED.value()
             return false
         }
 
-        logger.info { "当前登录会员信息 (来自JWT): $payload" }
-        return runCatching {
-            val member = objectMapper.convertValue(payload, MemberLoginResp::class.java)
+        logger.info { "当前登录会员信息 (来自JWT): $jwtPayload" }
 
-            val memberWithToken = member.copy(token = token)
+        return runCatching {
+            val payloadMemberVo = jwtPayload.convertToDataValue<MemberJwtPayloadVO>()
+
+            val memberWithToken = memberConvertor.voToDTO(vo = payloadMemberVo, token = token)
             loginMemberContext.member = memberWithToken
 
             true

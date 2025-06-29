@@ -1,6 +1,5 @@
 package com.sigmoid98.business.service
 
-import cn.hutool.core.bean.BeanUtil
 import cn.hutool.core.util.IdUtil
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryChainWrapper
 import com.sigmoid98.business.domain.Member
@@ -20,7 +19,7 @@ import java.time.LocalDateTime
 @Service
 class MemberService(
     @Resource private val memberMapper: MemberMapper,
-    @Resource private val jwtUtil: JwtProvider,
+    @Resource private val jwtProvider: JwtProvider,
 ) {
 
     companion object {
@@ -77,15 +76,22 @@ class MemberService(
         }
 
         logger.info { "登录成功, 登录手机号: $loginMobile" }
-        val loginResp = MemberLoginResp(
-            id = savedMember.id!!,
-            name = savedMember.name!!,
-            token = "",
-        )
+        // val loginResp = MemberLoginResp(
+        //     id = savedMember.id!!,
+        //     name = savedMember.name!!,
+        //     token = "",
+        // )
+        val savedMemberId = savedMember.id!!
+        val savedMemberName = savedMember.name!!
 
-        val map = BeanUtil.beanToMap(loginResp)
-        val token = jwtUtil.createLoginToken(map)
-        val loginRespWithToken = loginResp.copy(
+        // val map = BeanUtil.beanToMap(loginResp)
+        val token = jwtProvider.createLoginToken(
+            "id" to savedMemberId,
+            "name" to savedMemberName,
+        )
+        val loginRespWithToken = MemberLoginResp(
+            id = savedMemberId,
+            name = savedMemberName,
             token = token,
         )
 
