@@ -65,3 +65,29 @@ create table `file_transfer`
     primary key (`id`)
 ) engine = innodb
   default charset = utf8mb4 comment ='语音识别表';
+
+-- order_info 订单信息表
+-- 保存订单 I； 调用支付宝；回调接口更新成S；补偿查询
+drop table if exists `order_info`;
+create table `order_info`
+(
+    `id`         bigint        not null comment 'id',
+    `order_no`   char(20)      not null comment '订单号',
+    `order_at`   datetime(3)   not null comment '下单时间',
+    `order_type` char(1)       not null comment '订单类型|枚举[OrderInfoOrderTypeEnum]',
+    `info`       varchar(100)  not null comment '订单信息|根据订单类型，存放不同的信息',
+    `member_id`  bigint        not null comment '会员|id',
+    `amount`     decimal(6, 2) not null comment '订单金额(元)',
+    `pay_at`     datetime comment '支付时间|本地时间',
+    `channel`    char(1) comment '支付通道|枚举[OrderInfoChannelEnum]',
+    `channel_at` datetime comment '通道时间|支付通道返回的时间',
+    `status`     char(1) comment '交易状态|枚举[OrderInfoStatusEnum]',
+    `desc`       varchar(200) comment '订单描述',
+    `created_at` datetime(3)   not null comment '创建时间',
+    `updated_at` datetime(3)   not null comment '修改时间',
+    primary key (`id`),
+    unique key `order_no` (`order_no`)
+) engine = innodb
+  default charset = utf8 comment ='订单信息表';
+
+

@@ -15,7 +15,13 @@ fun main() {
     val dbUsername = "root"
     val dbPassword = "123456"
 
-    val generateTables = arrayOf("demo", "sms_code", "member", "file_transfer")
+    val generateTables = arrayOf(
+        "demo",
+        "sms_code",
+        "member",
+        "file_transfer",
+        "order_info",
+    )
 
     // 2. 全局配置
     val projectPath = "${System.getProperty("user.dir")}/business" // 获取项目根路径

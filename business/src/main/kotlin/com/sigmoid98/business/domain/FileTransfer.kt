@@ -13,7 +13,7 @@ import java.time.LocalDateTime
  * </p>
  *
  * @author mybatis-plus code generator
- * @since 2025-06-24 23:52:41
+ * @since 2025-06-30 00:38:00
  */
 @TableName("file_transfer")
 class FileTransfer : Serializable {
