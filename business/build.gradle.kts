@@ -55,8 +55,8 @@ dependencies {
     implementation("com.aliyun:aliyun-java-sdk-vod")
     implementation(files("src/main/resources/jar/aliyun-java-vod-upload-1.4.15.jar"))
 
-    // implementation("com.alipay.sdk:alipay-easysdk")
-    // implementation("com.alipay.sdk:alipay-sdk-java")
+    implementation("com.alipay.sdk:alipay-easysdk")
+    implementation("com.alipay.sdk:alipay-sdk-java")
     // implementation("com.github.pagehelper:pagehelper-spring-boot-starter")
     // implementation("com.alibaba.boot:nacos-config-spring-boot-starter")
     // runtimeOnly("org.springframework.boot:spring-boot-devtools")
