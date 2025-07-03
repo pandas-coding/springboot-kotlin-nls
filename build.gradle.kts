@@ -57,10 +57,11 @@ subprojects {
                 exclude(mapOf("group" to "javax.servlet", "name" to "javax.servlet-api"))
             }
 
-            // 阿里云vod
+            // 阿里云vod sdk
             dependency("com.aliyun:aliyun-java-sdk-core:4.5.1")
             dependency("com.aliyun.oss:aliyun-sdk-oss:3.10.2")
             dependency("com.aliyun:aliyun-java-sdk-vod:2.16.11")
+            // 支付宝-easy版sdk
             dependency("com.alipay.sdk:alipay-easysdk:2.2.3")
             dependency("com.alipay.sdk:alipay-sdk-java:4.38.149.ALL")
             dependency("com.github.pagehelper:pagehelper-spring-boot-starter:1.4.6")
