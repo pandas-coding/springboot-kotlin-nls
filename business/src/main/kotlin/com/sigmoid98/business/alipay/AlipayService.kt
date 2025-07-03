@@ -4,6 +4,7 @@ import com.alibaba.fastjson2.JSON
 import com.alipay.easysdk.factory.Factory
 import com.alipay.easysdk.kernel.Config
 import com.alipay.easysdk.kernel.util.ResponseChecker
+import com.alipay.easysdk.payment.common.models.AlipayTradeCloseResponse
 import com.alipay.easysdk.payment.common.models.AlipayTradeQueryResponse
 import jakarta.annotation.Resource
 import org.springframework.stereotype.Service
@@ -43,9 +44,32 @@ class AlipayService(
     }
 
     fun query(outTradeNo: String): AlipayTradeQueryResponse {
-
+        Factory.setOptions(getOptions())
+        return runCatching {
+            val response = Factory.Payment.Common().query(outTradeNo)
+            if (!ResponseChecker.success(response)) {
+                logger.warn { "调用支付宝订单查询接口失败, 原因: ${JSON.toJSONString(response)}" }
+            }
+            response
+        }.getOrElse { exception ->
+            logger.error(exception) { "调用支付宝订单查询接口异常" }
+            throw BusinessException(BusinessExceptionEnum.ALIPAY_ERROR)
+        }
     }
 
+    fun close(outTradeNo: String): AlipayTradeCloseResponse {
+        Factory.setOptions(getOptions())
+        return runCatching {
+            val response = Factory.Payment.Common().close(outTradeNo)
+            if (!ResponseChecker.success(response)) {
+                logger.warn { "调用支付宝关闭订单接口失败, 原因: ${JSON.toJSONString(response)}" }
+            }
+            response
+        }.getOrElse { exception ->
+            logger.error(exception) { "调用支付宝关闭订单接口异常, 原因:" }
+            throw BusinessException(BusinessExceptionEnum.ALIPAY_ERROR)
+        }
+    }
 
     fun getOptions() = Config().apply {
         protocol = "https"
