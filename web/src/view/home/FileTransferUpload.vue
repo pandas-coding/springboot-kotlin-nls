@@ -155,7 +155,10 @@ const pay = async (_ev: Event) => {
     return
   }
 
-  const respData = await restService.post('/nls/web/file-transfer/pay', {
+  const respData = await restService.post<{
+    channelResult: string,
+    orderNo: string,
+  }>('/nls/web/file-transfer/pay', {
     ...fileTransfer,
   })
   if (!respData.success) {
@@ -176,8 +179,8 @@ const pay = async (_ev: Event) => {
       const payInfo = {
         amount: fileTransfer.amount,
         desc: '语音识别结算',
-        qrcode: respData.content.channelResult,
-        orderNo: respData.content.orderNo,
+        qrcode: respData.content!.channelResult,
+        orderNo: respData.content!.orderNo,
       }
       alipayModelRef.value?.handleOpen(payInfo)
       break
