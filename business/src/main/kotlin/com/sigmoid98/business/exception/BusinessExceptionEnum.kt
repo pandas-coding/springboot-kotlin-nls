@@ -24,4 +24,5 @@ enum class BusinessExceptionEnum(val desc: String, ) {
 
     FILETRANS_TRANS_ERROR("录音文件识别请求失败"),
     FILETRANS_CAL_AMOUNT_ERROR("收费金额计算异常"),
+    FILETRANS_NOT_FOUNT("未找到录音文件信息"),
 }

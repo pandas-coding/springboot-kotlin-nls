@@ -25,7 +25,7 @@ class OrderInfoService(
     @Resource private val orderInfoMapper: OrderInfoMapper,
     @Resource private val loginMemberContext: LoginMemberContext,
     @Resource private val alipayService: AlipayService,
-    @Resource private val afterPayService: AfterPayService,
+    // @Resource private val afterPayService: ObjectProvider<AfterPayService>,
 ) {
 
     companion object {
@@ -100,8 +100,8 @@ class OrderInfoService(
         when (tradeStatus) {
             "TRADE_SUCCESS", "TRADE_FINISHED" -> {
                 val sendPayDate = alipayResponse.sendPayDate
-                val payDateTime = LocalDateTime.parse(sendPayDate, ORDER_NO_FORMATTER)
-                afterPayService.afterPaySuccess(orderNo, payDateTime)
+                // val payDateTime = LocalDateTime.parse(sendPayDate, ORDER_NO_FORMATTER)
+                // afterPayService.afterPaySuccess(orderNo, payDateTime)
                 return OrderInfoStatusEnum.S.code
             }
             else -> return orderInfo.status
