@@ -1,0 +1,6 @@
+# 查询订单状态
+GET localhost:18000/nls/web/order-info/query-order-status/20250706234826696653
+Accept: application/json
+token: {{token}}
+
+###
