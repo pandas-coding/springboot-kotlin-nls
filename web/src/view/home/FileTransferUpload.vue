@@ -9,6 +9,7 @@ import { useAliyunUpload } from '@/hooks/aliyun-upload.ts'
 import type { FileTransferInfo } from '@/view/home/types/file-transfer-upload-types.ts'
 import { FILE_TRANSFER_LANG_ARRAY } from "../../../public/js/enums.ts";
 import { isEmpty } from 'radash'
+import type AlipayModel from '@/components/payment/AlipayModel.vue'
 
 const {
   uploader,
@@ -36,6 +37,7 @@ const open = ref(false)
 const fileTransfer: FileTransferInfo = reactive({...INIT_FILE_TRANSFER})
 // const FILE_TRANSFER_LANG_ARRAY = ref(FILE_TRANSFER_LANG_ARRAY)
 const fileUploadInputRef = useTemplateRef<InstanceType<typeof HTMLInputElement>>('file-upload-input')
+const alipayModelRef = useTemplateRef<InstanceType<typeof AlipayModel>>('alipay-model')
 
 
 const showModal = () => {
@@ -167,6 +169,20 @@ const pay = async (_ev: Event) => {
     message: '系统提示',
     description: `下单成功, 订单号: ${respData.content?.orderNo}`,
   })
+
+  // 下单成功, 如果是支付宝渠道, 打开支付宝二维码弹框
+  switch (fileTransfer.channel) {
+    case 'A': {
+      const payInfo = {
+        amount: fileTransfer.amount,
+        desc: '语音识别结算',
+        qrcode: respData.content.channelResult,
+        orderNo: respData.content.orderNo,
+      }
+      alipayModelRef.value?.handleOpen(payInfo)
+      break
+    }
+  }
 }
 //</editor-fold>
 
@@ -218,6 +234,7 @@ defineExpose({
     </p>
   </a-modal>
 
+  <alipay-model ref="alipay-model"></alipay-model>
 </template>
 
 <style scoped>
