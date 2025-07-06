@@ -1,6 +1,7 @@
 package com.sigmoid98.business.service
 
 import cn.hutool.core.util.IdUtil
+import com.baomidou.mybatisplus.extension.kotlin.KtUpdateChainWrapper
 import com.sigmoid98.business.context.LoginMemberContext
 import com.sigmoid98.business.domain.FileTransfer
 import com.sigmoid98.business.enums.FileTransferPayStatusEnum
@@ -24,11 +25,8 @@ class FileTransferService(
     @Resource private val fileTransferMapper: FileTransferMapper,
     @Resource private val vodUtil: VodUtil,
     @Resource private val loginMemberContext: LoginMemberContext,
+    @Resource private val orderInfoService: OrderInfoService,
 ) {
-
-    @Autowired
-    private lateinit var orderInfoService: OrderInfoService
-
     companion object {
         private val logger = KotlinLogging.logger {} // Logger
     }
@@ -76,4 +74,24 @@ class FileTransferService(
         return orderInfoService.pay(orderInfoPayReq)
     }
 
+    fun afterPaySuccess(id: Long) {
+        val now = LocalDateTime.now()
+
+        // 更新语音识别支付和初始状态
+        val updateFileTransferSuccess = KtUpdateChainWrapper(fileTransferMapper, FileTransfer())
+            .set(FileTransfer::payStatus, FileTransferPayStatusEnum.S.code)
+            .set(FileTransfer::status, FileTransferStatusEnum.SUBTITLE_INIT.code)
+            .set(FileTransfer::updatedAt, now)
+            .eq(FileTransfer::id, id)
+            .update()
+        if (!updateFileTransferSuccess) {
+            logger.error { "更新语音识别支付和初始状态失败, 停止发起语音识别任务" }
+            return
+        }
+
+        logger.info { "发起语音识别任务" }
+        val savedFileTransfer = fileTransferMapper.selectById(id)
+            ?: throw BusinessException(BusinessExceptionEnum.FILETRANS_NOT_FOUNT)
+
+    }
 }
