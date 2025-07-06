@@ -232,6 +232,15 @@ defineExpose({
         <a-select-option v-for="op in FILE_TRANSFER_LANG_ARRAY" :value="op.code">{{ op.desc }}</a-select-option>
       </a-select>
     </p>
+    <!-- 支付方式 -->
+    <p>
+      支付方式：
+      <a-radio-group name="pay-channel-group" v-model:value="fileTransfer.channel">
+        <a-radio value="A">
+          <img src="@/assets/image/alipay.jpg" alt="支付宝" style="height: 30px;">
+        </a-radio>
+      </a-radio-group>
+    </p>
   </a-modal>
 
   <alipay-model ref="alipay-model"></alipay-model>
