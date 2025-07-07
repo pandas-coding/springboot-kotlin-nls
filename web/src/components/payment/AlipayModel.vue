@@ -34,7 +34,7 @@ const handleOpen = (info: PayInfo) => {
     const div = document.createElement('divform');
     div.innerHTML = info.qrcode; // 支付宝返回的form
     document.body.appendChild(div);
-    document.forms[0].setAttribute('target', 'zfb-qrcode');
+    document.forms[0].setAttribute('target', 'alipay-qrcode');
     document.forms[0].submit();
   }, 100)
 }
@@ -63,7 +63,7 @@ const queryPayInterval = ref()
 const queryPayResult = (queryOrderNo: string) => {
   orderNo.value = queryOrderNo
   queryPayInterval.value = setInterval(() => {
-    // queryOrder(queryOrderNo)
+    queryOrder(queryOrderNo)
   }, 2000)
 }
 
@@ -120,7 +120,7 @@ defineExpose({
         <img style="width: 35px" src="@/assets/image/alipay-icon.jpg" alt=""/>
         支付宝扫码支付
       </div>
-      <iframe></iframe>
+      <iframe name="alipay-qrcode" align="middle" class="alipay-qrcode-iframe"></iframe>
       <div style="font-size: 16px;">
         打开手机支付宝，扫码支付
         <span style="color: red">{{payInfo.amount}}</span>
@@ -143,6 +143,13 @@ defineExpose({
 .pay-info {
   text-align: center;
   margin-bottom: 20px;
+}
+
+.alipay-qrcode-iframe {
+  height: 240px;
+  border: none;
+  width: 200px;
+  text-align: center;
 }
 
 </style>

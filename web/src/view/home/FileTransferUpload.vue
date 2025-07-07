@@ -6,10 +6,12 @@ import {notification} from 'ant-design-vue'
 import {base64MD5String} from '@/utils/password.ts'
 import restService from '@/service'
 import { useAliyunUpload } from '@/hooks/aliyun-upload.ts'
-import type { FileTransferInfo } from '@/view/home/types/file-transfer-upload-types.ts'
+import type { FileTransferInfo, FileTransferUploadEmits } from '@/view/home/file-transfer-upload.ts'
 import { FILE_TRANSFER_LANG_ARRAY } from "../../../public/js/enums.ts";
 import { isEmpty } from 'radash'
 import type AlipayModel from '@/components/payment/AlipayModel.vue'
+
+const emit = defineEmits<FileTransferUploadEmits>()
 
 const {
   uploader,
@@ -189,6 +191,13 @@ const pay = async (_ev: Event) => {
 }
 //</editor-fold>
 
+// <editor-fold desc="扫码支付">
+const handleAfterPay = () => {
+  open.value = false
+  emit('after-pay')
+}
+// </editor-fold>
+
 defineExpose({
   showModal,
 })
@@ -246,7 +255,7 @@ defineExpose({
     </p>
   </a-modal>
 
-  <alipay-model ref="alipay-model"></alipay-model>
+  <alipay-model ref="alipay-model" @after-pay="handleAfterPay"></alipay-model>
 </template>
 
 <style scoped>
