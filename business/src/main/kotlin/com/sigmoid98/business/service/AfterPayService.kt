@@ -4,6 +4,7 @@ import com.sigmoid98.business.enums.OrderInfoOrderTypeEnum
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.Resource
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
@@ -16,6 +17,7 @@ class AfterPayService(
         private val logger = KotlinLogging.logger {  }
     }
 
+    @Transactional
     fun afterPaySuccess(orderNo: String, channelTime: LocalDateTime) {
         logger.info { "执行支付成功操作开始" }
 
@@ -41,8 +43,9 @@ class AfterPayService(
                 return
             }
             val fileTransferId = orderInfo.info!!.toLong()
-            fileTransferService
+            fileTransferService.afterPaySuccess(fileTransferId)
         }
 
+        logger.info { "执行支付成功操作结束" }
     }
 }
