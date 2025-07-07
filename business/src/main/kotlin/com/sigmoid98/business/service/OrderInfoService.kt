@@ -33,6 +33,9 @@ class OrderInfoService(
         private val ORDER_NO_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")
     }
 
+    /**
+     * 提交支付并调用支付宝下单接口
+     */
     fun pay(req: OrderInfoPayReq): OrderInfoPayResp {
         val newOrderNo = genOrderNo()
         val now = LocalDateTime.now()
@@ -99,7 +102,7 @@ class OrderInfoService(
 
         when (tradeStatus) {
             "TRADE_SUCCESS", "TRADE_FINISHED" -> {
-                val sendPayDate = alipayResponse.sendPayDate
+                // val sendPayDate = alipayResponse.sendPayDate
                 // val payDateTime = LocalDateTime.parse(sendPayDate, ORDER_NO_FORMATTER)
                 // afterPayService.afterPaySuccess(orderNo, payDateTime)
                 return OrderInfoStatusEnum.S.code

@@ -74,6 +74,9 @@ class FileTransferService(
         return orderInfoService.pay(orderInfoPayReq)
     }
 
+    /**
+     * 支付成功后处理
+     */
     fun afterPaySuccess(id: Long) {
         val now = LocalDateTime.now()
 
@@ -92,6 +95,7 @@ class FileTransferService(
         logger.info { "发起语音识别任务" }
         val savedFileTransfer = fileTransferMapper.selectById(id)
             ?: throw BusinessException(BusinessExceptionEnum.FILETRANS_NOT_FOUNT)
+
 
     }
 }

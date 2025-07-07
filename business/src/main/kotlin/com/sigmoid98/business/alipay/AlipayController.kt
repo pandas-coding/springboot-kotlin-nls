@@ -8,12 +8,14 @@ import jakarta.annotation.Resource
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.nio.charset.StandardCharsets
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @RestController
+@RequestMapping("/alipay")
 class AlipayController(
     @Value("\${env}") private val env: String,
     @Resource private val alipayProperties: AlipayProperties,
@@ -23,13 +25,14 @@ class AlipayController(
         private val logger = KotlinLogging.logger {}
     }
 
-    @PostMapping("/alipay/callback")
+    @PostMapping("/callback")
     fun alipayCallback(request: HttpServletRequest): String {
         val params = request.parameterMap.mapValues { (_, values) ->
             values.joinToString(",")
         }
         logger.info { "验签参数: $params" }
 
+        // 验签确保请求是alipay发起的, 并且参数没有被篡改过
         val isVerified = AlipaySignature.rsaCheckV1(
             params,
             alipayProperties.alipayPublicKey,
