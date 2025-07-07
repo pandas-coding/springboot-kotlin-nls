@@ -63,6 +63,7 @@ subprojects {
             dependency("com.aliyun:aliyun-java-sdk-vod:2.16.11")
             // 支付宝-easy版sdk
             dependency("com.alipay.sdk:alipay-easysdk:2.2.3")
+            // 支付宝-通用版sdk, 异步通知需要
             dependency("com.alipay.sdk:alipay-sdk-java:4.38.149.ALL")
             dependency("com.github.pagehelper:pagehelper-spring-boot-starter:1.4.6")
             dependency("com.alibaba.boot:nacos-config-spring-boot-starter:0.3.0-RC") // Be cautious with RC versions

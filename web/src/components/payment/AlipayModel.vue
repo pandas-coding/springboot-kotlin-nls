@@ -75,6 +75,10 @@ const queryOrder = async (queryOrderNo: string) => {
   }
   const payStatus = respData.content
   switch (payStatus) {
+    case 'I': {
+      console.info(`用户未支付, 支付状态: ${respData}`)
+      break
+    }
     case 'S': {
       clearInterval(queryPayInterval.value)
       notification.success({
