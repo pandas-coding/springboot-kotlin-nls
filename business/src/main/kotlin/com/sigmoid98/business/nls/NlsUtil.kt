@@ -76,6 +76,9 @@ class NlsUtil(
             }
     }
 
+    /**
+     * 查询识别任务状态
+     */
     fun query(taskId: String): CommonResponse {
         val client = runCatching { getClient() }
             .getOrElse { ex ->
