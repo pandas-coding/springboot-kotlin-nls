@@ -45,6 +45,9 @@ class NlsUtil(
             // put("appkey", appKey)
             // put("file_link", fileLink)
             // put("version", nlsFileTransferProperties.taskVersion)
+            put("file_link", fileLink)
+            put("appkey", appKey)
+            put("version", nlsFileTransferProperties.version)
             // 是否将大于16kHz采样率的音频进行自动降采样，默认为false，开启时需要设置version为“4.0”。
             put("enable_sample_rate_adaptive", true)
             // 允许单句话最大结束时间，秒 转 毫秒
