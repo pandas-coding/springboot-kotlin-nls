@@ -25,7 +25,6 @@ class OrderInfoService(
     @Resource private val orderInfoMapper: OrderInfoMapper,
     @Resource private val loginMemberContext: LoginMemberContext,
     @Resource private val alipayService: AlipayService,
-    // @Resource private val afterPayService: ObjectProvider<AfterPayService>,
 ) {
 
     companion object {
@@ -79,35 +78,24 @@ class OrderInfoService(
         "${LocalDateTime.now().format(ORDER_NO_FORMATTER)}${Random.nextInt(100, 1000)}"
 
     /**
-     * 查询订单状态
+     * 全链路查询alipay订单状态
      */
-    fun queryOrderStatus(orderNo: String): String? {
+    fun queryAlipayOrderStatus(orderNo: String): Pair<String, LocalDateTime?> {
         val orderInfo = selectByOrderNo(orderNo = orderNo)
-        if (orderInfo == null) {
-            return null
+            ?: throw Exception("orderNo异常: 没有对应的订单, orderNo: $orderNo")
+        if (orderInfo.status != OrderInfoStatusEnum.I.code || orderInfo.channel != OrderInfoChannelEnum.ALIPAY.code) {
+            throw Exception("订单号: $orderNo 状态异常")
         }
 
-        // 全链路查询
-        if (orderInfo.status != OrderInfoStatusEnum.I.code) {
-            return orderInfo.status
-        }
-        if (orderInfo.channel != OrderInfoChannelEnum.ALIPAY.code) {
-            return orderInfo.status
-        }
         val alipayResponse = alipayService.query(orderNo)
         val tradeStatus = alipayResponse.tradeStatus
-        if (tradeStatus != "TRADE_SUCCESS" && tradeStatus != "TRADE_FINISHED") {
-            return orderInfo.status
-        }
-
-        when (tradeStatus) {
+        return when (tradeStatus) {
             "TRADE_SUCCESS", "TRADE_FINISHED" -> {
-                // val sendPayDate = alipayResponse.sendPayDate
-                // val payDateTime = LocalDateTime.parse(sendPayDate, ORDER_NO_FORMATTER)
-                // afterPayService.afterPaySuccess(orderNo, payDateTime)
-                return OrderInfoStatusEnum.S.code
+                val sendPayDate = alipayResponse.sendPayDate
+                val payDateTime = LocalDateTime.parse(sendPayDate, ORDER_NO_FORMATTER)
+                Pair(OrderInfoStatusEnum.S.code, payDateTime)
             }
-            else -> return orderInfo.status
+            else -> Pair(OrderInfoStatusEnum.I.code, null)
         }
     }
 
