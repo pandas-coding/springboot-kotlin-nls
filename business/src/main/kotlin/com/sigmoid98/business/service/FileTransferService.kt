@@ -135,7 +135,10 @@ class FileTransferService(
                             logger.error { "更新fileTrans失败" }
                         }
                     }
-                    else -> logger.error { "录音文件识别请求失败: ${result.toJSONString()}" }
+                    else -> {
+                        logger.error { "录音文件识别请求失败: ${result.toJSONString()}" }
+                        throw BusinessException(BusinessExceptionEnum.FILETRANS_TRANS_ERROR)
+                    }
                 }
             }
             else -> logger.warn { "语音识别任务响应失败, 响应: $commonResponse" }
@@ -165,7 +168,6 @@ class FileTransferService(
                             it.set(FileTransfer::solveTime, solveTime)
                             it.set(FileTransfer::status, FileTransferStatusEnum.SUBTITLE_SUCCESS.code)
                         }
-
                         false -> {
                             it.set(FileTransfer::status, FileTransferStatusEnum.SUBTITLE_FAILURE.code)
                         }
