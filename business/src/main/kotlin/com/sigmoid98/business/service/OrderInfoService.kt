@@ -30,6 +30,7 @@ class OrderInfoService(
     companion object {
         private val logger = KotlinLogging.logger {  }
         private val ORDER_NO_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")
+        private val ALIPAY_ORDER_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
     }
 
     /**
@@ -92,7 +93,7 @@ class OrderInfoService(
         return when (tradeStatus) {
             "TRADE_SUCCESS", "TRADE_FINISHED" -> {
                 val sendPayDate = alipayResponse.sendPayDate
-                val payDateTime = LocalDateTime.parse(sendPayDate, ORDER_NO_FORMATTER)
+                val payDateTime = LocalDateTime.parse(sendPayDate, ALIPAY_ORDER_DATE_FORMATTER)
                 Pair(OrderInfoStatusEnum.S.code, payDateTime)
             }
             else -> Pair(OrderInfoStatusEnum.I.code, null)

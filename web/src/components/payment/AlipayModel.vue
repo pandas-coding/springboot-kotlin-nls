@@ -76,7 +76,7 @@ const queryOrder = async (queryOrderNo: string) => {
   const payStatus = respData.content
   switch (payStatus) {
     case 'I': {
-      console.info(`用户未支付, 支付状态: ${respData}`)
+      console.info(`用户未支付, 支付状态: %o`, respData)
       break
     }
     case 'S': {

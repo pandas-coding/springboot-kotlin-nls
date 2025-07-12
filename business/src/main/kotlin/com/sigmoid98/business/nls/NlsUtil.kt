@@ -35,6 +35,7 @@ class NlsUtil(
 
         // 设置请求参数
         val postRequest = CommonRequest().apply {
+            sysMethod = MethodType.POST
             sysDomain = nlsFileTransferProperties.domain
             sysVersion = nlsFileTransferProperties.version
             sysAction = "SubmitTask"
