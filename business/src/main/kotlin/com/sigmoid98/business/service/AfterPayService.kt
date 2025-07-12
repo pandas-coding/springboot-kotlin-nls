@@ -72,6 +72,7 @@ class AfterPayService(
             logger.error { "订单状态异常, 订单状态非初始状态, $orderNo, 操作结束" }
             return
         }
+        logger.info { "更新订单信息成功: orderNo: $orderNo, 更新订单状态为S" }
 
         if (orderInfo.orderType == OrderInfoOrderTypeEnum.FILE_TRANSFER_PAY.code) {
             logger.info { "语音识别单次付费, 更新语音识别表状态" }
