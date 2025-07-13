@@ -6,6 +6,7 @@ import com.aliyuncs.CommonResponse
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryChainWrapper
 import com.baomidou.mybatisplus.extension.kotlin.KtUpdateChainWrapper
 import com.sigmoid98.business.context.LoginMemberContext
+import com.sigmoid98.business.converter.FileTransferConverter
 import com.sigmoid98.business.domain.FileTransfer
 import com.sigmoid98.business.enums.FileTransferPayStatusEnum
 import com.sigmoid98.business.enums.FileTransferStatusEnum
@@ -15,7 +16,9 @@ import com.sigmoid98.business.exception.BusinessExceptionEnum
 import com.sigmoid98.business.mapper.FileTransferMapper
 import com.sigmoid98.business.nls.NlsUtil
 import com.sigmoid98.business.req.FileTransferPayReq
+import com.sigmoid98.business.req.FileTransferQueryReq
 import com.sigmoid98.business.req.OrderInfoPayReq
+import com.sigmoid98.business.resp.FileTransferQueryResp
 import com.sigmoid98.business.resp.OrderInfoPayResp
 import com.sigmoid98.business.util.VodUtil
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -32,6 +35,7 @@ class FileTransferService(
     @Resource private val loginMemberContext: LoginMemberContext,
     @Resource private val orderInfoService: OrderInfoService,
     @Resource private val nlsUtil: NlsUtil,
+    @Resource private val fileTransferConverter: FileTransferConverter,
 ) {
     companion object {
         private val logger = KotlinLogging.logger {} // Logger
@@ -195,4 +199,25 @@ class FileTransferService(
             }
         }
     }
+
+    /**
+     * 查询语音识别任务
+     */
+    fun query(req: FileTransferQueryReq): List<FileTransferQueryResp> {
+        val list = KtQueryChainWrapper(fileTransferMapper, FileTransfer())
+            .also {
+                when {
+                    req.memberId != null -> it.eq(FileTransfer::memberId, req.memberId)
+                    !req.lang.isNullOrEmpty() -> it.eq(FileTransfer::lang, req.lang)
+                    !req.status.isNullOrEmpty() -> it.eq(FileTransfer::status, req.status)
+                    !req.name.isNullOrEmpty() -> it.like(FileTransfer::name, "%${req.name}%")
+                }
+            }
+            .orderByDesc(FileTransfer::id)
+            .list()
+
+        val fileTransferQueryRespList = fileTransferConverter.toDtoList(list)
+        return fileTransferQueryRespList
+    }
+
 }
