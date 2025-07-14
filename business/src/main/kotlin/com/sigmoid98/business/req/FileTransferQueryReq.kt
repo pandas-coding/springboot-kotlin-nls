@@ -5,4 +5,5 @@ data class FileTransferQueryReq(
     val lang: String?,
     val status: String?,
     val name: String?,
+    val pagination: PageReq = PageReq(),
 )

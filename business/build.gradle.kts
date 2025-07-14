@@ -48,6 +48,7 @@ dependencies {
     /*implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter")*/
     // mybatis-plus
     implementation("com.baomidou:mybatis-plus-spring-boot3-starter:3.5.12")
+    implementation("com.baomidou:mybatis-plus-jsqlparser:3.5.12")
     implementation("mysql:mysql-connector-java:8.0.28")
     implementation("com.aliyun:alibabacloud-dysmsapi20170525")
     implementation("com.github.penggle:kaptcha")

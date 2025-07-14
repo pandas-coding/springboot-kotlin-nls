@@ -1,4 +1,4 @@
-package com.sigmoid98.business.config
+package com.sigmoid98.business.application
 
 import com.sigmoid98.business.alipay.AlipayProperties
 import com.sigmoid98.business.nls.NlsFileTransferProperties
