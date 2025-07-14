@@ -2,9 +2,9 @@ package com.sigmoid98.business.service
 
 import cn.hutool.core.util.IdUtil
 import com.alibaba.fastjson2.JSONObject
-import com.aliyuncs.CommonResponse
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryChainWrapper
 import com.baomidou.mybatisplus.extension.kotlin.KtUpdateChainWrapper
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page
 import com.sigmoid98.business.context.LoginMemberContext
 import com.sigmoid98.business.converter.FileTransferConverter
 import com.sigmoid98.business.domain.FileTransfer
@@ -13,6 +13,8 @@ import com.sigmoid98.business.enums.FileTransferStatusEnum
 import com.sigmoid98.business.enums.OrderInfoOrderTypeEnum
 import com.sigmoid98.business.exception.BusinessException
 import com.sigmoid98.business.exception.BusinessExceptionEnum
+import com.sigmoid98.business.extensions.list
+import com.sigmoid98.business.extensions.mapRecords
 import com.sigmoid98.business.mapper.FileTransferMapper
 import com.sigmoid98.business.nls.NlsUtil
 import com.sigmoid98.business.req.FileTransferPayReq
@@ -20,12 +22,11 @@ import com.sigmoid98.business.req.FileTransferQueryReq
 import com.sigmoid98.business.req.OrderInfoPayReq
 import com.sigmoid98.business.resp.FileTransferQueryResp
 import com.sigmoid98.business.resp.OrderInfoPayResp
+import com.sigmoid98.business.resp.PageResp
 import com.sigmoid98.business.util.VodUtil
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.Resource
-import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
-import java.io.File
 import java.time.LocalDateTime
 
 @Service
@@ -203,8 +204,13 @@ class FileTransferService(
     /**
      * 查询语音识别任务
      */
-    fun query(req: FileTransferQueryReq): List<FileTransferQueryResp> {
-        val list = KtQueryChainWrapper(fileTransferMapper, FileTransfer())
+    fun query(req: FileTransferQueryReq): PageResp<FileTransferQueryResp> {
+        val page = Page<FileTransfer>(
+            req.pagination.page.toLong(),
+            req.pagination.size.toLong(),
+        )
+
+        val pagedList = KtQueryChainWrapper(fileTransferMapper, FileTransfer())
             .also {
                 when {
                     req.memberId != null -> it.eq(FileTransfer::memberId, req.memberId)
@@ -214,10 +220,16 @@ class FileTransferService(
                 }
             }
             .orderByDesc(FileTransfer::id)
-            .list()
+            .page(page)
+        val dtoPage = pagedList.mapRecords(fileTransferConverter::toDto)
 
-        val fileTransferQueryRespList = fileTransferConverter.toDtoList(list)
-        return fileTransferQueryRespList
+        return PageResp(
+            total = dtoPage.total,
+            list = dtoPage.list,
+            pageNum = dtoPage.current.toInt(),
+            pageSize = dtoPage.size.toInt(),
+            pages = dtoPage.pages,
+        )
     }
 
 }

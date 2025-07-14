@@ -6,6 +6,7 @@ import com.sigmoid98.business.req.FileTransferQueryReq
 import com.sigmoid98.business.resp.CommonResp
 import com.sigmoid98.business.resp.FileTransferQueryResp
 import com.sigmoid98.business.resp.OrderInfoPayResp
+import com.sigmoid98.business.resp.PageResp
 import com.sigmoid98.business.service.FileTransferService
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.Resource
@@ -36,11 +37,11 @@ class WebFileTransferController(
     }
 
     @GetMapping("/query")
-    fun query(@Valid req: FileTransferQueryReq): CommonResp<List<FileTransferQueryResp>> {
+    fun query(@Valid req: FileTransferQueryReq): CommonResp<PageResp<FileTransferQueryResp>> {
         val reqWithMemberId = req.copy(
             memberId = loginMemberContext.id
         )
-        val respList = fileTransferService.query(req)
+        val respList = fileTransferService.query(req = reqWithMemberId)
         return CommonResp(content = respList)
     }
 
