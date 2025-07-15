@@ -6,7 +6,7 @@ import {notification} from 'ant-design-vue'
 import {base64MD5String} from '@/utils/password.ts'
 import restService from '@/service'
 import { useAliyunUpload } from '@/hooks/aliyun-upload.ts'
-import type { FileTransferInfo, FileTransferUploadEmits } from '@/view/home/file-transfer-upload.ts'
+import type { FileTransferInfo, FileTransferUploadEmits } from '@/view/file-transfer/file-transfer-upload.ts'
 import { FILE_TRANSFER_LANG_ARRAY } from "../../../public/js/enums.ts";
 import { isEmpty } from 'radash'
 import type AlipayModel from '@/components/payment/AlipayModel.vue'
@@ -249,7 +249,7 @@ defineExpose({
       支付方式：
       <a-radio-group name="pay-channel-group" v-model:value="fileTransfer.channel">
         <a-radio value="A">
-          <img src="@/assets/image/alipay.jpg" alt="支付宝" style="height: 30px;">
+          <img src="../../assets/image/alipay.jpg" alt="支付宝" style="height: 30px;">
         </a-radio>
       </a-radio-group>
     </p>
