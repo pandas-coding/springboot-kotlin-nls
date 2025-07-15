@@ -5,7 +5,7 @@ import Register from "@/view/Register.vue";
 import ResetPassword from "@/view/ResetPassword.vue";
 import HomeWelcome from "@/view/home/HomeWelcome.vue";
 import HomeHelp from "@/view/home/HomeHelp.vue";
-import FileTransfer from "@/view/home/FileTransfer.vue";
+import FileTransfer from "@/view/file-transfer/FileTransfer.vue";
 
 const routes: RouteRecordRaw[] = [
   { path: '/', redirect: '/login' },
