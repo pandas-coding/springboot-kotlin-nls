@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, useTemplateRef } from 'vue'
 import FileTransferUpload from "@/view/file-transfer/FileTransferUpload.vue";
-import { useFileTransferQuery } from '@/view/file-transfer/useFileTransferQuery.ts'
+import { useFileTransferQuery } from '@/view/file-transfer/useFileTransferQuery.tsx'
 import type { TablePaginationConfig } from 'ant-design-vue'
 
 const fileTransferUploadModalRef = useTemplateRef<InstanceType<typeof FileTransferUpload>>('file-transfer-upload-modal')

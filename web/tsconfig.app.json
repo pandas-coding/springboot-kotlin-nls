@@ -11,6 +11,8 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
+    "jsx": "preserve",
+
     /* setting up dir alias */
     "baseUrl": ".",
     "paths": {
