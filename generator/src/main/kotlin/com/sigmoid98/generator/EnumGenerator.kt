@@ -6,12 +6,9 @@ import com.sigmoid98.business.enums.FileTransferStatusEnum
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStreamWriter
-import java.lang.reflect.Field
-import java.lang.reflect.Modifier
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.primaryConstructor
-
 import kotlin.system.measureTimeMillis
 
 // 不能有"/"引导
