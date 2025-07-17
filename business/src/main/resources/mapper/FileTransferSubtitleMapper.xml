@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sigmoid98.business.mapper.FileTransferSubtitleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sigmoid98.business.domain.FileTransferSubtitle">
+        <id column="id" property="id"/>
+        <result column="file_transfer_id" property="fileTransferId"/>
+        <result column="index" property="index"/>
+        <result column="begin" property="begin"/>
+        <result column="end" property="end"/>
+        <result column="text" property="text"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id
+        , file_transfer_id, index,
+        begin, end, text, created_at, updated_at
+    </sql>
+
+</mapper>

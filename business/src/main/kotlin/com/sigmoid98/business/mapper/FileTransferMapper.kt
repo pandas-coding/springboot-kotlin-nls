@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author mybatis-plus code generator
- * @since 2025-06-30 00:38:00
+ * @since 2025-07-17 22:38:46
  */
 @Mapper
 interface FileTransferMapper : BaseMapper<FileTransfer> {

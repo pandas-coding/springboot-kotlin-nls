@@ -21,6 +21,7 @@ fun main() {
         "member",
         "file_transfer",
         "order_info",
+        "file_transfer_subtitle",
     )
 
     // 2. 全局配置

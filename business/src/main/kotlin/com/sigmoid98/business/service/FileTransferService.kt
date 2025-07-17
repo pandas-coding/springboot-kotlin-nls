@@ -37,6 +37,7 @@ class FileTransferService(
     @Resource private val orderInfoService: OrderInfoService,
     @Resource private val nlsUtil: NlsUtil,
     @Resource private val fileTransferConverter: FileTransferConverter,
+    @Resource private val fileTransferSubtitleService: FileTransferSubtitleService,
 ) {
     companion object {
         private val logger = KotlinLogging.logger {} // Logger
@@ -195,8 +196,11 @@ class FileTransferService(
                     logger.error { "无法查找到指定task的FileTransfer记录, taskId: $taskId" }
                     throw Exception("无法查找到")
                 }
+
+                // 保存字幕表
                 val savedFileTransfer = list.first()
                 val result = jsonResult.getJSONObject("Result")
+                fileTransferSubtitleService.saveSubtitle(savedFileTransfer.id!!, result)
             }
         }
     }
