@@ -90,4 +90,19 @@ create table `order_info`
 ) engine = innodb
   default charset = utf8 comment ='订单信息表';
 
-
+-- file_transfer_subtitle 语音识别字幕
+drop table if exists `file_transfer_subtitle`;
+create table `file_transfer_subtitle`
+(
+    `id`             bigint      not null comment 'id',
+    file_transfer_id bigint      not null comment '录音转换ID',
+    `index`          int         not null comment '索引号',
+    `begin`          int         not null comment '开始时间，毫秒',
+    `end`            int         not null comment '结束时间，毫秒',
+    `text`           varchar(2000) comment '字幕',
+    `created_at`     datetime(3) not null comment '创建时间',
+    `updated_at`     datetime(3) not null comment '修改时间',
+    primary key (`id`),
+    index file_transfer_subtitle_file_transfer_id (file_transfer_id)
+) engine = innodb
+  default charset = utf8mb4 comment ='语音识别字幕';
