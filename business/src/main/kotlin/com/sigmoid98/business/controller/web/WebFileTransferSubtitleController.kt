@@ -1,6 +1,7 @@
 package com.sigmoid98.business.controller.web
 
 import com.sigmoid98.business.req.FileTransferSubtitleQueryReq
+import com.sigmoid98.business.req.GenSubtitleReq
 import com.sigmoid98.business.resp.CommonResp
 import com.sigmoid98.business.resp.FileTransferSubtitleQueryResp
 import com.sigmoid98.business.resp.PageResp
@@ -24,5 +25,14 @@ class WebFileTransferSubtitleController(
     fun query(@Valid req: FileTransferSubtitleQueryReq): CommonResp<PageResp<FileTransferSubtitleQueryResp>> {
         val respList = fileTransferSubtitleService.query(req)
         return CommonResp(content = respList)
+    }
+
+    /**
+     * 生成字幕并返回文件链接
+     */
+    @GetMapping("/gen-subtitle")
+    fun genSubtitle(@Valid req: GenSubtitleReq): CommonResp<String> {
+        val url = fileTransferSubtitleService.genSubtitle(req)
+        return CommonResp(content = url)
     }
 }
