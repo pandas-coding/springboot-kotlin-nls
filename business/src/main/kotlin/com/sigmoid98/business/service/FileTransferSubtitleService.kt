@@ -3,8 +3,16 @@ package com.sigmoid98.business.service
 import cn.hutool.core.util.IdUtil
 import com.alibaba.fastjson2.JSONObject
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryChainWrapper
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page
+import com.sigmoid98.business.converter.FileTransferSubtitleConverter
 import com.sigmoid98.business.domain.FileTransferSubtitle
+import com.sigmoid98.business.extensions.list
+import com.sigmoid98.business.extensions.mapRecords
 import com.sigmoid98.business.mapper.FileTransferSubtitleMapper
+import com.sigmoid98.business.req.FileTransferSubtitleQueryReq
+import com.sigmoid98.business.req.PageReq
+import com.sigmoid98.business.resp.FileTransferSubtitleQueryResp
+import com.sigmoid98.business.resp.PageResp
 import com.sigmoid98.business.service.persistance.impl.FileTransferSubtitleServiceImpl
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.Resource
@@ -16,6 +24,7 @@ import java.time.LocalDateTime
 class FileTransferSubtitleService(
     @Resource private val fileTransferSubtitleMapper: FileTransferSubtitleMapper,
     @Resource private val fileTransferSubtitleServiceImpl: FileTransferSubtitleServiceImpl,
+    @Resource private val fileTransferSubtitleConverter: FileTransferSubtitleConverter,
 ) {
     companion object {
         private val kLogger = KotlinLogging.logger {  }
@@ -52,6 +61,30 @@ class FileTransferSubtitleService(
         }
         // 批量导入
         fileTransferSubtitleServiceImpl.saveBatch(subtitleList)
+    }
+
+    /**
+     * 查询字幕信息
+     */
+    fun query(req: FileTransferSubtitleQueryReq): PageResp<FileTransferSubtitleQueryResp> {
+        val page = Page<FileTransferSubtitle>(
+            req.pagination.page.toLong(),
+            req.pagination.size.toLong(),
+        )
+
+        val listPage = KtQueryChainWrapper(fileTransferSubtitleMapper, FileTransferSubtitle())
+            .eq(FileTransferSubtitle::fileTransferId, req.fileTransferId)
+            .orderByAsc(FileTransferSubtitle::index)
+            .page(page)
+
+        val dtoPage = listPage.mapRecords(fileTransferSubtitleConverter::toDto)
+        return PageResp(
+            total = dtoPage.total,
+            list = dtoPage.list,
+            pageNum = dtoPage.current.toInt(),
+            pageSize = dtoPage.size.toInt(),
+            pages = dtoPage.pages,
+        )
     }
 
 }

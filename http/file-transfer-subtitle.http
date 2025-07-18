@@ -1,0 +1,6 @@
+# 查询字幕
+GET http://localhost:18000/nls/web/file-transfer-subtitle/query?pagination.page=1&pagination.size=2&fileTransferId=1944058990768898048
+Accept: application/json
+token: {{token}}
+
+###
