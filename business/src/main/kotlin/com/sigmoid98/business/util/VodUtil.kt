@@ -200,7 +200,7 @@ class VodUtil(
         val request = CreateUploadAttachedMediaRequest().apply {
             title = file.name
             fileName = fullPath
-            mediaExt = "src"
+            mediaExt = "srt"
             businessType = "subtitle"
         }
 
@@ -255,6 +255,7 @@ class VodUtil(
         }.onSuccess { response ->
             logger.info { "获取辅助媒资地址和凭证: ${JSON.toJSONString(response)}" }
         }.getOrElse { ex ->
+            logger.error(ex) { "上传srt文件失败" }
             throw BusinessException(BusinessExceptionEnum.GEN_SUBTITLE_ERROR)
         }
 
