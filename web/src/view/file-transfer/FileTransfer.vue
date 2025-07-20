@@ -34,7 +34,6 @@ onMounted(() => {
 <template>
   <file-transfer-upload
     ref="file-transfer-upload-modal"
-
   ></file-transfer-upload>
 
   <a-alert :message="null" type="info">
