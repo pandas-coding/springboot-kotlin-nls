@@ -8,9 +8,11 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.Resource
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-@RestController("/file-transfer")
+@RestController
+@RequestMapping("/file-transfer")
 class NlsFileTransferCallbackController(
     @Resource private val fileTransferService: FileTransferService,
 ) {
