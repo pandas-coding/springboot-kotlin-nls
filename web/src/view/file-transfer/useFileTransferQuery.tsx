@@ -58,46 +58,11 @@ const langMap = FILE_TRANSFER_LANG_ARRAY
     new Map<(typeof FILE_TRANSFER_LANG_ARRAY)[number]['code'], (typeof FILE_TRANSFER_LANG_ARRAY)[number]>(),
   )
 
-const DEFAULT_COLUMNS: ColumnsType<FileTransferRecord> = [
-  {
-    title: '名称',
-    dataIndex: 'name',
-  },
-  {
-    title: '支付状态',
-    dataIndex: 'payStatus',
-    customRender: ({record}) => payStatusMap.get(record.payStatus)?.desc,
-  },
-  {
-    title: '状态',
-    dataIndex: 'status',
-    customRender: ({record}) => statusMap.get(record.status)?.desc,
-  },
-  {
-    title: '语言',
-    dataIndex: 'lang',
-    customRender: ({record}) => langMap.get(record.lang)?.desc,
-  },
-  {
-    title: '时长',
-    dataIndex: 'second',
-    customRender: ({record}) => formatSecond(record.second, true),
-  },
-  {
-    title: '操作',
-    dataIndex: 'operation',
-    customRender: ({record}) => record.status === FILE_TRANSFER_STATUS.SUBTITLE_SUCCESS.code
-      ? (<Button type='primary' onClick={() => window.alert('显示字幕弹框')}></Button>)
-      : null
-  },
-]
-
 /**
  * 分页查询语音识别文件列表
  */
 export const useFileTransferQuery = () => {
   const fileTransferList = shallowRef<FileTransferRecord[]>([])
-  const columns = shallowRef(DEFAULT_COLUMNS)
   const pagination = reactive({
     total: 0,
     current: 1,
@@ -138,9 +103,52 @@ export const useFileTransferQuery = () => {
 
   return {
     fileTransferList,
-    columns,
     pagination,
     loading,
     queryFileTransferList,
+  }
+}
+
+type UseColumnsParams = {
+  onClickColumnOperation: (record: FileTransferRecord) => void
+}
+
+export const useColumns = (params: UseColumnsParams) => {
+  const DEFAULT_COLUMNS = shallowRef<ColumnsType<FileTransferRecord>>([
+    {
+      title: '名称',
+      dataIndex: 'name',
+    },
+    {
+      title: '支付状态',
+      dataIndex: 'payStatus',
+      customRender: ({record}) => payStatusMap.get(record.payStatus)?.desc,
+    },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      customRender: ({record}) => statusMap.get(record.status)?.desc,
+    },
+    {
+      title: '语言',
+      dataIndex: 'lang',
+      customRender: ({record}) => langMap.get(record.lang)?.desc,
+    },
+    {
+      title: '时长',
+      dataIndex: 'second',
+      customRender: ({record}) => formatSecond(record.second, true),
+    },
+    {
+      title: '操作',
+      dataIndex: 'operation',
+      customRender: ({record}) => record.status === FILE_TRANSFER_STATUS.SUBTITLE_SUCCESS.code
+        ? (<Button type='primary' onClick={() => params.onClickColumnOperation(record)}></Button>)
+        : null
+    },
+  ])
+
+  return {
+    columns: DEFAULT_COLUMNS,
   }
 }

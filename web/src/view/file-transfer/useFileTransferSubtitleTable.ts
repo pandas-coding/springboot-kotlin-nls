@@ -6,7 +6,7 @@ import { formatSecond } from '@/utils/format-time.ts'
 import type { TablePaginationConfig } from 'ant-design-vue'
 
 
-export const useFileTransferSubtitleTable = (params: {fileTransferId: number}) => {
+export const useFileTransferSubtitleTable = (params: {fileTransferId: string}) => {
   const subtitleList = shallowRef([])
   const columns = shallowRef(DEFAULT_SUBTITLE_COLUMNS)
   const pagination = reactive({
@@ -16,7 +16,7 @@ export const useFileTransferSubtitleTable = (params: {fileTransferId: number}) =
   })
   const loading = ref(false)
 
-  const querySubtitleList = async (fileTransferId: number, queryPagination: {
+  const querySubtitleList = async (fileTransferId: string, queryPagination: {
     page?: number,
     size?: number,
   } = { page: 1, size: pagination.pageSize }) => {

@@ -1,18 +1,30 @@
 <script setup lang="ts">
-import { onMounted, useTemplateRef } from 'vue'
+import { onMounted, ref, useTemplateRef } from 'vue'
 import FileTransferUpload from "@/view/file-transfer/FileTransferUpload.vue";
-import { useFileTransferQuery } from '@/view/file-transfer/useFileTransferQuery.tsx'
+import {
+  useColumns,
+  useFileTransferQuery,
+} from '@/view/file-transfer/useFileTransferQuery.tsx'
 import type { TablePaginationConfig } from 'ant-design-vue'
+import FileTransferSubtitle from '@/view/file-transfer/FileTransferSubtitle.vue'
 
 const fileTransferUploadModalRef = useTemplateRef<InstanceType<typeof FileTransferUpload>>('file-transfer-upload-modal')
+const fileTransferSubtitleModalRef = useTemplateRef<InstanceType<typeof FileTransferSubtitle>>('file-transfer-subtitle-modal')
+const clickFileTransferId = ref('')
 
 const showModal = () => {
   fileTransferUploadModalRef.value?.showModal()
 }
 
+const {columns} = useColumns({
+  onClickColumnOperation: (record) => {
+    clickFileTransferId.value = record.id
+    fileTransferSubtitleModalRef.value?.showModal()
+  }
+})
+
 const {
   fileTransferList,
-  columns,
   pagination,
   loading,
   queryFileTransferList,
@@ -34,7 +46,8 @@ onMounted(() => {
 <template>
   <file-transfer-upload
     ref="file-transfer-upload-modal"
-  ></file-transfer-upload>
+  />
+  <file-transfer-subtitle :file-transfer-id="clickFileTransferId" ref="file-transfer-subtitle-modal" />
 
   <a-alert :message="null" type="info">
     <template #description>

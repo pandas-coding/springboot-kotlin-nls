@@ -1,4 +1,3 @@
-
 export interface FileTransferSubtitleProps {
-  id: number
+  fileTransferId: string
 }
