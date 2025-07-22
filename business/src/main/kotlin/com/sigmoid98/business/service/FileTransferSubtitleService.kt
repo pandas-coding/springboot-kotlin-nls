@@ -11,6 +11,7 @@ import com.sigmoid98.business.extensions.mapRecords
 import com.sigmoid98.business.mapper.FileTransferSubtitleMapper
 import com.sigmoid98.business.req.FileTransferSubtitleQueryReq
 import com.sigmoid98.business.req.GenSubtitleReq
+import com.sigmoid98.business.req.GenTextReq
 import com.sigmoid98.business.resp.FileTransferSubtitleQueryResp
 import com.sigmoid98.business.resp.PageResp
 import com.sigmoid98.business.service.persistance.impl.FileTransferSubtitleServiceImpl
@@ -114,6 +115,20 @@ class FileTransferSubtitleService(
         return uploadFile(fileTransferId, buffer, fileSuffix)
     }
 
+    fun genText(req: GenTextReq): String {
+        val fileTransferId = req.fileTransferId
+
+        kLogger.info { "开始获取字幕" }
+        val fileTransferSubtitleList = KtQueryChainWrapper(fileTransferSubtitleMapper, FileTransferSubtitle())
+            .eq(FileTransferSubtitle::fileTransferId, fileTransferId)
+            .list()
+
+        kLogger.info { "格式化字幕文本" }
+        val buffer = formatText(fileTransferSubtitleList)
+        val fileSuffix = ".txt"
+        return uploadFile(fileTransferId, buffer, fileSuffix)
+    }
+
     /**
      * 上传文件内容到VOD并返回URL
      */
@@ -174,12 +189,13 @@ class FileTransferSubtitleService(
     /**
      * 格式化字幕纯文本
      */
-    fun formatText(list: List<FileTransferSubtitle>): String {
+    fun formatText(list: List<FileTransferSubtitle>): StringBuffer {
         kLogger.info { "拼接纯文本数据, 总行数: ${list.size}" }
 
-        return buildString {
+        return StringBuffer().apply {
+            val buffer = this
             list.forEach { item ->
-                appendLine(item.text)
+                buffer.appendLine(item.text)
             }
         }.also {
             kLogger.info { "拼接纯文本完成, 字符数: ${it.length}" }
