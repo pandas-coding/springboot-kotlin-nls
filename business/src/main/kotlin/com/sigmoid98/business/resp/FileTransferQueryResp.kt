@@ -13,6 +13,7 @@ data class FileTransferQueryResp(
     @Serializable(with = LongAsStringSerializer::class)
     val id: Long,
 
+    @Serializable(with = LongAsStringSerializer::class)
     val memberId: Long,
 
     val name: String,
