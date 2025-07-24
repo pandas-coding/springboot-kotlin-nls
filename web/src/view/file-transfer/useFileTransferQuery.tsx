@@ -143,7 +143,7 @@ export const useColumns = (params: UseColumnsParams) => {
       title: '操作',
       dataIndex: 'operation',
       customRender: ({record}) => record.status === FILE_TRANSFER_STATUS.SUBTITLE_SUCCESS.code
-        ? (<Button type='primary' onClick={() => params.onClickColumnOperation(record)}></Button>)
+        ? (<Button type='primary' onClick={() => params.onClickColumnOperation(record)}>查看字幕</Button>)
         : null
     },
   ])

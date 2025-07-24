@@ -27,7 +27,9 @@ import com.sigmoid98.business.util.VodUtil
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.Resource
 import org.springframework.stereotype.Service
+import java.time.Instant
 import java.time.LocalDateTime
+import java.time.ZoneId
 
 @Service
 class FileTransferService(
@@ -170,7 +172,9 @@ class FileTransferService(
                 .also {
                     when (isSucceed) {
                         true -> {
-                            val solveTime = LocalDateTime.parse(jsonResult.getString("SolveTime"))
+                            val instant = Instant.ofEpochMilli(jsonResult.getLong("SolveTime"))
+                            val solveTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+                            // val solveTime = LocalDateTime.parse(jsonResult.getString("SolveTime"))
                             it.set(FileTransfer::solveTime, solveTime)
                             it.set(FileTransfer::status, FileTransferStatusEnum.SUBTITLE_SUCCESS.code)
                         }
