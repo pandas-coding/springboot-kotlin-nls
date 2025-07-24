@@ -148,7 +148,7 @@ class VodUtil(
     fun getMezzanineInfo(toGetVideoId: String): GetMezzanineInfoResponse {
         val request = GetMezzanineInfoRequest().apply {
             videoId = toGetVideoId
-            authTimeout =  10L
+            authTimeout = 36000L // 链接过期时间/s, 设置有效期10h
         }
 
         logger.info { "获取VOD源文件信息请求: ${JSON.toJSONString(request)}" }
