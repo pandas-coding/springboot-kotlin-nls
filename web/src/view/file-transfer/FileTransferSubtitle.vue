@@ -13,6 +13,7 @@ const {
   isRevealed,
   reveal,
   confirm,
+  cancel,
   onReveal,
 } = useConfirmDialog()
 onReveal(() => {
@@ -43,16 +44,17 @@ const {
 const isTableLoading = computed(() => isSubtitleListLoading.value || isGenSubtitleQueryLoading.value || isGenTextQueryLoading.value)
 
 defineExpose({
-  showModal: reveal,
+  showModal: () => reveal(),
 })
 </script>
 
 <template>
   <a-modal
-    v-model:open(v-model)="isRevealed"
+    v-model:open="isRevealed"
     title=""
     footer=""
     style="width: 800px; top: 20px"
+    @cancel="cancel"
     @ok="confirm"
   >
     <p>

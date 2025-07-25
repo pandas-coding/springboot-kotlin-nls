@@ -36,3 +36,10 @@ Accept: application/json
 token: {{token}}
 
 ###
+
+# 查询翻译语音转换列表
+GET http://localhost:18000/nls/web/file-transfer/query?pagination.page=1&pagination.size=2
+Accept: application/json
+token: {{token}}
+
+###
