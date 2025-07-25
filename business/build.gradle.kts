@@ -33,7 +33,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     // kotlin serialization lib
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
-    // implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1-0.6.x-compat")
     // jjwt for JWT
     implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:$jjwtVersion")

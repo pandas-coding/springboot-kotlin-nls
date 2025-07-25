@@ -1,26 +1,24 @@
 package com.sigmoid98.business.resp
 
-import com.sigmoid98.business.serializer.BigDecimalToStringSerializer
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer
 import com.sigmoid98.business.serializer.JavaLocalDateTimeSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.LongAsStringSerializer
-
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
-@Serializable
 data class FileTransferQueryResp(
-    @Serializable(with = LongAsStringSerializer::class)
+    @field:JsonSerialize(using = ToStringSerializer::class)
     val id: Long,
 
-    @Serializable(with = LongAsStringSerializer::class)
+    @field:JsonSerialize(using = ToStringSerializer::class)
     val memberId: Long,
 
     val name: String,
 
     val second: Int,
 
-    @Serializable(with = BigDecimalToStringSerializer::class)
+    @field:JsonSerialize(using = ToStringSerializer::class)
     val amount: BigDecimal,
 
     val audio: String,
