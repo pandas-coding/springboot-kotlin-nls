@@ -1,12 +1,14 @@
-import { reactive, ref, shallowRef } from 'vue'
+import { reactive, ref, shallowRef, toValue } from 'vue'
 import type { ColumnsType } from 'ant-design-vue/es/table'
 import restService from '@/service'
 import qs from 'qs'
 import { formatSecond } from '@/utils/format-time.ts'
 import type { TablePaginationConfig } from 'ant-design-vue'
+import type { MaybeRefOrGetter } from '@vueuse/core'
 
-
-export const useFileTransferSubtitleTable = (params: {fileTransferId: string}) => {
+export const useFileTransferSubtitleTable = (params: {
+  fileTransferId: MaybeRefOrGetter<string>,
+}) => {
   const subtitleList = shallowRef([])
   const columns = shallowRef(DEFAULT_SUBTITLE_COLUMNS)
   const pagination = reactive({
@@ -45,7 +47,7 @@ export const useFileTransferSubtitleTable = (params: {fileTransferId: string}) =
   }
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
-    querySubtitleList(params.fileTransferId, {
+    querySubtitleList(toValue(params.fileTransferId), {
       page: pagination.current,
       size: pagination.pageSize,
     })

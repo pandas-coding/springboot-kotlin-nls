@@ -3,6 +3,7 @@ package com.sigmoid98.business.service
 import cn.hutool.core.util.IdUtil
 import com.alibaba.fastjson2.JSONObject
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryChainWrapper
+import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page
 import com.sigmoid98.business.converter.FileTransferSubtitleConverter
 import com.sigmoid98.business.domain.FileTransferSubtitle
@@ -45,7 +46,7 @@ class FileTransferSubtitleService(
         val now = LocalDateTime.now()
 
         // 先清空已有的字幕记录防止重复记录
-        val queryWrapper = KtQueryChainWrapper(fileTransferSubtitleMapper, FileTransferSubtitle())
+        val queryWrapper = KtQueryWrapper(FileTransferSubtitle())
             .eq(FileTransferSubtitle::fileTransferId, relayFileTransferId)
         fileTransferSubtitleMapper.delete(queryWrapper)
 

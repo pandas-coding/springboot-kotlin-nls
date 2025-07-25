@@ -27,7 +27,7 @@ const {
   loading: isSubtitleListLoading,
   querySubtitleList,
   handleTableChange,
-} = useFileTransferSubtitleTable({fileTransferId: props.fileTransferId})
+} = useFileTransferSubtitleTable({fileTransferId: () => props.fileTransferId})
 
 const {
   data: subtitleUrl,
