@@ -5,9 +5,11 @@ import { useFileTransferSubtitleTable } from '@/view/file-transfer/useFileTransf
 import { useConfirmDialog } from '@vueuse/core';
 import { useGenSubtitleQuery } from '@/view/file-transfer/useGenSubtitleQuery.ts'
 import { useGenTextQuery } from '@/view/file-transfer/useGenTextQuery.ts'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const props = defineProps<FileTransferSubtitleProps>()
+
+const downloadUrl = ref('')
 
 const {
   isRevealed,
@@ -82,6 +84,11 @@ defineExpose({
       @change="handleTableChange"
     ></a-table>
   </a-modal>
+
+  <download-anchor
+    ref="downloadAnchorRef"
+    :download-url="downloadUrl"
+  />
 </template>
 
 <style scoped>
