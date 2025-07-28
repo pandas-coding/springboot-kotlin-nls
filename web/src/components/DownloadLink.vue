@@ -18,15 +18,14 @@ const download = () => {
   downloadUrl.value = props.downloadUrl
   const url = props.downloadUrl
   downloadAnchorRef.value.download = url.substring(url.lastIndexOf('/') + 1)
-  setTimeout(() => downloadAnchorRef.value.click(), 50)
+  setTimeout(() => downloadAnchorRef.value?.click(), 50)
 }
 
 const {
-  data,
-  execute
-} = useAxios({ responseType: 'blob', })
+  execute,
+} = useAxios<string>({ responseType: 'blob', })
 
-const downloadItem = async (url: string, name = null) => {
+const downloadItem = async (url: string, name: null | string = null) => {
   if (!downloadAnchorRef.value) return
   console.log("调用下载组件下载")
 
@@ -40,7 +39,7 @@ const downloadItem = async (url: string, name = null) => {
     downloadAnchorRef.value.download = name
   }
 
-  setTimeout(() => downloadAnchorRef.value.click(), 50)
+  setTimeout(() => downloadAnchorRef.value?.click(), 50)
 }
 
 defineExpose({

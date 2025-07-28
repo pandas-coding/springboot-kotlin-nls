@@ -5,11 +5,13 @@ import { useFileTransferSubtitleTable } from '@/view/file-transfer/useFileTransf
 import { useConfirmDialog } from '@vueuse/core';
 import { useGenSubtitleQuery } from '@/view/file-transfer/useGenSubtitleQuery.ts'
 import { useGenTextQuery } from '@/view/file-transfer/useGenTextQuery.ts'
-import { computed, ref } from 'vue'
+import { computed, ref, useTemplateRef } from 'vue'
+import type DownloadLink from '@/components/DownloadLink.vue'
 
 const props = defineProps<FileTransferSubtitleProps>()
 
 const downloadUrl = ref('')
+const downloadLinkRef = useTemplateRef<InstanceType<typeof DownloadLink>>('downloadLinkRef')
 
 const {
   isRevealed,
@@ -35,7 +37,7 @@ const {
   data: subtitleUrl,
   isLoading: isGenSubtitleQueryLoading,
   genSubtitle,
-} = useGenSubtitleQuery({fileTransferId: props.fileTransferId})
+} = useGenSubtitleQuery({fileTransferId: () => props.fileTransferId})
 
 const {
   data: textUrl,
@@ -44,6 +46,18 @@ const {
 } = useGenTextQuery({fileTransferId: props.fileTransferId})
 
 const isTableLoading = computed(() => isSubtitleListLoading.value || isGenSubtitleQueryLoading.value || isGenTextQueryLoading.value)
+
+const onClickGenSubtitle = async () => {
+  await genSubtitle()
+  downloadUrl.value = subtitleUrl.value.content ?? ''
+  downloadLinkRef.value?.downloadItem(downloadUrl.value, `${props.name}-${props.fileTransferId}.srt`)
+}
+
+const onClickGenText = async () => {
+  await genText()
+  downloadUrl.value = textUrl.value.content ?? ''
+  downloadLinkRef.value?.downloadItem(downloadUrl.value, `${props.name}-${props.fileTransferId}.txt`)
+}
 
 defineExpose({
   showModal: () => reveal(),
@@ -61,13 +75,13 @@ defineExpose({
   >
     <p>
       <a-space>
-        <a-button type="primary" @click="genSubtitle">
+        <a-button type="primary" @click="onClickGenSubtitle">
           <span>
             <FileTextOutlined/>
             下载字幕
           </span>
         </a-button>
-        <a-button type="primary" @click="genText">
+        <a-button type="primary" @click="onClickGenText">
           <span>
             <FileTextOutlined/>
             下载纯文本
@@ -85,8 +99,8 @@ defineExpose({
     ></a-table>
   </a-modal>
 
-  <download-anchor
-    ref="downloadAnchorRef"
+  <download-link
+    ref="downloadLinkRef"
     :download-url="downloadUrl"
   />
 </template>
