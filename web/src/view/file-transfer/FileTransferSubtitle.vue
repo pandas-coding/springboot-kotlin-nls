@@ -7,6 +7,7 @@ import { useGenSubtitleQuery } from '@/view/file-transfer/useGenSubtitleQuery.ts
 import { useGenTextQuery } from '@/view/file-transfer/useGenTextQuery.ts'
 import { computed, ref, useTemplateRef } from 'vue'
 import type DownloadLink from '@/components/DownloadLink.vue'
+import type { FileTransferRecord } from '@/view/file-transfer/useFileTransferQuery.tsx'
 
 const props = defineProps<FileTransferSubtitleProps>()
 
@@ -43,7 +44,7 @@ const {
   data: textUrl,
   isLoading: isGenTextQueryLoading,
   genText,
-} = useGenTextQuery({fileTransferId: props.fileTransferId})
+} = useGenTextQuery({fileTransferId: () => props.fileTransferId})
 
 const isTableLoading = computed(() => isSubtitleListLoading.value || isGenSubtitleQueryLoading.value || isGenTextQueryLoading.value)
 
