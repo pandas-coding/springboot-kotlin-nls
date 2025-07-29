@@ -1,0 +1,53 @@
+.pull-right {
+    float: right;
+}
+
+/************* 登录/注册/忘记密码 ************/
+.login, .register, .reset {
+    padding-top: 8%;
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right: 0;
+    background-color: #3B5998;
+}
+.register {
+    padding-top: 4%;
+}
+.login .ant-form-item, .register .ant-form-item, .reset .ant-form-item {
+    margin-bottom: 5px!important;
+}
+.login .main, .register .main, .reset .main {
+    padding: 30px 20px;
+    background-color: #F0F8FF;
+    border-radius: 50px 0 ;
+}
+.login .title, .register .title, .reset .title {
+    vertical-align: middle;
+    font-size: 1.8rem;
+    /*color: transparent;*/
+    /*-webkit-text-fill-color: #F0F8FF;*/
+    font-weight: 600;
+    /*-webkit-text-stroke: 2px #444;*/
+    text-align: center;
+}
+.login .ant-input-affix-wrapper, .register .ant-input-affix-wrapper, .reset .ant-input-affix-wrapper {
+    padding: 0 !important
+}
+.login .ant-input-affix-wrapper > input.ant-input, .register .ant-input-affix-wrapper > input.ant-input, .reset .ant-input-affix-wrapper > input.ant-input {
+    padding: 4px 11px !important;
+}
+.login .form-item, .register .form-item, .reset .form-item {
+    margin-top: 15px;
+}
+.login .login-btn {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.login .footer {
+    margin-top: 10px;
+}
+.login .footer a, .register .footer a, .reset .footer a {
+    color: #444;
+}
