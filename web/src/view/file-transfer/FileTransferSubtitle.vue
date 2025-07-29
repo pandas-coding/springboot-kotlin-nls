@@ -7,7 +7,6 @@ import { useGenSubtitleQuery } from '@/view/file-transfer/useGenSubtitleQuery.ts
 import { useGenTextQuery } from '@/view/file-transfer/useGenTextQuery.ts'
 import { computed, ref, useTemplateRef } from 'vue'
 import type DownloadLink from '@/components/DownloadLink.vue'
-import type { FileTransferRecord } from '@/view/file-transfer/useFileTransferQuery.tsx'
 
 const props = defineProps<FileTransferSubtitleProps>()
 
@@ -35,14 +34,14 @@ const {
 } = useFileTransferSubtitleTable({fileTransferId: () => props.fileTransferId})
 
 const {
-  data: subtitleUrl,
+  mediaUrl: subtitleUrl,
   isLoading: isGenSubtitleQueryLoading,
   genSubtitle,
 } = useGenSubtitleQuery({fileTransferId: () => props.fileTransferId})
 
 const {
-  data: textUrl,
   isLoading: isGenTextQueryLoading,
+  mediaUrl: textUrl,
   genText,
 } = useGenTextQuery({fileTransferId: () => props.fileTransferId})
 
@@ -50,13 +49,13 @@ const isTableLoading = computed(() => isSubtitleListLoading.value || isGenSubtit
 
 const onClickGenSubtitle = async () => {
   await genSubtitle()
-  downloadUrl.value = subtitleUrl.value.content ?? ''
+  downloadUrl.value = subtitleUrl.value ?? ''
   downloadLinkRef.value?.downloadItem(downloadUrl.value, `${props.name}-${props.fileTransferId}.srt`)
 }
 
 const onClickGenText = async () => {
   await genText()
-  downloadUrl.value = textUrl.value.content ?? ''
+  downloadUrl.value = textUrl.value ?? ''
   downloadLinkRef.value?.downloadItem(downloadUrl.value, `${props.name}-${props.fileTransferId}.txt`)
 }
 

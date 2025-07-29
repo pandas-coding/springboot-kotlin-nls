@@ -268,7 +268,7 @@ class VodUtil(
             throw BusinessException(BusinessExceptionEnum.GEN_SUBTITLE_ERROR)
         }
 
-        return response.fileURL
+        return response.mediaURL
     }
 
     /**

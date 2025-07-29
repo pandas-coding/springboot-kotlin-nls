@@ -23,14 +23,16 @@ const download = () => {
 
 const {
   execute,
-} = useAxios<string>({ responseType: 'blob', })
+} = useAxios<Blob>({ responseType: 'blob', })
 
 const downloadItem = async (url: string, name: null | string = null) => {
   if (!downloadAnchorRef.value) return
   console.log("调用下载组件下载")
 
-  const resp = await execute(url)
-  const blob = new Blob([resp.data])
+  const axiosReturn = await execute(url)
+  if (null == axiosReturn.data.value) return
+
+  const blob = new Blob([axiosReturn.data.value])
   downloadUrl.value = URL.createObjectURL(blob)
 
   if (name == null) {
