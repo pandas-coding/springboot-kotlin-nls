@@ -37,6 +37,7 @@ declare module 'vue' {
     AStatistic: typeof import('ant-design-vue/es')['Statistic']
     ASubMenu: typeof import('ant-design-vue/es')['SubMenu']
     ATable: typeof import('ant-design-vue/es')['Table']
+    DownloadLink: typeof import('./components/DownloadLink.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ViewHeader: typeof import('./components/ViewHeader.vue')['default']

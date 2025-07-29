@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, useTemplateRef } from 'vue'
+import { nextTick, onMounted, ref, useTemplateRef } from 'vue'
 import FileTransferUpload from "@/view/file-transfer/FileTransferUpload.vue";
 import {
   useColumns,
@@ -11,14 +11,17 @@ import FileTransferSubtitle from '@/view/file-transfer/FileTransferSubtitle.vue'
 const fileTransferUploadModalRef = useTemplateRef<InstanceType<typeof FileTransferUpload>>('file-transfer-upload-modal')
 const fileTransferSubtitleModalRef = useTemplateRef<InstanceType<typeof FileTransferSubtitle>>('file-transfer-subtitle-modal')
 const clickFileTransferId = ref('')
+const fileTransferName = ref('')
 
 const showModal = () => {
   fileTransferUploadModalRef.value?.showModal()
 }
 
 const {columns} = useColumns({
-  onClickColumnOperation: (record) => {
+  onClickColumnOperation: async (record) => {
     clickFileTransferId.value = record.id
+    fileTransferName.value = record.name
+    await nextTick()
     fileTransferSubtitleModalRef.value?.showModal()
   }
 })
@@ -47,7 +50,11 @@ onMounted(() => {
   <file-transfer-upload
     ref="file-transfer-upload-modal"
   />
-  <file-transfer-subtitle :file-transfer-id="clickFileTransferId" ref="file-transfer-subtitle-modal" />
+  <file-transfer-subtitle
+    :file-transfer-id="clickFileTransferId"
+    :name="fileTransferName"
+    ref="file-transfer-subtitle-modal"
+  />
 
   <a-alert :message="null" type="info">
     <template #description>
