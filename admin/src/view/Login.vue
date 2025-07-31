@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 import { service } from '@/service/index.ts'
 import { message } from 'ant-design-vue'
 import { LockOutlined, MobileOutlined, SafetyOutlined } from '@ant-design/icons-vue'
 import { hashPassword } from '@/utils/password.ts'
 import { uuid } from '@/utils/tool.ts'
-import { useMemberStore } from '@/stores/member-store.ts'
+import { useUserStore } from '@/stores/user-store.ts'
 
 
 const router = useRouter()
 
-const { setMember } = useMemberStore()
+const {setUser} = useUserStore()
 
-const loginMember = ref({
-  mobile: '',
+const loginUser = reactive({
+  loginName: '',
   password: '',
   imageCode: '',
 })
@@ -22,9 +22,9 @@ const loginMember = ref({
 const login = async (values: {}) => {
   console.info('开始登录: %o', values)
   const response = await service.post('/nls/admin/user/login', {
-    mobile: loginMember.value.mobile,
-    password: hashPassword(loginMember.value.password),
-    imageCode: loginMember.value.imageCode,
+    loginName: loginUser.loginName,
+    password: hashPassword(loginUser.password),
+    imageCode: loginUser.imageCode,
     imageCodeToken: imageCodeToken.value,
   })
 
@@ -35,7 +35,7 @@ const login = async (values: {}) => {
   }
 
   message.success('登录成功!')
-  setMember(data.content)
+  setUser(data.content)
   await router.push('/home/welcome')
 }
 
@@ -46,7 +46,7 @@ const imageCodeSrc = ref()
  * 加载图形验证码
  */
 const loadImageCode = () => {
-  loginMember.value.imageCode = ''
+  loginUser.imageCode = ''
   imageCodeToken.value = uuid(8)
   imageCodeSrc.value = `${import.meta.env.VITE_SERVER}/nls/admin/kaptcha/image-code/${imageCodeToken.value}`
 }
@@ -63,16 +63,16 @@ loadImageCode()
 
         <a-form
             name="basic"
-            :model="loginMember"
+            :model="loginUser"
             :wrapper-col="{ span: 24 }"
             @finish="login"
         >
-          <!-- 手机号 -->
+          <!-- 用户名 -->
           <a-form-item
-              name="mobile" class="form-item"
-              :rules="[{ required: true, message: '请输入手机号' }]"
+              name="loginName" class="form-item"
+              :rules="[{ required: true, message: '请输入用户名' }]"
           >
-            <a-input v-model:value="loginMember.mobile" placeholder="手机号" size="large">
+            <a-input v-model:value="loginUser.loginName" placeholder="用户名" size="large">
               <template #prefix>
                 <MobileOutlined style="margin-left: 15px"/>
               </template>
@@ -84,7 +84,7 @@ loadImageCode()
               name="password" class="form-item"
               :rules="[{ required: true, message: '请输入密码' }]"
           >
-            <a-input-password v-model:value="loginMember.password" placeholder="密码" size="large">
+            <a-input-password v-model:value="loginUser.password" placeholder="密码" size="large">
               <template #prefix>
                 <LockOutlined style="margin-left: 15px"/>
               </template>
@@ -94,7 +94,7 @@ loadImageCode()
           <!-- 图片验证码 -->
           <a-form-item name="imageCode" class="form-item"
                        :rules="[{ required: true, message: '请输入图片验证码', trigger: 'blur' }]">
-            <a-input v-model:value="loginMember.imageCode" placeholder="图片验证码">
+            <a-input v-model:value="loginUser.imageCode" placeholder="图片验证码">
               <template #prefix>
                 <SafetyOutlined style="margin-left: 15px"/>
               </template>

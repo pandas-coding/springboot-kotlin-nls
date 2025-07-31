@@ -70,7 +70,7 @@ class MemberService(
             throw BusinessException(BusinessExceptionEnum.MEMBER_LOGIN_ERROR)
         }
 
-        if (savedMember.password.equals(req.password, ignoreCase = true)) {
+        if (!savedMember.password.equals(req.password, ignoreCase = true)) {
             logger.warn { "密码错误: $loginMobile" }
             throw BusinessException(BusinessExceptionEnum.MEMBER_LOGIN_ERROR)
         }

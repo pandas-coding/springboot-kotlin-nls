@@ -2,12 +2,12 @@
 import { ref, watch } from 'vue';
 import { useRouter } from "vue-router";
 import { CoffeeOutlined, QuestionCircleOutlined, VideoCameraOutlined, } from '@ant-design/icons-vue'
-import { useMemberStore } from "@/stores/member-store.ts";
 import { storeToRefs } from "pinia";
+import { useUserStore } from '@/stores/user-store.ts'
 
 const router = useRouter()
-const memberStore = useMemberStore()
-const { member } = storeToRefs(memberStore)
+const userStore = useUserStore()
+const {user} = storeToRefs(userStore)
 
 const selectedKeys = ref(['/home/welcome'])
 
@@ -24,7 +24,7 @@ watch(() => router.currentRoute.value.path, (newValue: any, oldValue: any) => {
     <div class="logo"/>
 
     <div style="float: right; color: white;">
-      Hello ~: {{ member.name }}
+      Hello ~: {{ user?.name }}
 
       <router-link to="/login" style="color: white;">
         退出登录

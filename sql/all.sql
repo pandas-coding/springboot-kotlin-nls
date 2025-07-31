@@ -125,4 +125,4 @@ create table `user`
 -- 算法：a111111拼接上盐值!@#$*&^%nls（写在md5.js），得到：a111111!@#$*&^%nls，对该值做两次md5（可以找一些在线md5工具）
 -- 如果想设置自己的密码，比如:123456，password=md5(md5(123456!@#$*&^%nls))
 insert into `user` (id, login_name, password)
-values (1, 'test', '$2b$10$IyQzAXCKFyDIZ9nyZ1afye0SnpnMjWevo3UFeuCowtHgJW2yqQpkm');
+values (1, 'test', '9cf88e80e2fd9aa1451bfc8eb6cf8e39');
