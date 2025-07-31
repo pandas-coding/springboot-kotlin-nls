@@ -39,7 +39,7 @@ class UserService(
             throw BusinessException(BusinessExceptionEnum.USER_LOGIN_ERROR)
         }
 
-        if (savedUser.password.equals(req.password, ignoreCase = true)) {
+        if (!savedUser.password.equals(req.password, ignoreCase = true)) {
             kLogger.warn { "密码错误: ${req.loginName}" }
             throw BusinessException(BusinessExceptionEnum.USER_LOGIN_ERROR)
         }
