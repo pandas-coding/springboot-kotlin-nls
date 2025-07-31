@@ -21,7 +21,7 @@ const loginMember = ref({
 
 const login = async (values: {}) => {
   console.info('开始登录: %o', values)
-  const response = await service.post('/nls/web/member/login', {
+  const response = await service.post('/nls/admin/user/login', {
     mobile: loginMember.value.mobile,
     password: hashPassword(loginMember.value.password),
     imageCode: loginMember.value.imageCode,
@@ -48,7 +48,7 @@ const imageCodeSrc = ref()
 const loadImageCode = () => {
   loginMember.value.imageCode = ''
   imageCodeToken.value = uuid(8)
-  imageCodeSrc.value = `${import.meta.env.VITE_SERVER}/nls/web/kaptcha/image-code/${imageCodeToken.value}`
+  imageCodeSrc.value = `${import.meta.env.VITE_SERVER}/nls/admin/kaptcha/image-code/${imageCodeToken.value}`
 }
 loadImageCode()
 
@@ -111,11 +111,6 @@ loadImageCode()
             </a-button>
           </a-form-item>
         </a-form>
-
-        <p class="footer">
-          <router-link to="/register">注册</router-link>
-          <router-link to="/reset" class="pull-right">忘记密码</router-link>
-        </p>
       </a-col>
     </a-row>
   </div>
