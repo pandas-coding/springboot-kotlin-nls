@@ -1,15 +1,11 @@
-import bcrypt from 'bcryptjs'
 import SparkMD5 from 'spark-md5'
-
-const saltRounds = 10;
 
 /**
  * generate hashed password
  * @param password
  */
 export function hashPassword(password: string): string {
-  const salt = bcrypt.genSaltSync(saltRounds)
-  return bcrypt.hashSync(password, salt)
+  return SparkMD5.hash(password)
 }
 
 /**
@@ -17,6 +13,6 @@ export function hashPassword(password: string): string {
  * @param s
  */
 export function base64MD5String(s: string): string {
-  const rawMd5 = SparkMD5.hash(s, true)
+  const rawMd5 = SparkMD5.hash(s)
   return btoa(rawMd5)
 }
