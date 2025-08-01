@@ -13,6 +13,6 @@ export function hashPassword(password: string): string {
  * @param s
  */
 export function base64MD5String(s: string): string {
-  const rawMd5 = SparkMD5.hash(s)
+  const rawMd5 = SparkMD5.hash(s, true)
   return btoa(rawMd5)
 }
