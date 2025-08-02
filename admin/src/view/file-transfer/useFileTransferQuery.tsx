@@ -76,7 +76,7 @@ export const useFileTransferQuery = () => {
     const _queryParam = toValue(param)
 
     loading.value = true
-    const respData = await restService.get<FileTransferQueryResult>('/nls/web/file-transfer/query', {
+    const respData = await restService.get<FileTransferQueryResult>('/nls/admin/file-transfer/query', {
       params: {
         pagination: {
           page: _queryParam.page,

@@ -1,10 +1,14 @@
 package com.sigmoid98.business.vo
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer
+import com.sigmoid98.business.serializer.BusinessLongAsStringSerializer
+import kotlinx.serialization.Serializable
 
+/**
+ * user info stored in jwt payload
+ */
+@Serializable
 data class UserJwtPayloadVO(
-    @field:JsonSerialize(using = ToStringSerializer::class)
+    @Serializable(with = BusinessLongAsStringSerializer::class)
     val id: Long,
     val name: String,
 )
