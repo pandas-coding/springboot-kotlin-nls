@@ -1,5 +1,6 @@
 package com.sigmoid98.business.config
 
+import com.sigmoid98.business.interceptor.AdminLoginInterceptor
 import com.sigmoid98.business.interceptor.LoggingInterceptor
 import com.sigmoid98.business.interceptor.WebLoginInterceptor
 import jakarta.annotation.Resource
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 class SpringMvcConfig(
     @Resource private val loggingInterceptor: LoggingInterceptor,
     @Resource private val webLoginInterceptor: WebLoginInterceptor,
+    @Resource private val adminLoginInterceptor: AdminLoginInterceptor,
 ) : WebMvcConfigurer {
 
     override fun addInterceptors(registry: InterceptorRegistry) {
@@ -27,6 +29,15 @@ class SpringMvcConfig(
                 "/web/member/reset",
                 "/web/sms-code/send-for-register",
                 "/web/sms-code/send-for-reset",
+            )
+
+        // 设置admin/*路径下不要包含context-path
+        registry.addInterceptor(adminLoginInterceptor)
+            .addPathPatterns("/admin/**")
+            .excludePathPatterns(
+                "/admin/kaptcha/image-code/*",
+                "/admin/user/login",
+                "/admin/report/**",
             )
     }
 }
