@@ -4,12 +4,12 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.sigmoid98.business.domain.MemberLoginLog">
-        <id column="id" property="id" />
-        <result column="member_id" property="memberId" />
-        <result column="login_time" property="loginTime" />
-        <result column="token" property="token" />
-        <result column="heart_count" property="heartCount" />
-        <result column="last_heart_time" property="lastHeartTime" />
+        <id column="id" property="id"/>
+        <result column="member_id" property="memberId"/>
+        <result column="login_time" property="loginTime"/>
+        <result column="token" property="token"/>
+        <result column="heart_count" property="heartCount"/>
+        <result column="last_heart_time" property="lastHeartTime"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

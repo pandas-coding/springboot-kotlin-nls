@@ -18,7 +18,8 @@
     <sql id="Base_Column_List">
         id
         , file_transfer_id, index,
-        begin, end, text, created_at, updated_at
+        begin
+        , end, text, created_at, updated_at
     </sql>
 
 </mapper>

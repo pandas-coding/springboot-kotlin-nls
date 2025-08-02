@@ -4,18 +4,19 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.sigmoid98.business.domain.SmsCode">
-        <id column="id" property="id" />
-        <result column="mobile" property="mobile" />
-        <result column="code" property="code" />
-        <result column="use" property="use" />
-        <result column="status" property="status" />
-        <result column="created_at" property="createdAt" />
-        <result column="updated_at" property="updatedAt" />
+        <id column="id" property="id"/>
+        <result column="mobile" property="mobile"/>
+        <result column="code" property="code"/>
+        <result column="use" property="use"/>
+        <result column="status" property="status"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, mobile, code, use, status, created_at, updated_at
+        id
+        , mobile, code, use, status, created_at, updated_at
     </sql>
 
 </mapper>
