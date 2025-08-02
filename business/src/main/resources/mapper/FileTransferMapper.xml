@@ -4,29 +4,30 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.sigmoid98.business.domain.FileTransfer">
-        <id column="id" property="id" />
-        <result column="member_id" property="memberId" />
-        <result column="name" property="name" />
-        <result column="second" property="second" />
-        <result column="amount" property="amount" />
-        <result column="audio" property="audio" />
-        <result column="file_sign" property="fileSign" />
-        <result column="pay_status" property="payStatus" />
-        <result column="status" property="status" />
-        <result column="lang" property="lang" />
-        <result column="vod" property="vod" />
-        <result column="task_id" property="taskId" />
-        <result column="trans_status_code" property="transStatusCode" />
-        <result column="trans_status_text" property="transStatusText" />
-        <result column="trans_time" property="transTime" />
-        <result column="solve_time" property="solveTime" />
-        <result column="created_at" property="createdAt" />
-        <result column="updated_at" property="updatedAt" />
+        <id column="id" property="id"/>
+        <result column="member_id" property="memberId"/>
+        <result column="name" property="name"/>
+        <result column="second" property="second"/>
+        <result column="amount" property="amount"/>
+        <result column="audio" property="audio"/>
+        <result column="file_sign" property="fileSign"/>
+        <result column="pay_status" property="payStatus"/>
+        <result column="status" property="status"/>
+        <result column="lang" property="lang"/>
+        <result column="vod" property="vod"/>
+        <result column="task_id" property="taskId"/>
+        <result column="trans_status_code" property="transStatusCode"/>
+        <result column="trans_status_text" property="transStatusText"/>
+        <result column="trans_time" property="transTime"/>
+        <result column="solve_time" property="solveTime"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, member_id, name, second, amount, audio, file_sign, pay_status, status, lang, vod, task_id, trans_status_code, trans_status_text, trans_time, solve_time, created_at, updated_at
+        id
+        , member_id, name, second, amount, audio, file_sign, pay_status, status, lang, vod, task_id, trans_status_code, trans_status_text, trans_time, solve_time, created_at, updated_at
     </sql>
 
 </mapper>

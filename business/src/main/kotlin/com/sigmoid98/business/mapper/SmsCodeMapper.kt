@@ -1,8 +1,8 @@
-package com.sigmoid98.business.mapper;
+package com.sigmoid98.business.mapper
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.sigmoid98.business.domain.SmsCode;
-import org.apache.ibatis.annotations.Mapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper
+import com.sigmoid98.business.domain.SmsCode
+import org.apache.ibatis.annotations.Mapper
 
 /**
  * <p>

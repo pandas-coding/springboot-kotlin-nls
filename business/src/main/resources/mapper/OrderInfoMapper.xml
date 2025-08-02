@@ -4,25 +4,26 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.sigmoid98.business.domain.OrderInfo">
-        <id column="id" property="id" />
-        <result column="order_no" property="orderNo" />
-        <result column="order_at" property="orderAt" />
-        <result column="order_type" property="orderType" />
-        <result column="info" property="info" />
-        <result column="member_id" property="memberId" />
-        <result column="amount" property="amount" />
-        <result column="pay_at" property="payAt" />
-        <result column="channel" property="channel" />
-        <result column="channel_at" property="channelAt" />
-        <result column="status" property="status" />
-        <result column="desc" property="desc" />
-        <result column="created_at" property="createdAt" />
-        <result column="updated_at" property="updatedAt" />
+        <id column="id" property="id"/>
+        <result column="order_no" property="orderNo"/>
+        <result column="order_at" property="orderAt"/>
+        <result column="order_type" property="orderType"/>
+        <result column="info" property="info"/>
+        <result column="member_id" property="memberId"/>
+        <result column="amount" property="amount"/>
+        <result column="pay_at" property="payAt"/>
+        <result column="channel" property="channel"/>
+        <result column="channel_at" property="channelAt"/>
+        <result column="status" property="status"/>
+        <result column="desc" property="desc"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, order_no, order_at, order_type, info, member_id, amount, pay_at, channel, channel_at, status, desc, created_at, updated_at
+        id
+        , order_no, order_at, order_type, info, member_id, amount, pay_at, channel, channel_at, status, desc, created_at, updated_at
     </sql>
 
 </mapper>
