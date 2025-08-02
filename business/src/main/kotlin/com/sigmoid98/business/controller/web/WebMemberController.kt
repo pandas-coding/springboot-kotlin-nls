@@ -8,12 +8,14 @@ import com.sigmoid98.business.req.MemberResetReq
 import com.sigmoid98.business.resp.CommonResp
 import com.sigmoid98.business.resp.MemberLoginResp
 import com.sigmoid98.business.service.KaptchaService
+import com.sigmoid98.business.service.MemberLoginLogService
 import com.sigmoid98.business.service.MemberService
 import com.sigmoid98.business.service.SmsCodeService
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.Resource
 import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -24,7 +26,8 @@ import org.springframework.web.bind.annotation.RestController
 class WebMemberController(
     @Resource private val memberService: MemberService,
     @Resource private val smsCodeService: SmsCodeService,
-    @Resource private val kaptchaService: KaptchaService
+    @Resource private val kaptchaService: KaptchaService,
+    @Resource private val memberLoginLogService: MemberLoginLogService,
 ) {
 
     companion object {
@@ -80,4 +83,9 @@ class WebMemberController(
         return CommonResp()
     }
 
+    @GetMapping("/heart")
+    fun heart(): CommonResp<Unit> {
+        memberLoginLogService.updateHeartInfo()
+        return CommonResp()
+    }
 }

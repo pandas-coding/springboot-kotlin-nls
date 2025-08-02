@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRouter } from "vue-router";
 import { CoffeeOutlined, QuestionCircleOutlined, VideoCameraOutlined, } from '@ant-design/icons-vue'
 import { useMemberStore } from "@/stores/member-store.ts";
 import { storeToRefs } from "pinia";
+import { useMemberLoginHeartStore } from '@/stores/member-login-heart-store.ts'
 
 const router = useRouter()
 const memberStore = useMemberStore()
@@ -17,6 +18,20 @@ watch(() => router.currentRoute.value.path, (newValue: any, oldValue: any) => {
   selectedKeys.value.push(newValue)
 }, { immediate: true })
 
+// 用户登录后监听心跳
+
+const {
+  startHeart,
+  stopHeart,
+} = useMemberLoginHeartStore()
+
+onMounted(() => {
+  startHeart()
+})
+
+onUnmounted(() => {
+  stopHeart()
+})
 </script>
 
 <template>
