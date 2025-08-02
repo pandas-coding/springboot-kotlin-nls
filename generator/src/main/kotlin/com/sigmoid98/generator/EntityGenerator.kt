@@ -23,6 +23,7 @@ fun main() {
         "order_info",
         "file_transfer_subtitle",
         "user",
+        "member_login_log",
     )
 
     // 2. 全局配置
