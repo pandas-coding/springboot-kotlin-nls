@@ -1,6 +1,9 @@
 package com.sigmoid98.business.service
 
 import cn.hutool.core.util.IdUtil
+import com.baomidou.mybatisplus.extension.kotlin.KtQueryChainWrapper
+import com.baomidou.mybatisplus.extension.kotlin.KtUpdateChainWrapper
+import com.sigmoid98.business.context.LoginMemberContext
 import com.sigmoid98.business.domain.MemberLoginLog
 import com.sigmoid98.business.mapper.MemberLoginLogMapper
 import com.sigmoid98.business.resp.MemberLoginResp
@@ -15,6 +18,7 @@ import java.time.LocalDateTime
 @Service
 class MemberLoginLogService(
     @Resource private val memberLoginLogMapper: MemberLoginLogMapper,
+    @Resource private val loginMemberContext: LoginMemberContext,
 ) {
 
     companion object {
@@ -33,5 +37,34 @@ class MemberLoginLogService(
             lastHeartTime = now
         }
         memberLoginLogMapper.insert(toSaveMemberLoginLog)
+    }
+
+    fun updateHeartInfo() {
+        val memberLoginResp = loginMemberContext.member
+        val token = memberLoginResp.token
+        kLogger.info { "更新会员心跳信息: $token" }
+
+        val memberLoginLogList = KtQueryChainWrapper(memberLoginLogMapper, MemberLoginLog())
+            .eq(MemberLoginLog::token, token)
+            .orderByDesc(MemberLoginLog::id)
+            .list()
+
+        if (memberLoginLogList.isEmpty()) {
+            kLogger.warn { "未找到该token的登录信息: $token, 会员ID: ${memberLoginResp.id}" }
+            save(memberLoginResp)
+            return
+        }
+
+        val latestLoginLog = memberLoginLogList.first()
+        val now = LocalDateTime.now()
+        val updateSuccess = KtUpdateChainWrapper(memberLoginLogMapper, MemberLoginLog())
+            .eq(MemberLoginLog::id, latestLoginLog.id)
+            .set(MemberLoginLog::heartCount, (latestLoginLog.heartCount ?: 0) + 1)
+            .set(MemberLoginLog::lastHeartTime, now)
+            .update()
+
+        if (!updateSuccess) {
+            kLogger.error { "更新用户心跳失败" }
+        }
     }
 }
