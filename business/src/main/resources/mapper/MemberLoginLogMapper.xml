@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sigmoid98.business.mapper.MemberLoginLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.sigmoid98.business.domain.MemberLoginLog">
+        <id column="id" property="id" />
+        <result column="member_id" property="memberId" />
+        <result column="login_time" property="loginTime" />
+        <result column="token" property="token" />
+        <result column="heart_count" property="heartCount" />
+        <result column="last_heart_time" property="lastHeartTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id
+        , member_id, login_time, token, heart_count, last_heart_time
+    </sql>
+
+</mapper>
