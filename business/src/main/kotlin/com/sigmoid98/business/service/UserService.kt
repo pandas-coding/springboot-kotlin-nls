@@ -49,7 +49,7 @@ class UserService(
         val savedUserName = savedUser.loginName!!
 
         val token = jwtProvider.createLoginToken(
-            "id" to savedUserId,
+            "id" to savedUserId.toString(),
             "name" to savedUserName,
         )
 

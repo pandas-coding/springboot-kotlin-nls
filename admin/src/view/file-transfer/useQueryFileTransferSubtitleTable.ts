@@ -6,7 +6,7 @@ import { formatSecond } from '@/utils/format-time.ts'
 import type { TablePaginationConfig } from 'ant-design-vue'
 import type { MaybeRefOrGetter } from '@vueuse/core'
 
-export const useFileTransferSubtitleTable = (params: {
+export const useQueryFileTransferSubtitleTable = (params: {
   fileTransferId: MaybeRefOrGetter<string>,
 }) => {
   const subtitleList = shallowRef([])
@@ -23,7 +23,7 @@ export const useFileTransferSubtitleTable = (params: {
     size?: number,
   } = { page: 1, size: pagination.pageSize }) => {
     loading.value = true
-    const respData = await restService.get('/nls/web/file-transfer-subtitle/query', {
+    const respData = await restService.get('/nls/admin/file-transfer-subtitle/query', {
       paramsSerializer: params => qs.stringify(params, { allowDots: true }),
       params: {
         fileTransferId: fileTransferId,

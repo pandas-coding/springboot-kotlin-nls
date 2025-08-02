@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref, useTemplateRef } from 'vue'
-import FileTransferUpload from "@/view/file-transfer/FileTransferUpload.vue";
 import {
   useColumns,
   useFileTransferQuery,
@@ -8,15 +7,9 @@ import {
 import type { TablePaginationConfig } from 'ant-design-vue'
 import FileTransferSubtitle from '@/view/file-transfer/FileTransferSubtitle.vue'
 
-const fileTransferUploadModalRef = useTemplateRef<InstanceType<typeof FileTransferUpload>>('file-transfer-upload-modal')
 const fileTransferSubtitleModalRef = useTemplateRef<InstanceType<typeof FileTransferSubtitle>>('file-transfer-subtitle-modal')
 const clickFileTransferId = ref('')
 const fileTransferName = ref('')
-
-const showModal = () => {
-  fileTransferUploadModalRef.value?.showModal()
-}
-
 const {columns} = useColumns({
   onClickColumnOperation: async (record) => {
     clickFileTransferId.value = record.id
@@ -47,9 +40,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <file-transfer-upload
-    ref="file-transfer-upload-modal"
-  />
   <file-transfer-subtitle
     :file-transfer-id="clickFileTransferId"
     :name="fileTransferName"
@@ -65,10 +55,6 @@ onMounted(() => {
   <br/>
   <p>
     <a-space>
-      <a-button
-          type="primary"
-          @click="showModal"
-      >开始上传音频</a-button>
       <a-button
         type="default"
         @click="queryFileTransferList()"

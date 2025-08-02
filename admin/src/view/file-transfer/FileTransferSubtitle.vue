@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { FileTextOutlined } from '@ant-design/icons-vue'
 import type { FileTransferSubtitleProps } from '@/view/file-transfer/file-transfer-subtitle.ts'
-import { useFileTransferSubtitleTable } from '@/view/file-transfer/useFileTransferSubtitleTable.ts'
+import { useQueryFileTransferSubtitleTable } from '@/view/file-transfer/useQueryFileTransferSubtitleTable.ts'
 import { useConfirmDialog } from '@vueuse/core';
 import { useGenSubtitleQuery } from '@/view/file-transfer/useGenSubtitleQuery.ts'
 import { useGenTextQuery } from '@/view/file-transfer/useGenTextQuery.ts'
@@ -31,7 +31,7 @@ const {
   loading: isSubtitleListLoading,
   querySubtitleList,
   handleTableChange,
-} = useFileTransferSubtitleTable({fileTransferId: () => props.fileTransferId})
+} = useQueryFileTransferSubtitleTable({fileTransferId: () => props.fileTransferId})
 
 const {
   mediaUrl: subtitleUrl,

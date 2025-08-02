@@ -17,7 +17,7 @@ export const useGenSubtitleQuery = (params: { fileTransferId: MaybeRefOrGetter<s
 
   const genSubtitle = async () => {
     const _fileTransferId = toValue(params.fileTransferId)
-    const axiosReturn = await execute('/nls/web/file-transfer-subtitle/gen-subtitle', {
+    const axiosReturn = await execute('/nls/admin/file-transfer-subtitle/gen-subtitle', {
       params: {
         fileTransferId: _fileTransferId,
       },

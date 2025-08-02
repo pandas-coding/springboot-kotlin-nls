@@ -17,7 +17,7 @@ export const useGenTextQuery = (params: { fileTransferId: MaybeRefOrGetter<strin
 
   const genText = async () => {
     const _fileTransferId = toValue(params.fileTransferId)
-    const axiosReturn = await execute('/nls/web/file-transfer-subtitle/gen-text',
+    const axiosReturn = await execute('/nls/admin/file-transfer-subtitle/gen-text',
       {
         params: {
           fileTransferId: _fileTransferId,
