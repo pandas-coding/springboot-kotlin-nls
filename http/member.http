@@ -65,8 +65,8 @@ Content-Type: application/json
 
 {
   "mobile": "12345678908",
-  "password": "$2b$10$ltWxALzJw.UM46trElkkKOnSrRtym0.VMSD8.mWWRdASZdJSQs4rm",
-  "imageCode": "na3y",
+  "password": "e10adc3949ba59abbe56e057f20f883e",
+  "imageCode": "gg8w",
   "imageCodeToken": "123"
 }
 

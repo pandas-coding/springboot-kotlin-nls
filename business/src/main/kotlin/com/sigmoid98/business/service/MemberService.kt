@@ -20,6 +20,7 @@ import java.time.LocalDateTime
 class MemberService(
     @Resource private val memberMapper: MemberMapper,
     @Resource private val jwtProvider: JwtProvider,
+    @Resource private val memberLoginLogService: MemberLoginLogService,
 ) {
 
     companion object {
@@ -94,6 +95,8 @@ class MemberService(
             name = savedMemberName,
             token = token,
         )
+
+        memberLoginLogService.save(loginRespWithToken)
 
         return loginRespWithToken
     }
