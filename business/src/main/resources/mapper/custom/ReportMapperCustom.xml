@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sigmoid98.business.mapper.custom.ReportMapperCustom" >
+
+    <select id="queryOnlineCount" resultType="int">
+        select count(1) from member_login_log where TIME_TO_SEC(TIMEDIFF(now(), `last_heart_time` )) <![CDATA[<=]]> 60
+    </select>
+
+</mapper>
