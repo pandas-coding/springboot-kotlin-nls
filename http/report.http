@@ -1,0 +1,5 @@
+# query statistic
+GET http://localhost:18000/nls/admin/report/query-statistic
+Accept: application/json
+
+###
