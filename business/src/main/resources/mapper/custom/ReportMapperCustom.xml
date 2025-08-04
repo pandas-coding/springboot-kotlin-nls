@@ -6,4 +6,23 @@
         select count(1) from member_login_log where TIME_TO_SEC(TIMEDIFF(now(), `last_heart_time` )) <![CDATA[<=]]> 60
     </select>
 
+    <select id="queryRegisterCount" resultType="int">
+        select count(1) from member where to_days(created_at) = to_days(now())
+    </select>
+
+    <select id="queryFileTransferCount" resultType="int">
+        select count(1) from file_transfer where to_days(created_at) = to_days(now()) and pay_status = 'S'
+    </select>
+
+    <select id="queryFileTransferSecond" resultType="int">
+        select sum(second) from file_transfer where to_days(created_at) = to_days(now()) and pay_status = 'S'
+    </select>
+
+    <select id="queryOrderCount" resultType="int">
+        select count(1) from order_info where to_days(order_at) = to_days(now()) and status = 'S';
+    </select>
+
+    <select id="queryOrderAmount" resultType="java.math.BigDecimal">
+        select sum(amount) from order_info where to_days(order_at) = to_days(now()) and status = 'S';
+    </select>
 </mapper>
