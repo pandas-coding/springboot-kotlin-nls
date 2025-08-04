@@ -1,28 +1,83 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.sigmoid98.business.mapper.custom.ReportMapperCustom" >
+<mapper namespace="com.sigmoid98.business.mapper.custom.ReportMapperCustom">
 
     <select id="queryOnlineCount" resultType="int">
-        select count(1) from member_login_log where TIME_TO_SEC(TIMEDIFF(now(), `last_heart_time` )) <![CDATA[<=]]> 60
+        select count(1)
+        from member_login_log
+        where TIME_TO_SEC(TIMEDIFF(now(), `last_heart_time`)) <![CDATA[<=]]> 60
     </select>
 
     <select id="queryRegisterCount" resultType="int">
-        select count(1) from member where to_days(created_at) = to_days(now())
+        select count(1)
+        from member
+        where to_days(created_at) = to_days(now())
     </select>
 
     <select id="queryFileTransferCount" resultType="int">
-        select count(1) from file_transfer where to_days(created_at) = to_days(now()) and pay_status = 'S'
+        select count(1)
+        from file_transfer
+        where to_days(created_at) = to_days(now())
+          and pay_status = 'S'
     </select>
 
     <select id="queryFileTransferSecond" resultType="int">
-        select sum(second) from file_transfer where to_days(created_at) = to_days(now()) and pay_status = 'S'
+        select sum(second)
+        from file_transfer
+        where to_days(created_at) = to_days(now())
+          and pay_status = 'S'
     </select>
 
     <select id="queryOrderCount" resultType="int">
-        select count(1) from order_info where to_days(order_at) = to_days(now()) and status = 'S';
+        select count(1)
+        from order_info
+        where to_days(order_at) = to_days(now())
+          and status = 'S';
     </select>
 
     <select id="queryOrderAmount" resultType="java.math.BigDecimal">
-        select sum(amount) from order_info where to_days(order_at) = to_days(now()) and status = 'S';
+        select sum(amount)
+        from order_info
+        where to_days(order_at) = to_days(now())
+          and status = 'S';
+    </select>
+
+    <select id="queryRegisterCountIn30Days" resultType="com.sigmoid98.business.resp.StatisticDateResp">
+        select date_format(created_at, '%m-%d') as `date`, count(1) as num
+        from member
+        where date_sub(curdate(), interval 29 day) <![CDATA[<=]]> created_at
+        group by date_format(created_at, '%m-%d')
+    </select>
+
+    <select id="queryFileTransferCountIn30Days" resultType="com.sigmoid98.business.resp.StatisticDateResp">
+        select date_format(created_at, '%m-%d') as `date`, count(1) as filetransCount
+        from file_transfer
+        where date_sub(curdate(), interval 29 day) <![CDATA[<=]]> created_at
+          and pay_status = 'S'
+        group by date_format(created_at, '%m-%d')
+    </select>
+
+    <select id="queryFileTransferSecondIn30Days" resultType="com.sigmoid98.business.resp.StatisticDateResp">
+        select date_format(created_at, '%m-%d') as `date`, sum(second) as filetransSecond
+        from filetrans
+        where date_sub(curdate(), interval 29 day) <![CDATA[<=]]> created_at
+          and pay_status = 'S'
+        group by date_format(created_at, '%m-%d')
+    </select>
+
+    <select id="queryOrderCountIn30Days" resultType="com.sigmoid98.business.resp.StatisticDateResp">
+        select date_format(`order_at`, '%m-%d') as `date`, count(1) as orderCount
+        from order_info
+        where date_sub(curdate(), interval 29 day) <![CDATA[<=]]> `order_at`
+          and status = 'S'
+        group by date_format(`order_at`, '%m-%d')
+    </select>
+
+    <select id="queryOrderAmountIn30Days" resultType="com.sigmoid98.business.resp.StatisticDateResp">
+        select date_format(`order_at`, '%m-%d') as `date`, sum(amount) as orderAmount
+        from order_info
+        where date_sub(curdate(), interval 29 day) <![CDATA[<=]]> `order_at`
+          and status = 'S'
+        group by date_format(`order_at`, '%m-%d')
     </select>
 </mapper>
