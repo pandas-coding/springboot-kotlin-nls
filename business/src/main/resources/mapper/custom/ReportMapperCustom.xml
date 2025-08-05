@@ -59,7 +59,7 @@
 
     <select id="queryFileTransferSecondIn30Days" resultType="com.sigmoid98.business.resp.StatisticDateResp">
         select date_format(created_at, '%m-%d') as `date`, sum(second) as filetransSecond
-        from filetrans
+        from file_transfer
         where date_sub(curdate(), interval 29 day) <![CDATA[<=]]> created_at
           and pay_status = 'S'
         group by date_format(created_at, '%m-%d')
