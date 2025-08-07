@@ -13,7 +13,7 @@ export interface Statistic {
   orderAmountList: StatisticDate[]
 }
 
-interface StatisticDate {
+export interface StatisticDate {
   date: string
   num: number
 }
