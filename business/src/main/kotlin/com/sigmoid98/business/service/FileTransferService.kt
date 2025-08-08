@@ -28,8 +28,11 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.Resource
 import org.springframework.stereotype.Service
 import java.time.Instant
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.temporal.TemporalUnit
 
 @Service
 class FileTransferService(
@@ -240,4 +243,47 @@ class FileTransferService(
         )
     }
 
+    /**
+     * 删除过期的VOD任务
+     */
+    fun deleteVodJob() {
+        // 使用 runCatching 来优雅地处理顶层异常，替代外层 try-catch
+        runCatching {
+            // 1. 使用 java.time.LocalDate 和 DateTimeFormatter 处理日期
+            // 这种方式类型安全、不可变，是现代Java/Kotlin推荐的做法
+            val today = LocalDate.now()
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+
+            // 2. 计算并格式化日期字符串
+            // 使用 minusDays 方法更具可读性，字符串模板让拼接更简洁
+            val startStr = "${today.minusDays(30).format(formatter)}T00:00:00Z"
+            val endStr = "${today.minusDays(15).format(formatter)}T00:00:00Z"
+
+            logger.info { "删除过期VOD，查询列表日期范围：$startStr, $endStr" }
+
+            // 3. 查询媒体列表
+            // 使用 ?. 安全调用操作符，如果 searchByCreationTime 返回 null，整个表达式会返回 null
+            // Kotlin会自动将 getMediaList() 转换为 mediaList 属性访问
+            val mediaList = vodUtil.searchByCreationTime(startStr, endStr).mediaList
+
+            // 4. 遍历并删除媒体
+            // 使用 forEach 扩展函数配合安全调用 ?.
+            // 如果 mediaList 为 null 或为空，循环体不会执行，代码更简洁
+            mediaList?.forEach { media ->
+                // 同样使用 runCatching 处理循环内部的单个删除异常
+                runCatching {
+                    // 将 getMediaId() 转换为 mediaId 属性访问
+                    vodUtil.deleteVideo(media.mediaId)
+                    logger.info { "成功删除VOD: ${media.mediaId}" } // 建议增加成功日志
+                }.onFailure { e ->
+                    // onFailure 块只在发生异常时执行
+                    logger.error(e) { "删除过期VOD异常: ${media.mediaId}" }
+                }
+            }
+
+        }.onFailure { e ->
+            // 当顶层 runCatching 块中出现任何异常时，会在此处捕获
+            logger.error(e) { "删除过期VOD任务执行异常" }
+        }
+    }
 }
