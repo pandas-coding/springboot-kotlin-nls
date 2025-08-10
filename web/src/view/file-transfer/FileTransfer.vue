@@ -33,10 +33,10 @@ const {
   queryFileTransferList,
 } = useFileTransferQuery()
 
-const handleTableChange = (pagination: TablePaginationConfig) => {
+const handleTableChange = (pagination?: TablePaginationConfig) => {
   queryFileTransferList({
-    page: pagination.current ?? 1,
-    size: pagination.pageSize ?? 10,
+    page: pagination?.current ?? 1,
+    size: pagination?.pageSize ?? 10,
   })
 }
 
@@ -49,11 +49,12 @@ onMounted(() => {
 <template>
   <file-transfer-upload
     ref="file-transfer-upload-modal"
+    @after-pay="() => handleTableChange()"
   />
   <file-transfer-subtitle
+    ref="file-transfer-subtitle-modal"
     :file-transfer-id="clickFileTransferId"
     :name="fileTransferName"
-    ref="file-transfer-subtitle-modal"
   />
 
   <a-alert :message="null" type="info">
