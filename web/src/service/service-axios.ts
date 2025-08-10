@@ -35,6 +35,7 @@ service.interceptors.response.use(
     console.info('返回错误: %o', err)
     const response = err.response
     const status = response.status
+    // 后端响应401时, 跳转登录页面
     if (status === 401) {
       console.info('未登录, 即将跳转登录页面...')
       router.push('/login')
