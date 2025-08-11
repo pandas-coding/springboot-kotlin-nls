@@ -79,7 +79,7 @@ dependencies {
     implementation("me.paulschwarz:spring-dotenv:4.0.0")
 
     // // 阿里云vod上传
-    // implementation(files("${projectDir}/src/main/resources/aliyun-java-vod-upload-1.4.15.jar"))
+    implementation(files("${projectDir}/src/main/resources/aliyun-java-vod-upload-1.4.15.jar"))
 
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
