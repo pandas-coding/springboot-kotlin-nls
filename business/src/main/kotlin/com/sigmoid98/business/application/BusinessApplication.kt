@@ -2,6 +2,7 @@ package com.sigmoid98.business.application
 
 import com.sigmoid98.business.alipay.AlipayProperties
 import com.sigmoid98.business.nls.NlsFileTransferProperties
+import com.sigmoid98.business.properties.DemoProperties
 import org.mybatis.spring.annotation.MapperScan
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -16,6 +17,7 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @EnableConfigurationProperties(value = [
     AlipayProperties::class,
     NlsFileTransferProperties::class,
+    DemoProperties::class,
 ])
 @SpringBootApplication
 class BusinessApplication

@@ -2,6 +2,7 @@ package com.sigmoid98.business.controller.web
 
 import com.sigmoid98.business.exception.BusinessException
 import com.sigmoid98.business.exception.BusinessExceptionEnum
+import com.sigmoid98.business.properties.DemoProperties
 import com.sigmoid98.business.req.GetUploadAuthReq
 import com.sigmoid98.business.resp.CommonResp
 import com.sigmoid98.business.resp.GetRepeatFileUploadAuthResp
@@ -22,6 +23,7 @@ import java.math.BigDecimal
 @RequestMapping("/web/vod")
 class WebVodController(
     @Resource private val vodService: VodUtil,
+    @Resource private val demoProperties: DemoProperties,
 ) {
 
     companion object {
@@ -88,6 +90,54 @@ class WebVodController(
     fun calcAmount(@PathVariable videoId: String): CommonResp<BigDecimal> {
         val amount = vodService.calcAmount(videoId)
         return CommonResp(content = amount)
+    }
+
+    /**
+     * 上传实例音频, 如果上传过, 直接取上传过的示例音频, 并计算出收费金额, 时长等
+     */
+    @GetMapping("/upload-demo")
+    fun uploadDemo(): CommonResp<DemoProperties> {
+        val title = "${demoProperties.key}-${demoProperties.name}"
+        val searchMediaResponse = vodService.searchByTitle(title)
+
+        // 1. 使用 if-else 表达式，避免声明可变的 vid 变量
+        val vid = if (searchMediaResponse.total > 0) {
+            logger.info { "该文件已上传过, title=${title}" }
+            // 2. 使用 Kotlin 的属性访问和集合函数
+            searchMediaResponse.mediaList.first().mediaId
+        } else {
+            // 注释保留，因为它们包含重要的上下文信息
+            // File file = ResourceUtils.getFile("classpath:" + demoProperties.getName());
+            // UploadVideoResponse videoResponse = VodUtil.uploadLocalFile(title, file.getAbsolutePath());
+            // 上面两行只在本地起作用，生产打包后，demo.wav会被打进jar包里，导致file.getAbsolutePath()报错
+            // 所以修改demo.name配置为全路径，如：demo.name=/Users/temp/nls/demo.wav，并手动放入demo.wav文件，生产也需要手动放入demo.wav文件
+            val videoResponse = vodService.uploadLocalFile(title, demoProperties.name)
+
+            // 需要延迟2秒，才能拿到刚上传的音频的时长，否则金额计算出来是0
+            // 注意：在响应式编程或协程中，应使用 delay() 而非 Thread.sleep() 来避免阻塞线程。
+            // 在传统 Spring MVC 中，Thread.sleep() 是可行的，但仍需谨慎。
+            Thread.sleep(2000)
+
+            videoResponse.videoId
+        }
+
+        // 获取音频地址
+        val mezzanineInfo = vodService.getMezzanineInfo(vid)
+        // 使用更安全、更简洁的字符串处理函数
+        val rawFileUrl = mezzanineInfo.mezzanine.fileURL.substringBefore('?')
+
+        // 使用作用域函数 apply 来配置 demoProperties 对象，使代码更紧凑和链式
+        val updatedProperties = DemoProperties(
+            name = demoProperties.name,
+            audio = rawFileUrl,
+            key = demoProperties.key,
+            amount = vodService.calcAmount(vid),
+            lang = demoProperties.lang,
+            vid = vid,
+        )
+
+        // 5. 构造函数调用更简洁
+        return CommonResp(updatedProperties)
     }
 
 }
