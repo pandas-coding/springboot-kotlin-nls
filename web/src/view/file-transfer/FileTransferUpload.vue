@@ -10,6 +10,7 @@ import type { FileTransferInfo, FileTransferUploadEmits } from '@/view/file-tran
 import { FILE_TRANSFER_LANG_ARRAY } from "../../../public/js/enums.ts";
 import { isEmpty } from 'radash'
 import type AlipayModel from '@/components/payment/AlipayModel.vue'
+import { useUploadDemo } from '@/view/file-transfer/useUploadDemo.ts'
 
 const emit = defineEmits<FileTransferUploadEmits>()
 
@@ -198,6 +199,22 @@ const handleAfterPay = () => {
 }
 // </editor-fold>
 
+const {
+  isLoading: uploadLoading,
+  uploadDemo: selectDemoFile,
+  onUploaded,
+  onError,
+} = useUploadDemo()
+onUploaded((demo) => {
+  Object.assign(fileTransfer, demo, {percent: 100})
+})
+onError(() => {
+  notification.error({
+    message: '系统提示',
+    description: '示例文件上传失败',
+  })
+})
+
 defineExpose({
   showModal,
 })
@@ -219,7 +236,11 @@ defineExpose({
             选择音频
           </span>
         </a-button>
-        <a-button type="primary">
+        <a-button
+          type="primary"
+          :loading="uploadLoading"
+          @click="selectDemoFile"
+        >
           没有音频? 使用示例音频
         </a-button>
         <input
